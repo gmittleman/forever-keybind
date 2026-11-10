@@ -331,10 +331,23 @@ function press(id, key) {
   say(label, M.name(k), (key ? K.long(key) + ' · ' : '') + M.slotName(id, st.stance), w);
 }
 function done(msg, sub, warns) { saveNow(); paint(); say('', msg, sub || '', warns); }
+/* Like WoW, dropping on a filled slot picks up the ability it replaces. From a slot the two swap first (each keeps
+   its key) and the displaced one is picked up where it landed, so Esc leaves it there. From the spellbook the
+   replaced ability is picked up with nowhere to go back to, so Esc drops it. */
 function drop(src, r, onKey) {
+  let b = st.M.get(st.L, r);
+  if (b === src.k) b = null;
   const res = st.M.drop(st.L, src, r, onKey);
   if (!res) return paint();
-  done(res.msg, res.sub, res.warns);
+  let pick = '';
+  if (b && src.from === 'book') {
+    st.held = { from: 'book', k: b };
+    pick = 'Picked up ' + st.M.name(b) + ', which it replaced: click a slot or key to place it, or press Esc to drop it.';
+  } else if (b) {
+    st.held = { from: 'slot', ref: src.ref, k: b };
+    pick = st.M.name(b) + ' is picked up: click a slot or key to put it somewhere else, or press Esc to leave it there.';
+  }
+  done(res.msg, [res.sub, pick].filter(Boolean).join(' '), res.warns);
 }
 function removeHeld(src) { st.M.set(st.L, src.ref, null); done('Removed ' + st.M.name(src.k) + ' from ' + st.M.slotName(src.ref.id, src.ref.st) + '.'); }
 /* Click-to-move: the first click picks up, the next places. Stance slots switch stance instead. */
@@ -595,6 +608,26 @@ $('themeToggle').addEventListener('click', () => {
 /* The work area fills the window under the header, whose height depends on how its controls wrap. */
 const topBar = $('setupBar');
 new ResizeObserver(() => root.style.setProperty('--top-h', topBar.offsetHeight + 'px')).observe(topBar);
+/* Square keys: the largest key that fits the space under the bars, between 44 and 76px. A key spans four
+   grid columns with three gaps, so --kc is the column width and --ku one key. */
+/* The left column is then sized to its content (--stage-w), so the work area stays together, centered. */
+const kbdWrap = document.querySelector('.kbd-wrap');
+const MAX_W = 1600, SIDE = 18 * 2 + 290 + 14; /* page padding, spellbook and the gap beside it */
+function sizeKeys() {
+  const GAP = 4, PAD = 9; /* padding plus border on each side */
+  const head = kbdWrap.querySelector('.kb-kbd-h').offsetHeight + 5, foot = $('kbOff').offsetHeight + 6;
+  const fromW = (Math.min(innerWidth, MAX_W) - SIDE - 59 * GAP - 2 * PAD) / 60;
+  const fromH = ((kbdWrap.clientHeight - head - foot - 4 * GAP - 2 * PAD) / 5 - 3 * GAP) / 4;
+  const kc = Math.max(8, Math.min(16, Math.floor(Math.min(fromW, fromH)))), ku = 4 * kc + 3 * GAP;
+  const kbd = $('kbKeys');
+  kbd.style.setProperty('--kc', kc + 'px');
+  kbd.style.setProperty('--ku', ku + 'px');
+  kbd.classList.toggle('kk-small', ku < 60);
+  const bars = $('kbB1') ? $('kbB1').offsetWidth : 0;
+  root.style.setProperty('--stage-w', Math.max(60 * kc + 59 * GAP + 2 * PAD, bars) + 'px');
+}
+new ResizeObserver(sizeKeys).observe(kbdWrap);
+addEventListener('resize', sizeKeys);
 
 /* ---------- Desktop only ---------- */
 /* Phones and tablets get a friendly note. "Show it anyway" is remembered for this browser session. */

@@ -34,6 +34,8 @@ Feedback round after sprint 1:
 - Modes replaced by one view plus Keybind mode (hover a slot and press a key).
 - Bar order: stance bar on top, extra bars numbered down from it, action bar 1 at the bottom.
 - Desktop-only note for phones and tablets.
+- Like WoW, dropping an ability on a filled slot picks up the one it replaces.
+- Main area capped at 1600px and centered; action bars packed tight; square keyboard keys sized to the space.
 
 ## Sprint 2: Engine and first classes (14 points)
 

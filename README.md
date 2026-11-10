@@ -5,7 +5,7 @@ Plan your WoW Forever action bars, see them on a keyboard, and practice until th
 Everything fits on one desktop screen: your bars, a QWERTY keyboard showing every bind, and the spellbook beside them.
 
 - **Press your keys** (keys, Mouse 4/5, modifier + wheel) to see what fires, with warnings for the wrong stance or an ability you haven't learned yet. Shift, Ctrl and Alt switch the keyboard to that layer.
-- **Drag** abilities from the spellbook onto slots or keyboard keys, or click to pick up and click to place. Abilities keep their keys when you move them on the bars.
+- **Drag** abilities from the spellbook onto slots or keyboard keys, or click to pick up and click to place. Like in WoW, dropping on a filled slot picks up the ability that was there. Abilities keep their keys when you move them on the bars.
 - **Keybind mode**, like WoW's /kb addons: hover a slot and press a key to bind it.
 - **Setups:** several named setups, saved automatically in your browser. No account needed. Export and import as JSON.
 

@@ -77,6 +77,8 @@ const { serve, OUT } = require('./env');
     await cap('1').scrollIntoViewIfNeeded();
     await p.dragAndDrop('#kbBook [data-k="cleave"]', capSel('1'));
     ok((await slotName('b2-0')) === 'Cleave' && (await capName('1')) === 'Cleave', 'drag spellbook → key 1 fills its slot');
+    ok((await p.textContent('#kbOut')).includes('Picked up Heroic Strike'), 'the replaced Heroic Strike is picked up');
+    await p.keyboard.press('Escape');
     await p.click('#kbBars [data-slot="b2-2"]'); await cap('1').click();
     ok((await slotName('b2-0')) === 'Sunder Armor' && (await slotName('b2-2')) === 'Cleave', 'pick up Sunder Armor, click key 1: Sunder takes 1, Cleave takes 2');
     await cap('Y').click();

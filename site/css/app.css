@@ -33,8 +33,8 @@ a{color:var(--link)}
 [hidden]{display:none!important}
 
 /* ===== Page: a desktop tool that fills the window ===== */
-body{min-width:1100px}
-.top{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:8px 18px;background:var(--panel);border-bottom:2px solid var(--frame);box-shadow:0 1px 0 var(--frame-hi)}
+body{min-width:1100px;--max-w:1600px}
+.top{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:8px max(18px,calc((100% - var(--max-w))/2 + 18px));background:var(--panel);border-bottom:2px solid var(--frame);box-shadow:0 1px 0 var(--frame-hi)}
 .brand{display:flex;align-items:center;gap:8px;font-size:1.15rem;font-weight:800;letter-spacing:.02em;white-space:nowrap}
 .setup{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;flex:1;min-width:0}
 .setup select,.setup input,#setupDlg select,#setupDlg input,.book input{font:inherit;font-size:.92rem;background:var(--panel-2);color:var(--ink);border:1px solid var(--frame);border-radius:4px;padding:2px 8px}
@@ -64,14 +64,14 @@ body{min-width:1100px}
 
 /* Work area: bars and keyboard on the left, spellbook on the right, both filling the window height.
    --top-h is the header's height, measured by the page. */
-.work{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px;padding:10px 18px 12px;height:calc(100vh - var(--top-h,56px));min-height:600px}
+.work{display:grid;grid-template-columns:var(--stage-w,minmax(0,1fr)) 290px;justify-content:center;gap:14px;max-width:var(--max-w);margin:0 auto;padding:10px 18px 12px;height:calc(100vh - var(--top-h,56px));min-height:600px}
 .stage{display:flex;flex-direction:column;gap:8px;min-height:0;min-width:0}
 .frame{background:var(--panel);border:2px solid var(--frame);box-shadow:inset 0 0 0 1px var(--frame-hi);border-radius:6px}
-.extras{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:6px 18px 10px;align-items:start}
+.extras{display:grid;grid-template-columns:1fr 1fr;gap:14px;max-width:var(--max-w);margin:0 auto;padding:6px 18px 10px;align-items:start}
 .extra{padding:12px 16px}
 .extra h3{font-size:1.05rem;margin:0 0 .4rem}
 .extra p{margin:.3rem 0}
-footer{padding:6px 18px 30px;color:var(--ink-soft);font-size:.82rem}
+footer{max-width:var(--max-w);margin:0 auto;padding:6px 18px 30px;color:var(--ink-soft);font-size:.82rem}
 footer p{margin:0 0 5px}
 footer a{color:var(--ink-soft)}
 #clsNote:empty{display:none}
@@ -109,14 +109,14 @@ body.on-mobile>:not(.mobile-note){display:none}
 .kb-rs{font-size:.86rem;color:var(--tt-grey)}
 .kb-rw{font-size:.88rem;color:var(--tt-red)}
 #kbBars{flex:none;display:flex;flex-direction:column;gap:5px}
-.kb-bar{display:grid;grid-template-columns:108px minmax(0,1fr);align-items:center;gap:8px;padding:4px 8px;background:var(--panel-2);border:1px solid var(--frame);border-radius:6px}
+.kb-bar{display:grid;grid-template-columns:108px max-content;align-items:center;gap:8px;padding:4px 8px;background:var(--panel-2);border:1px solid var(--frame);border-radius:6px}
 #kbB1{border:2px solid var(--kb-st);box-shadow:inset 5px 0 0 var(--kb-st);padding-left:12px}
 .kb-bar-h{display:flex;flex-direction:column;align-items:flex-start;gap:2px;font-size:.74rem;color:var(--ink-soft);min-width:0}
 .kb-bar-h b{font-family:Cinzel,Georgia,serif;font-size:.86rem;color:var(--title);white-space:nowrap}
 .kb-st{display:inline-block;padding:0 7px;border-radius:3px;background:var(--kb-st);color:#fff;font-weight:700;white-space:nowrap}
-.kb-slots{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:4px}
+.kb-slots{display:grid;grid-template-columns:repeat(12,56px);gap:4px}
 .kb-slot{display:flex;flex-direction:column;align-items:center;gap:1px;min-width:0;cursor:pointer;border-radius:5px}
-.kb-btn{position:relative;display:block;width:100%;max-width:40px;aspect-ratio:1;border-radius:5px;background:var(--tt-bg);border:1px solid var(--icon-edge);box-shadow:inset 0 0 0 1px var(--frame-hi);overflow:hidden}
+.kb-btn{position:relative;display:block;width:100%;max-width:44px;aspect-ratio:1;border-radius:5px;background:var(--tt-bg);border:1px solid var(--icon-edge);box-shadow:inset 0 0 0 1px var(--frame-hi);overflow:hidden}
 .kb-empty .kb-btn{background:var(--xp-empty);box-shadow:inset 0 2px 6px rgba(0,0,0,.35)}
 .kb-ico{position:absolute;inset:0;display:block;text-decoration:none}
 /* Without Wowhead icons an ability shows its initials; the real icon covers them when it loads */
@@ -138,6 +138,8 @@ body.on-mobile>:not(.mobile-note){display:none}
 .kb-hit .kb-btn{animation:kbhit .35s ease-out}
 @keyframes kbhit{0%{transform:scale(.88);box-shadow:0 0 0 3px var(--tt-yellow),0 0 16px var(--tt-yellow)}100%{transform:scale(1)}}
 @media (prefers-reduced-motion:reduce){.kb-hit .kb-btn{animation:none;box-shadow:0 0 0 3px var(--tt-yellow)}.kb-wait .kb-btn{animation:none}}
+/* Short screens: slightly smaller bar slots, so the keyboard still fits under them */
+@media (max-height:820px){.kb-btn{max-width:38px}.kb-slots{grid-template-columns:repeat(12,50px)}.kb-bar{padding:2px 8px}#kbBars{gap:4px}}
 /* Keybind mode: every slot is a target; the one under the mouse is the one a key press binds */
 .kbmode #kbBars .kb-btn{outline:1px dashed var(--link);outline-offset:1px}
 .kbmode #kbBars .kb-slot:hover .kb-btn{outline:2px solid var(--gold);outline-offset:1px}
@@ -164,17 +166,20 @@ body.on-mobile>:not(.mobile-note){display:none}
 .kb-sum{margin:0;padding:10px 12px;max-height:340px;overflow:auto;background:var(--panel-2);border:1px solid var(--frame);border-radius:4px;font:.8rem/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
 
 /* Keyboard view. Key border color = the bar a key's slot is on. */
-.kbd-wrap{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.kbd-wrap{flex:1 1 0;min-height:0;display:flex;flex-direction:column}
 .kb-kbd-h{flex:none;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:4px 14px;margin:0 0 5px;font-size:.82rem;color:var(--ink-soft)}
 .kb-legend{display:flex;flex-wrap:wrap;gap:10px}
 .kb-legend span{display:inline-flex;align-items:center;gap:5px;font-size:.8rem}
 .kb-legend span::before{content:"";width:14px;height:10px;border:2px solid var(--kk-c);border-radius:3px}
-/* five rows share whatever height is left under the bars */
-.kb-kbd{flex:1 1 auto;min-height:250px;display:grid;grid-template-columns:repeat(60,minmax(0,1fr));grid-template-rows:repeat(5,minmax(44px,76px));align-content:start;gap:4px;padding:8px;background:var(--panel-2);border:1px solid var(--frame);border-radius:8px}
+/* Square keys: the page measures the space under the bars and sets --kc (a quarter-key column) and --ku (one key) */
+.kb-kbd{flex:none;width:max-content;display:grid;grid-template-columns:repeat(60,var(--kc,14px));grid-auto-rows:var(--ku,60px);gap:4px;padding:8px;background:var(--panel-2);border:1px solid var(--frame);border-radius:8px}
 .kk{--kk-c:var(--xp-empty);grid-column:span 4;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;min-height:0;padding:3px 3px 4px;overflow:hidden;background:var(--panel);border:2px solid var(--kk-c);border-bottom-width:4px;border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.kk-l{align-self:flex-start;font:700 .74rem/1 "Alegreya Sans",sans-serif;color:var(--ink)}
-.kk .kb-btn{flex:none;width:30px}
-.kk .kb-fb{font-size:.7rem}
+.kk-l{align-self:flex-start;font:700 .7rem/1 "Alegreya Sans",sans-serif;color:var(--ink)}
+.kk .kb-btn{flex:none;width:calc(var(--ku,60px) * .44);max-width:none}
+/* small keys: a bigger icon and no name (the tooltip has it) */
+.kk-small .kk .kb-btn{width:calc(var(--ku,60px) * .5)}
+.kk-small .kk-n:not(.kk-e){display:none}
+.kk .kb-fb{font-size:calc(var(--ku,60px) * .17)}
 .kk-n{max-width:100%;font-size:.6rem;line-height:1.15;text-align:center;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .kk-e{margin-top:auto;color:var(--ink-soft);font-style:italic}
 .kk-free{opacity:.62}
@@ -194,5 +199,4 @@ body.on-mobile>:not(.mobile-note){display:none}
 .kk.kb-over,.kk.kb-wait{outline:2px solid var(--gold);outline-offset:1px}
 .kk.kb-held .kb-btn{opacity:.45}
 .kk.kb-hit{animation:kbhit .35s ease-out}
-.kb-off{flex:none;margin:.3rem 0 0;font-size:.8rem}
-.kb-off:empty{display:none}
+.kb-off{flex:none;min-height:1.3em;margin:.3rem 0 0;font-size:.8rem}

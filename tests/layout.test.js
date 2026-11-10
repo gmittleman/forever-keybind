@@ -28,7 +28,16 @@ const { serve, OUT } = require('./env');
     ok(r.key >= 44, `${w}×${h}: keys at least 44px tall (${Math.round(r.key)})`);
     ok(r.book.left > r.stage.right && r.book.top < 120 && r.book.bottom <= r.vh, `${w}×${h}: spellbook beside the bars, full height`);
     ok(r.sw <= w, `${w}×${h}: no sideways scroll`);
+    const k = await p.$eval('#kbKeys .kk[data-base="Q"]', e => { const b = e.getBoundingClientRect(); return [b.width, b.height]; });
+    ok(Math.abs(k[0] - k[1]) < 1, `${w}×${h}: keys are square (${Math.round(k[0])}×${Math.round(k[1])})`);
     if (w === 1440) await p.screenshot({ path: OUT + '/layout-1440.png' });
+    await ctx.close();
+  }
+  {
+    const { ctx, p } = await open({ width: 2560, height: 1300 });
+    const r = await p.evaluate(() => { const box = s => document.querySelector(s).getBoundingClientRect(); return { work: box('.work'), stage: box('.stage'), book: box('#kbBookWrap'), kbd: box('#kbKeys'), b1: box('#kbB1') }; });
+    ok(r.work.width <= 1600 && Math.abs((r.work.left + r.work.right) / 2 - 1280) < 2, '2560 wide: work area capped at 1600px and centered');
+    ok(r.book.left - r.stage.right <= 20 && Math.abs(r.b1.width - r.kbd.width) < 2, '2560 wide: spellbook right beside the bars; bars as wide as the keyboard');
     await ctx.close();
   }
   {
@@ -90,6 +99,22 @@ const { serve, OUT } = require('./env');
     ok((await p.textContent('#kbBars [data-slot="b3-0"] .kb-name')) === 'Challenging Shout', 'click spellbook, click slot: placed');
     await p.click('#kbBars [data-slot="b3-0"]'); await p.click('#kbBars [data-slot="b3-11"]');
     ok((await p.textContent('#kbBars [data-slot="b3-11"] .kb-name')) === 'Challenging Shout' && (await p.textContent('#kbBars [data-slot="b3-0"] .kb-name')) === '', 'click slot, click slot: moved');
+    // dropping on a filled slot picks up what was there, like WoW
+    const nm = id => p.textContent(`#kbBars [data-slot="${id}"] .kb-name`);
+    const ky = id => p.locator(`#kbBars [data-slot="${id}"] .kb-key`).textContent({ timeout: 300 }).catch(() => '');
+    await p.click('#kbBars [data-slot="b2-1"]'); await p.click('#kbBars [data-slot="b2-2"]');
+    ok((await nm('b2-2')) === 'Cleave' && (await ky('b2-2')) === 's-1' && (await nm('b2-1')) === 'Sunder Armor' && (await ky('b2-1')) === '2', 'Cleave onto Sunder Armor: they swap, each keeps its key');
+    ok((await p.getAttribute('#kbBars [data-slot="b2-1"]', 'class')).includes('kb-held') && (await p.textContent('#kbOut')).includes('Sunder Armor is picked up'), '…and Sunder Armor is picked up');
+    await p.click('#kbBars [data-slot="b3-1"]');
+    ok((await nm('b3-1')) === 'Sunder Armor' && (await ky('b3-1')) === '2' && (await nm('b2-1')) === '' && (await p.textContent('#kbOut')).startsWith('Moved Sunder Armor'), 'click a slot: Sunder Armor placed there, still on 2');
+    await p.click('#kbBars [data-slot="b2-3"]'); await p.click('#kbBars [data-slot="b2-4"]'); await p.keyboard.press('Escape');
+    ok((await nm('b2-3')) === 'Demoralizing Shout' && (await ky('b2-3')) === 'T' && !(await p.getAttribute('#kbBars [data-slot="b2-3"]', 'class')).includes('kb-held'), 'Esc leaves the picked-up ability where it landed');
+    await p.click('#kbBook [data-k="disarm"]'); await p.click('#kbBars [data-slot="b2-5"]');
+    ok((await nm('b2-5')) === 'Disarm' && (await ky('b2-5')) === 'F' && (await p.textContent('#kbOut')).includes('Picked up Bloodrage'), 'from the spellbook onto Bloodrage: Disarm takes F, Bloodrage picked up');
+    await p.click('#kbBars [data-slot="b3-2"]');
+    ok((await nm('b3-2')) === 'Bloodrage' && (await p.textContent('#kbOut')).startsWith('Placed Bloodrage'), 'and placed elsewhere');
+    await p.click('#kbBook [data-k="disarm"]'); await p.click('#kbBars [data-slot="b3-2"]'); await p.keyboard.press('Escape');
+    ok((await nm('b3-2')) === 'Disarm' && !(await p.$$eval('#kbBars .kb-name', n => n.map(x => x.textContent))).includes('Bloodrage'), 'Esc drops an ability picked up from the spellbook');
     await p.click('#setupMenu summary');
     ok(await p.isVisible('[data-setup="rename"]'), 'the ⋯ menu opens');
     await p.click('.brand');
