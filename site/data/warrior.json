@@ -1,0 +1,435 @@
+{
+  "id": "warrior",
+  "name": "Warrior",
+  "color": "#C79C6E",
+  "note": "Stance rules are being moved from Classic to Forever (sprint 2).",
+  "stances": [
+    {
+      "id": "battle",
+      "ability": "bstance",
+      "abbr": "B",
+      "color": "var(--rage)"
+    },
+    {
+      "id": "def",
+      "ability": "defstance",
+      "abbr": "D",
+      "color": "var(--mana)"
+    }
+  ],
+  "laterStances": [
+    {
+      "id": "berserker",
+      "ability": "berserker",
+      "abbr": "Z",
+      "color": "var(--xp)"
+    }
+  ],
+  "use": {
+    "charge": [
+      "battle"
+    ],
+    "rend": [
+      "battle",
+      "def"
+    ],
+    "tclap": [
+      "battle"
+    ],
+    "hamstring": [
+      "battle",
+      "berserker"
+    ],
+    "taunt": [
+      "def"
+    ],
+    "overpower": [
+      "battle"
+    ],
+    "sbash": [
+      "battle",
+      "def"
+    ],
+    "revenge": [
+      "def"
+    ],
+    "mocking": [
+      "battle"
+    ],
+    "sblock": [
+      "def"
+    ],
+    "disarm": [
+      "def"
+    ],
+    "retaliation": [
+      "battle"
+    ],
+    "execute": [
+      "battle",
+      "berserker"
+    ],
+    "swall": [
+      "def"
+    ],
+    "intercept": [
+      "berserker"
+    ],
+    "whirlwind": [
+      "berserker"
+    ],
+    "pummel": [
+      "berserker"
+    ],
+    "brage": [
+      "berserker"
+    ],
+    "reck": [
+      "berserker"
+    ]
+  },
+  "book": [
+    "hstrike",
+    "bshout",
+    "shoot",
+    "charge",
+    "rend",
+    "tclap",
+    "hamstring",
+    "bloodrage",
+    "sunder",
+    "taunt",
+    "overpower",
+    "sbash",
+    "demo",
+    "revenge",
+    "mocking",
+    "sblock",
+    "disarm",
+    "cleave",
+    "retaliation",
+    "ishout",
+    "execute",
+    "cshout",
+    "swall"
+  ],
+  "abilities": {
+    "bstance": {
+      "name": "Battle Stance",
+      "spell": 2457,
+      "icon": "ability_warrior_offensivestance",
+      "level": 1,
+      "desc": "Your starting stance. Charge, Overpower and Execute need it."
+    },
+    "defstance": {
+      "name": "Defensive Stance",
+      "spell": 71,
+      "icon": "ability_warrior_defensivestance",
+      "level": 10,
+      "desc": "Less damage taken and more threat. Class quest at 10."
+    },
+    "hstrike": {
+      "name": "Heroic Strike",
+      "spell": 78,
+      "icon": "ability_rogue_ambush",
+      "level": 1,
+      "desc": "Rage dump on your next swing."
+    },
+    "bshout": {
+      "name": "Battle Shout",
+      "spell": 6673,
+      "icon": "ability_warrior_battleshout",
+      "level": 1,
+      "desc": "Party-wide Attack Power buff. Keep it up in combat."
+    },
+    "shoot": {
+      "name": "Shoot / Throw",
+      "spell": 7918,
+      "icon": "ability_marksmanship",
+      "level": 1,
+      "desc": "Ranged attack with your gun, bow or thrown weapon. Good for pulling."
+    },
+    "charge": {
+      "name": "Charge",
+      "spell": 100,
+      "icon": "ability_warrior_charge",
+      "level": 4,
+      "desc": "Rush to the target and generate rage. Defensive Stance needs Vanguard."
+    },
+    "rend": {
+      "name": "Rend",
+      "spell": 772,
+      "icon": "ability_gouge",
+      "level": 4,
+      "desc": "Bleed that scales with Attack Power. Tags the mob instantly."
+    },
+    "tclap": {
+      "name": "Thunder Clap",
+      "spell": 6343,
+      "icon": "spell_nature_thunderclap",
+      "level": 6,
+      "desc": "Hits up to 4 enemies and slows their attacks. Usable in Defensive Stance, 6 sec cooldown."
+    },
+    "hamstring": {
+      "name": "Hamstring",
+      "spell": 1715,
+      "icon": "ability_shockwave",
+      "level": 8,
+      "desc": "Slows the target."
+    },
+    "bloodrage": {
+      "name": "Bloodrage",
+      "spell": 2687,
+      "icon": "ability_racial_bloodrage",
+      "level": 10,
+      "desc": "Free rage at the start of a pull."
+    },
+    "sunder": {
+      "name": "Sunder Armor",
+      "spell": 7386,
+      "icon": "ability_warrior_sunder",
+      "level": 10,
+      "desc": "Reduces armor. Threat scales with Attack Power. Tags the mob instantly."
+    },
+    "taunt": {
+      "name": "Taunt",
+      "spell": 355,
+      "icon": "spell_nature_reincarnation",
+      "level": 10,
+      "desc": "Forces the target to attack you."
+    },
+    "overpower": {
+      "name": "Overpower",
+      "spell": 7384,
+      "icon": "ability_meleedamage",
+      "level": 12,
+      "desc": "Battle Stance attack after the target dodges."
+    },
+    "sbash": {
+      "name": "Shield Bash",
+      "spell": 72,
+      "icon": "ability_warrior_shieldbash",
+      "level": 12,
+      "desc": "Interrupts a spellcast."
+    },
+    "demo": {
+      "name": "Demoralizing Shout",
+      "spell": 1160,
+      "icon": "ability_warrior_warcry",
+      "level": 14,
+      "desc": "Lowers nearby enemies’ Attack Power. Generates threat."
+    },
+    "revenge": {
+      "name": "Revenge",
+      "spell": 6572,
+      "icon": "ability_warrior_revenge",
+      "level": 14,
+      "desc": "Cheap, hard-hitting attack after you block, dodge or parry."
+    },
+    "mocking": {
+      "name": "Mocking Blow",
+      "spell": 694,
+      "icon": "ability_warrior_punishingblow",
+      "level": 16,
+      "desc": "Battle Stance taunt-attack."
+    },
+    "sblock": {
+      "name": "Shield Block",
+      "spell": 2565,
+      "icon": "ability_defend",
+      "level": 16,
+      "desc": "Big block chance boost. Creates Revenge procs."
+    },
+    "disarm": {
+      "name": "Disarm",
+      "spell": 676,
+      "icon": "ability_warrior_disarm",
+      "level": 18,
+      "desc": "Removes the target’s weapon briefly."
+    },
+    "cleave": {
+      "name": "Cleave",
+      "spell": 845,
+      "icon": "ability_warrior_cleave",
+      "level": 20,
+      "desc": "Next swing hits a second target."
+    },
+    "retaliation": {
+      "name": "Retaliation",
+      "spell": 20230,
+      "icon": "ability_warrior_challange",
+      "level": 20,
+      "desc": "Counterattack every melee hit. 15 min cooldown."
+    },
+    "ishout": {
+      "name": "Intimidating Shout",
+      "spell": 5246,
+      "icon": "ability_golemthunderclap",
+      "level": 22,
+      "desc": "Makes nearby enemies flee."
+    },
+    "execute": {
+      "name": "Execute",
+      "spell": 5308,
+      "icon": "inv_sword_48",
+      "level": 24,
+      "desc": "Finisher on low-health targets."
+    },
+    "cshout": {
+      "name": "Challenging Shout",
+      "spell": 1161,
+      "icon": "ability_bullrush",
+      "level": 26,
+      "desc": "Taunts all nearby enemies."
+    },
+    "swall": {
+      "name": "Shield Wall",
+      "spell": 871,
+      "icon": "ability_warrior_shieldwall",
+      "level": 28,
+      "desc": "Big damage reduction. Own 15 min cooldown in Forever."
+    },
+    "berserker": {
+      "name": "Berserker Stance",
+      "spell": 2458,
+      "icon": "ability_racial_avatar",
+      "level": 30,
+      "desc": "More crit, more damage taken. Class quest at 30."
+    },
+    "intercept": {
+      "name": "Intercept",
+      "spell": 20252,
+      "icon": "ability_rogue_sprint",
+      "level": 30,
+      "desc": "Berserker Stance charge with a stun."
+    },
+    "whirlwind": {
+      "name": "Whirlwind",
+      "spell": 1680,
+      "icon": "ability_whirlwind",
+      "level": 36,
+      "desc": "Hits nearby enemies. Berserker Stance."
+    },
+    "pummel": {
+      "name": "Pummel",
+      "spell": 6552,
+      "icon": "inv_gauntlets_04",
+      "level": 38,
+      "desc": "Interrupt in Berserker Stance."
+    },
+    "brage": {
+      "name": "Berserker Rage",
+      "spell": 18499,
+      "icon": "spell_nature_ancestralguardian",
+      "level": 30,
+      "desc": "Breaks and prevents fear."
+    },
+    "reck": {
+      "name": "Recklessness",
+      "spell": 1719,
+      "icon": "ability_criticalstrike",
+      "level": 50,
+      "desc": "Huge crit chance for a short time."
+    }
+  },
+  "starter": {
+    "stances": {
+      "battle": "Z",
+      "def": "X"
+    },
+    "bar1": [
+      {
+        "key": "Mouse4",
+        "battle": "charge",
+        "def": "taunt"
+      },
+      {
+        "key": "Shift+Mouse4",
+        "battle": "mocking"
+      },
+      {
+        "key": "Mouse5",
+        "battle": "overpower",
+        "def": "revenge"
+      },
+      {
+        "key": "3",
+        "battle": "execute",
+        "def": "sblock"
+      },
+      {
+        "key": "4",
+        "battle": "rend",
+        "def": "rend"
+      },
+      {
+        "key": "Q",
+        "battle": "hamstring",
+        "def": "disarm"
+      },
+      {
+        "key": "Shift+Q",
+        "battle": "sbash",
+        "def": "sbash"
+      },
+      {
+        "key": "E",
+        "battle": "tclap"
+      },
+      {
+        "key": "C",
+        "battle": "retaliation",
+        "def": "swall"
+      }
+    ],
+    "bars": [
+      [
+        [
+          "1",
+          "hstrike"
+        ],
+        [
+          "Shift+1",
+          "cleave"
+        ],
+        [
+          "2",
+          "sunder"
+        ],
+        [
+          "R",
+          "bshout"
+        ],
+        [
+          "T",
+          "demo"
+        ],
+        [
+          "F",
+          "bloodrage"
+        ],
+        [
+          "G",
+          "shoot"
+        ],
+        [
+          "V",
+          null
+        ],
+        [
+          "Shift+C",
+          "ishout"
+        ],
+        [
+          "Ctrl+1",
+          "potion"
+        ],
+        [
+          "Ctrl+2",
+          "bandage"
+        ]
+      ],
+      []
+    ]
+  }
+}

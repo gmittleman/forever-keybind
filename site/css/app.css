@@ -1,0 +1,174 @@
+/* Light = quest-log parchment. Dark = stone UI frame (default when the system is dark). */
+:root{
+  --bg:#D9CBA8;--panel:#EFE4C8;--panel-2:#E3D4AE;--ink:#2B1D0E;--ink-soft:#5E4A2E;
+  --frame:#7A5C2E;--frame-hi:#B08A4A;--gold:#7A4E0B;--title:#5A2E0A;--link:#1D4F8C;
+  --rage:#B3261E;--mana:#1F5FB8;--hp:#2E8B2E;--xp:#7B3FA6;--xp-empty:#B9A57E;
+  /* keyboard border colors for extra bars (bar 2 uses --gold, bar 3 --xp) */
+  --bar4:#13786D;--bar5:#A8336A;
+  --tt-bg:#070A1F;--tt-border:#9AA4B8;--tt-ink:#FFFFFF;--tt-yellow:#FFD100;--tt-grey:#9D9D9D;--tt-red:#FF4D4D;
+  --icon-edge:#111111;
+  color-scheme:light;
+  box-sizing:border-box;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#121110;--panel:#1D1B19;--panel-2:#262320;--ink:#E8E0CF;--ink-soft:#B4A88F;
+    --frame:#5C4A2C;--frame-hi:#A88A4E;--gold:#FFD100;--title:#FFD100;--link:#5AB0FF;
+    --rage:#D6332A;--mana:#2F78E0;--hp:#33B033;--xp:#9B4FD1;--xp-empty:#2E2A25;--bar4:#2BB3A3;--bar5:#E0609A;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#121110;--panel:#1D1B19;--panel-2:#262320;--ink:#E8E0CF;--ink-soft:#B4A88F;
+  --frame:#5C4A2C;--frame-hi:#A88A4E;--gold:#FFD100;--title:#FFD100;--link:#5AB0FF;
+  --rage:#D6332A;--mana:#2F78E0;--hp:#33B033;--xp:#9B4FD1;--xp-empty:#2E2A25;--bar4:#2BB3A3;--bar5:#E0609A;
+  color-scheme:dark;
+}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Alegreya Sans","Trebuchet MS","Segoe UI",sans-serif;font-size:17px;line-height:1.55}
+h1,h2,h3{font-family:Cinzel,Georgia,"Times New Roman",serif;line-height:1.2;margin:0;color:var(--title)}
+a{color:var(--link)}
+:focus-visible{outline:2px solid var(--link);outline-offset:2px}
+.muted{color:var(--ink-soft)}
+[hidden]{display:none!important}
+
+/* ===== Page ===== */
+.top{max-width:1120px;margin:0 auto;padding:22px 20px 8px;display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.top h1{font-size:clamp(1.8rem,4.5vw,2.6rem);font-weight:800;letter-spacing:.02em}
+.tag{margin:.2rem 0 0;color:var(--ink-soft)}
+.theme-toggle{flex:none;margin-top:8px;font:inherit;font-size:.85rem;background:var(--panel);border:1px solid var(--frame);color:var(--ink-soft);padding:5px 10px;border-radius:5px;cursor:pointer}
+.shell{max-width:1120px;margin:0 auto;padding:8px 20px 22px}
+.frame{background:var(--panel);border:2px solid var(--frame);box-shadow:inset 0 0 0 1px var(--frame-hi);border-radius:6px}
+#kbBody{padding:18px 22px 24px}
+#kbBody h3{font-size:1.15rem;margin:1.6rem 0 .55rem;padding-bottom:4px;border-bottom:1px solid var(--frame)}
+footer{max-width:1120px;margin:0 auto;padding:6px 20px 40px;color:var(--ink-soft);font-size:.85rem}
+footer p{margin:0 0 6px}
+footer a{color:var(--ink-soft)}
+.copy{font:inherit;font-size:.85rem;background:var(--panel);border:1px solid var(--frame);color:var(--ink);padding:3px 10px;border-radius:4px;cursor:pointer}
+.copy:hover{border-color:var(--frame-hi)}
+
+/* ===== Setup bar ===== */
+.setup{padding:12px 18px;margin-bottom:14px}
+.setup-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin-bottom:8px}
+.setup label{font-size:.88rem;color:var(--ink-soft)}
+.setup select,.setup input,#setupDlg select,#setupDlg input{font:inherit;font-size:.95rem;background:var(--panel-2);color:var(--ink);border:1px solid var(--frame);border-radius:4px;padding:3px 8px}
+#setupSel{min-width:12rem;max-width:100%}
+#levelIn{width:4.5rem}
+.setup-acts{display:flex;flex-wrap:wrap;gap:6px}
+.setup-cls{display:inline-flex;align-items:center;gap:6px;font-family:Cinzel,Georgia,serif;font-weight:700;color:var(--title)}
+.cls-dot{width:12px;height:12px;border-radius:50%;border:1px solid var(--icon-edge)}
+.save-state{margin:0;font-size:.85rem;color:var(--ink-soft)}
+.save-state.warn{color:var(--rage);font-weight:700}
+.specbar{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.specbar .lbl{font-size:.85rem;color:var(--ink-soft);margin-right:2px}
+.specbar button{font:inherit;font-size:.92rem;cursor:pointer;background:var(--panel);color:var(--ink-soft);border:1px solid var(--frame);border-radius:999px;padding:3px 12px}
+.specbar button[aria-pressed="true"]{color:var(--title);border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold);font-weight:700}
+#setupDlg{background:var(--panel);color:var(--ink);border:2px solid var(--frame);border-radius:8px;padding:18px 20px;width:min(360px,calc(100vw - 32px))}
+#setupDlg::backdrop{background:rgba(0,0,0,.55)}
+#setupDlg h2{font-size:1.2rem;margin-bottom:10px}
+#setupDlg label{display:block;font-size:.88rem;color:var(--ink-soft);margin:10px 0 3px}
+#setupDlg input,#setupDlg select{width:100%}
+.dlg-acts{display:flex;gap:8px;justify-content:flex-end;margin-top:16px}
+
+/* ===== Tooltip (when Wowhead isn't available) ===== */
+#tt{position:fixed;z-index:50;max-width:320px;background:var(--tt-bg);color:var(--tt-ink);border:1px solid var(--tt-border);border-radius:5px;padding:9px 11px;font-size:.92rem;line-height:1.4;pointer-events:none;box-shadow:0 4px 18px rgba(0,0,0,.55);display:none}
+#tt .t-name{font-weight:700;font-size:1rem}
+#tt .y{color:var(--tt-yellow)}
+#tt .gr{color:var(--tt-grey)}
+
+/* ===== Tester ===== */
+.kb-who{margin:0 0 .7rem;color:var(--ink-soft);font-size:.9rem;font-style:italic}
+.kb-help{margin:.6rem 0 .8rem;font-size:.92rem;color:var(--ink-soft)}
+.kb-out{display:flex;align-items:center;gap:14px;min-height:70px;margin:0 0 14px;padding:10px 14px;background:var(--tt-bg);color:var(--tt-ink);border:1px solid var(--tt-border);border-radius:5px}
+.kb-rk{flex:none;min-width:52px;padding:7px 10px;text-align:center;font:700 1.1rem/1 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;border:1px solid var(--tt-border);border-radius:4px}
+.kb-rk:empty{display:none}
+.kb-rt{display:flex;flex-direction:column;gap:2px;min-width:0}
+.kb-rn{font-weight:700;color:var(--tt-yellow)}
+.kb-rs{font-size:.88rem;color:var(--tt-grey)}
+.kb-rw{font-size:.9rem;color:var(--tt-red)}
+.kb-bar{margin:0 0 12px;padding:8px 10px 4px;background:var(--panel-2);border:1px solid var(--frame);border-radius:6px}
+#kbB1{border:2px solid var(--kb-st);box-shadow:inset 5px 0 0 var(--kb-st)}
+.kb-bar-h{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:0 0 6px;font-size:.82rem;color:var(--ink-soft)}
+.kb-bar-h b{font-family:Cinzel,Georgia,serif;font-size:.92rem;color:var(--title)}
+.kb-st{display:inline-block;padding:1px 9px;border-radius:3px;background:var(--kb-st);color:#fff;font-weight:700}
+.kb-slots{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));gap:6px}
+.kb-slot{display:flex;flex-direction:column;align-items:center;gap:3px;min-width:0;cursor:pointer;border-radius:5px;-webkit-tap-highlight-color:transparent}
+.kb-btn{position:relative;display:block;width:100%;max-width:50px;aspect-ratio:1;border-radius:5px;background:var(--tt-bg);border:1px solid var(--icon-edge);box-shadow:inset 0 0 0 1px var(--frame-hi);overflow:hidden}
+.kb-empty .kb-btn{background:var(--xp-empty);box-shadow:inset 0 2px 6px rgba(0,0,0,.35)}
+.kb-ico{position:absolute;inset:0;display:block;text-decoration:none}
+/* Without Wowhead icons an ability shows its initials; the real icon covers them when it loads */
+.kb-fb{position:absolute;inset:0;display:grid;place-items:center;background:linear-gradient(145deg,#4A4038,#1C1814);color:#F6EBD2;font:700 .95rem/1 Cinzel,Georgia,serif;text-shadow:0 1px 2px #000}
+.kb-ico img{position:absolute;inset:0;z-index:2;width:100%;height:100%;object-fit:cover}
+.kb-key{position:absolute;top:1px;right:3px;z-index:3;font:700 .72rem/1.15 "Alegreya Sans",sans-serif;color:#fff;text-shadow:0 0 2px #000,0 1px 2px #000;pointer-events:none}
+.kb-lv{position:absolute;right:2px;bottom:2px;z-index:3;padding:0 3px;border-radius:2px;background:rgba(0,0,0,.8);color:var(--tt-yellow);font:700 .66rem/1.3 "Alegreya Sans",sans-serif;pointer-events:none}
+.kb-mark{position:absolute;left:2px;bottom:2px;z-index:3;padding:0 3px;border-radius:2px;background:var(--tt-bg);color:var(--tt-ink);border:1px solid var(--tt-border);font:700 .62rem/1.2 "Alegreya Sans",sans-serif}
+.kb-dim .kb-ico{filter:grayscale(1) brightness(.5)}
+.kb-red .kb-btn{border-color:var(--rage);box-shadow:0 0 0 2px var(--rage)}
+.kb-red .kb-ico::after{content:"";position:absolute;inset:0;z-index:2;background:var(--rage);opacity:.45}
+.kb-name{max-width:100%;min-height:2.3em;font-size:.7rem;line-height:1.15;text-align:center;color:var(--ink-soft);overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kb-on .kb-btn{box-shadow:0 0 0 2px var(--gold)}
+.kb-on .kb-name{color:var(--title);font-weight:700}
+.kb-held .kb-btn{opacity:.45;outline:2px dashed var(--gold);outline-offset:1px}
+.kb-over .kb-btn,.kb-wait .kb-btn{outline:2px solid var(--gold);outline-offset:1px}
+.kb-wait .kb-btn{animation:kbwait 1s ease-in-out infinite}
+@keyframes kbwait{50%{outline-color:transparent}}
+.kb-hit .kb-btn{animation:kbhit .35s ease-out}
+@keyframes kbhit{0%{transform:scale(.88);box-shadow:0 0 0 3px var(--tt-yellow),0 0 16px var(--tt-yellow)}100%{transform:scale(1)}}
+@media (prefers-reduced-motion:reduce){.kb-hit .kb-btn{animation:none;box-shadow:0 0 0 3px var(--tt-yellow)}.kb-wait .kb-btn{animation:none}}
+.kb-bookwrap{border-radius:6px;padding-bottom:4px}
+.kb-bookwrap.kb-over{outline:2px dashed var(--gold);outline-offset:4px}
+.kb-book{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:6px}
+.kb-sp{display:flex;align-items:center;gap:9px;min-width:0;padding:5px 8px 5px 5px;background:var(--panel-2);border:1px solid var(--frame);border-radius:5px;cursor:grab;-webkit-tap-highlight-color:transparent}
+.kb-sp .kb-btn{flex:none;width:36px}
+.kb-sp .kb-fb{font-size:.75rem}
+.kb-spt{display:flex;flex-direction:column;min-width:0}
+.kb-spn{font-weight:700;font-size:.92rem;line-height:1.2}
+.kb-spm{font-size:.78rem;color:var(--ink-soft)}
+.kb-sp.kb-dim .kb-spn{color:var(--ink-soft)}
+.kb-sp.kb-held{outline:2px dashed var(--gold);outline-offset:1px}
+.kb-tools{display:flex;flex-wrap:wrap;gap:8px;margin:.6rem 0}
+.kb-json{display:block;width:100%;min-height:90px;padding:8px;background:var(--panel-2);color:var(--ink);border:1px solid var(--frame);border-radius:4px;font:.82rem/1.4 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+.kb-sum{margin:.4rem 0 0;padding:10px 12px;background:var(--panel-2);border:1px solid var(--frame);border-radius:4px;overflow-x:auto;font:.82rem/1.45 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+
+/* Keyboard view. Key border color = the bar a key's slot is on. */
+.kb-kbd-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:6px 14px;margin:0 0 8px;font-size:.88rem;color:var(--ink-soft)}
+.kb-legend{display:flex;flex-wrap:wrap;gap:10px}
+.kb-legend span{display:inline-flex;align-items:center;gap:5px;font-size:.8rem}
+.kb-legend span::before{content:"";width:14px;height:10px;border:2px solid var(--kk-c);border-radius:3px}
+.kb-kbd-scroll{overflow-x:auto;padding:2px 2px 6px}
+.kb-kbd{display:grid;grid-template-columns:repeat(60,minmax(0,1fr));gap:5px;min-width:760px;padding:10px;background:var(--panel-2);border:1px solid var(--frame);border-radius:8px}
+.kk{--kk-c:var(--xp-empty);grid-column:span 4;display:flex;flex-direction:column;align-items:center;gap:2px;min-width:0;min-height:78px;padding:4px 3px 5px;background:var(--panel);border:2px solid var(--kk-c);border-bottom-width:4px;border-radius:6px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.kk-l{align-self:flex-start;font:700 .74rem/1 "Alegreya Sans",sans-serif;color:var(--ink)}
+.kk .kb-btn{flex:none;width:34px}
+.kk .kb-fb{font-size:.7rem}
+.kk-n{max-width:100%;font-size:.62rem;line-height:1.1;text-align:center;color:var(--ink);overflow-wrap:break-word;-webkit-hyphens:auto;hyphens:auto;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.kk-e{margin-top:auto;color:var(--ink-soft);font-style:italic}
+.kk-free{opacity:.62}
+.kk-free .kk-l{color:var(--ink-soft)}
+.kk-off{opacity:.35;cursor:default}
+.kk-b1{--kk-c:var(--kb-st)}
+.kk-b2{--kk-c:var(--gold)}
+.kk-b3{--kk-c:var(--xp)}
+.kk-b4{--kk-c:var(--bar4)}
+.kk-b5{--kk-c:var(--bar5)}
+.kk-st{--kk-c:var(--hp)}
+.kk.kb-on{background:var(--panel-2);box-shadow:inset 0 0 0 1px var(--hp)}
+.kk-mod{--kk-c:var(--frame);justify-content:space-between;background:var(--panel-2)}
+.kk-c{align-self:flex-start;font-size:.7rem;color:var(--ink-soft)}
+.kk-mod.kk-on{background:var(--gold);border-color:var(--gold)}
+.kk-mod.kk-on .kk-l,.kk-mod.kk-on .kk-c{color:var(--panel)}
+.kk.kb-over,.kk.kb-wait{outline:2px solid var(--gold);outline-offset:1px}
+.kk.kb-held .kb-btn{opacity:.45}
+.kk.kb-hit{animation:kbhit .35s ease-out}
+.kb-off{margin:.4rem 0 0;font-size:.88rem}
+.kb-off:empty{display:none}
+
+@media (max-width:640px){
+  .top{padding:16px 14px 6px}
+  .shell{padding:6px 14px 14px}
+  #kbBody{padding:14px}
+  .setup{padding:10px 12px}
+  .kb-slots{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .kb-name{font-size:.64rem}
+  .kb-out{min-height:62px}
+}

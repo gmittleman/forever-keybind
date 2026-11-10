@@ -1,0 +1,13 @@
+{
+  "name": "forever-keybind",
+  "private": true,
+  "description": "Plan, see and practice your WoW Forever action bars. A static site in site/; this file is only for the tests.",
+  "license": "MIT",
+  "scripts": {
+    "test": "node tests/run-all.js",
+    "serve": "node -e \"require('./tests/server').serve().then(s => console.log('Serving site/ at ' + s.url))\""
+  },
+  "devDependencies": {
+    "playwright": "1.63.0"
+  }
+}

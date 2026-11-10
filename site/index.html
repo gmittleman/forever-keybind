@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>forever keybind – plan and practice your WoW Forever action bars</title>
+<meta name="description" content="Plan your WoW Forever action bars and keybinds, see them on a keyboard, and practice until they're muscle memory.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#121110">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Alegreya+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/app.css">
+<script>const whTooltips={colorLinks:true,iconizeLinks:true,renameLinks:false,iconSize:'small'};</script>
+<script defer src="https://wow.zamimg.com/widgets/power.js"></script>
+<script type="module" src="js/app.js"></script>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <h1>forever keybind</h1>
+    <p class="tag">Plan your WoW Forever action bars, see them on a keyboard, and practice until they’re muscle memory.</p>
+  </div>
+  <button class="theme-toggle" id="themeToggle" type="button">Light / dark</button>
+</header>
+
+<main class="shell">
+  <section class="setup frame" id="setupBar" aria-label="Your setup">
+    <div class="setup-row">
+      <label for="setupSel">Setup</label>
+      <select id="setupSel"></select>
+      <span class="setup-acts">
+        <button type="button" class="copy" data-setup="new">New</button>
+        <button type="button" class="copy" data-setup="rename">Rename</button>
+        <button type="button" class="copy" data-setup="duplicate">Duplicate</button>
+        <button type="button" class="copy" data-setup="delete">Delete</button>
+      </span>
+    </div>
+    <div class="setup-row">
+      <span class="setup-cls" id="setupCls"></span>
+      <label for="levelIn">Level</label>
+      <input id="levelIn" type="number" min="1" max="60" inputmode="numeric">
+      <span class="specbar" id="barCount" role="group" aria-label="Extra action bars"></span>
+    </div>
+    <p class="save-state" id="saveState" aria-live="polite"></p>
+  </section>
+
+  <div id="kbBody" class="frame"><p class="muted">Loading…</p></div>
+</main>
+
+<dialog id="setupDlg">
+  <form method="dialog" id="setupForm">
+    <h2 id="dlgTitle">New setup</h2>
+    <label for="dlgName">Name</label>
+    <input id="dlgName" required maxlength="40" autocomplete="off">
+    <div id="dlgNewOnly">
+      <label for="dlgCls">Class</label>
+      <select id="dlgCls"></select>
+      <label for="dlgLevel">Level</label>
+      <input id="dlgLevel" type="number" min="1" max="60" value="60" inputmode="numeric">
+    </div>
+    <div class="dlg-acts">
+      <button type="submit" class="copy" value="ok" id="dlgOk">Create</button>
+      <button type="submit" class="copy" value="cancel" formnovalidate>Cancel</button>
+    </div>
+  </form>
+</dialog>
+
+<footer>
+  <p>Not affiliated with or endorsed by Blizzard Entertainment. World of Warcraft and its ability names and icons are trademarks and property of Blizzard Entertainment.
+    Ability icons and tooltips via <a href="https://www.wowhead.com/forever" target="_blank" rel="noopener">Wowhead</a>.</p>
+  <p id="iconNote"></p>
+  <p>Open source (MIT) on <a href="https://github.com/gmittleman/forever-keybind" target="_blank" rel="noopener">GitHub</a>. Ideas and bug reports welcome there.</p>
+</footer>
+<div id="tt" role="tooltip"></div>
+</body>
+</html>

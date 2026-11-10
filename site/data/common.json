@@ -1,0 +1,16 @@
+{
+  "abilities": {
+    "potion": {
+      "name": "Healing Potion",
+      "item": 929,
+      "icon": "inv_potion_51",
+      "desc": "Instantly restores health. Shares a cooldown with other potions."
+    },
+    "bandage": {
+      "name": "Bandage",
+      "item": 3530,
+      "icon": "inv_misc_bandage_14",
+      "desc": "Heals over 8 sec while you stand still. Any damage interrupts it. Wool Bandage around level 20."
+    }
+  }
+}
