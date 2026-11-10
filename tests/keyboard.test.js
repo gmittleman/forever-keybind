@@ -32,7 +32,7 @@ const { serve, OUT } = require('./env');
     ok((await capName('\\')) === '' && (await p.$$(capSel('\\'))).length === 1, 'backslash key exists');
     const mouseName = async b => ((await p.locator(`#kbMouse .kk[data-base="${b}"] .kk-n`).textContent({ timeout: 300 }).catch(() => '')) || '').trim();
     ok((await mouseName('Mouse4')) === 'Charge' && (await mouseName('Mouse5')) === 'Overpower' && (await p.textContent('#kbOff')) === '', 'Mouse 4 and 5 binds shown on the mouse, nothing left over');
-    ok((await mod('Shift').textContent()).includes('4 binds') && (await mod('Ctrl').textContent()).includes('2 binds'), 'modifier keys count their binds');
+    ok((await mod('Shift').textContent()).includes('6 binds') && (await mod('Ctrl').textContent()).includes('2 binds'), 'modifier keys count their binds');
     ok(await p.$eval('#kbBody', e => e.style.getPropertyValue('--kb-st')) === 'var(--rage)', 'legend gets the stance color');
     // hold Shift on the real keyboard
     await p.keyboard.down('Shift');
@@ -44,7 +44,7 @@ const { serve, OUT } = require('./env');
     ok((await capName('Q')) === 'Hamstring' && (await layer()).startsWith('Keyboard and mouse: no modifier'), 'releasing Shift goes back');
     // stance switch updates bar 1 keys only
     await p.keyboard.press('x');
-    ok((await capName('Q')) === 'Disarm' && (await capCls('Q')).includes('kk-b1') && (await capName('1')) === 'Heroic Strike' && (await capName('E')) === 'Empty slot', 'Defensive: bar 1 keys swap, bar 2 stays, E empty');
+    ok((await capName('Q')) === 'Disarm' && (await capCls('Q')).includes('kk-b1') && (await capName('1')) === 'Heroic Strike' && (await capName('E')) === 'Thunder Clap' && (await capName('3')) === 'Shield Block', 'Defensive: bar 1 keys swap, bar 2 stays, Thunder Clap works there now');
     ok(await p.$eval('#kbBody', e => e.style.getPropertyValue('--kb-st')) === 'var(--mana)' && (await p.textContent('#kbB1 .kb-st')) === 'Defensive Stance', 'keyboard follows Defensive Stance');
     await p.keyboard.press('q');
     ok((await capCls('Q')).includes('kb-hit'), 'Q flashes on the keyboard');
@@ -95,7 +95,8 @@ const { serve, OUT } = require('./env');
     const eName = await capName('E');
     ok(eName === 'Hamstring' && (await capCls('X')).includes('kb-on'), 'drag Q key over X key, drop on E: Hamstring on the Defensive page (' + eName + ')');
     await p.keyboard.press('z');
-    ok((await capName('Q')) === 'Empty slot' && (await slotName('b1-5')) === '', 'Hamstring left the Battle page');
+    ok((await capName('Q')) === 'Thunder Clap' && (await slotName('b1-5')) === 'Thunder Clap', 'Hamstring left the Battle page; the Defensive Thunder Clap it replaced swapped in');
+    await p.keyboard.press('Escape');
     ok(errs.length === 0, 'no page errors ' + errs.join(' | '));
     if (mode === 'wowhead') {
       await p.evaluate(() => localStorage.clear()); await p.reload(); await p.waitForTimeout(1200);

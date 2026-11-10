@@ -4,10 +4,12 @@ Plan your WoW Forever action bars, see them on a keyboard, and practice until th
 
 Everything fits on one desktop screen: your bars, a QWERTY keyboard and a 5-button mouse showing every bind, and the spellbook beside them.
 
-- **Press your keys** (keys, Mouse 4/5, modifier + wheel) to see what fires, with warnings for the wrong stance or an ability you haven't learned yet. Shift, Ctrl and Alt switch the keyboard to that layer.
+- **Press your keys** (keys, Mouse 4/5, modifier + wheel) to see what fires, with warnings for the wrong stance or form, or an ability you haven't learned yet. Shift, Ctrl and Alt switch the keyboard to that layer.
+- **Stances and forms swap action bar 1** like in the game: warrior stances, druid Bear and Cat Form, and Prowl inside Cat Form. Pressing a druid's active form again goes back to caster form. Tabs beside action bar 1 show any page.
 - **Drag** abilities from the spellbook onto slots or keyboard keys, or click to pick up and click to place. Like in WoW, dropping on a filled slot picks up the ability that was there. Abilities keep their keys when you move them on the bars.
 - **Keybind mode**, like WoW's /kb addons: hover a slot and press a key to bind it.
-- **Setups:** several named setups, saved automatically in your browser. No account needed. Export and import as JSON.
+- **Setups:** several named setups, each with a class, race and level, saved automatically in your browser. No account needed. Export and import as JSON.
+- **Races and racials:** all ten Forever races, including both Skyborne, with their racials in the spellbook.
 
 It's made for desktop; phones and tablets get a note suggesting a computer.
 
@@ -16,8 +18,8 @@ tooltips are shown through [Wowhead](https://www.wowhead.com/forever).
 
 ## Status
 
-Early. Only the Warrior is in so far, and its stance rules still follow WoW Classic; they move to Forever's rules next.
-The other classes follow one at a time.
+Early. Warrior and Druid are in, on Forever's rules for levels 1–60. The other classes follow one at a time; talent
+abilities (Mortal Strike, Moonkin Form and so on) come with talents. See `BACKLOG.md`.
 
 ## How it's built
 
@@ -28,12 +30,14 @@ A static site with no build step: plain HTML, CSS and JavaScript modules in `sit
 | `site/index.html` | The page |
 | `site/css/app.css` | Styles, with a light and a dark theme |
 | `site/js/keys.js` | Reading keys from keyboard, mouse and wheel events, and their labels (`s-Q`, `M4`) |
-| `site/js/layout.js` | The layout model: bars, slots, moving abilities, checking saved and imported layouts |
+| `site/js/layout.js` | The layout model: stances and forms, bars, slots, moving abilities, checking saved and imported layouts |
 | `site/js/store.js` | Saving setups in the browser's localStorage |
 | `site/js/app.js` | Everything on screen and all input handling |
 | `site/data/classes.json` | The classes, and which are ready |
 | `site/data/<class>.json` | One file per class (see below) |
 | `site/data/common.json` | Things every class can put on a bar, like potions |
+| `site/data/races.json` | The races, which classes each can be, and their racials |
+| `tools/wowhead.js` | Checks the data against Wowhead's Forever tooltips (`npm run check`) |
 
 To run it locally, serve `site/` with any static server, for example `npm run serve`. Opening `index.html` straight
 from disk doesn't work, because browsers block modules and data files from `file://`.
@@ -42,20 +46,36 @@ from disk doesn't work, because browsers block modules and data files from `file
 
 Each `site/data/<class>.json` has:
 
-- `stances`: the stance bar, in order. Each stance has its own action bar 1 page. `ability` points into `abilities`,
-  `abbr` is the one-letter marker and `color` the frame color.
-- `use`: for abilities limited to some stances, the stance ids they work in. Abilities not listed work everywhere.
+- `stances`: the stance bar, in order. Each one has its own action bar 1 page unless `page` is `false` (Travel Form
+  keeps the caster page). `ability` points into `abilities`, `abbr` is the short marker and `color` the frame color.
+- `base` (druid): the state you're in without a form. It has its own page and no button; pressing the active form
+  again returns to it.
+- `hidden`: states entered by an ability on the bars, inside another state: Prowl `within` Cat Form, with its own page.
+- `use`: for abilities limited to some stances or forms, the ids they work in. A hidden state also allows what its
+  parent allows, so Cat Form abilities work while prowling.
+- `castIn`: where the class's other abilities work. The druid's is `["caster"]`. Without it they work everywhere.
+  Potions, bandages and racials always work everywhere.
+- `stateWord`: `"form"` for druids, so the page says "Any form".
+- `aliases`: other names Wowhead uses for a state, for the checker (`"Dire Bear Form": "bear"`).
 - `book`: the spellbook, in order.
 - `abilities`: every ability by id, with `name`, `spell` (or `item`, the Wowhead Forever id), `icon` (the Wowhead icon
   name), `level` and a short `desc` for when Wowhead isn't available.
 - `starter`: the layout a new setup starts with. `bar1` rows give a key plus what each stance shows, `bars` lists
   `[key, ability]` pairs for action bars 2 and up.
 
-Wowhead's Forever pages are the source for spell ids, icon names and levels.
+Wowhead's Forever tooltips are the source for spell ids, names, icons, levels and stance or form requirements.
+`npm run check` compares every ability with them and lists any difference; `npm run lookup -- 402927 item:929`
+prints what Wowhead says, which helps when adding abilities. Where the site deliberately differs, an ability can set
+`wowheadName` (Shoot / Throw is "Shoot Gun" on Wowhead) or `wowheadUse: false` (Forever lets Faerie Fire into Bear and
+Cat Form, which its tooltip doesn't say). Tooltips are cached in `tools/.cache`; delete it to fetch fresh ones.
+
+`races.json` lists each race with its classes and racial ids, and the racials themselves. A racial with `classes`
+only shows for those classes (Eureka! has one per class).
 
 ### Saved data
 
-Setups live in localStorage under `forever-keybind` as `{ v, active, setups: [{ id, name, cls, level, layout, updated }] }`.
+Setups live in localStorage under `forever-keybind` as `{ v, active, setups: [{ id, name, cls, race, level, layout, updated }] }`.
+`race` is null until one is chosen. A page added later (Berserker Stance) starts empty in older saves.
 `v` is the save format version. When the format changes, bump `VERSION` in `store.js` and convert older saves when
 loading, so nobody loses their setup. Exports use `{ app: 'forever-keybind', v, setup }`, and older Fuffenforge
 exports still import.
@@ -82,6 +102,7 @@ blocked. GitHub runs the whole suite on every push.
 | `keys-follow.test.js` | Keys moving with abilities when you rearrange |
 | `setups-bars.test.js` | Number of bars, level, setups, storage problems, imports, and `keys.js` |
 | `layout.test.js` | Keyboard and mouse above the fold at common screen sizes, the mouse view, Keybind mode, spellbook search, click-to-move and pick-up, the phone note |
+| `forms-races.test.js` | The stance and form engine, Berserker Stance, the druid, races and racials |
 
 ## Hosting
 

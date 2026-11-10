@@ -10,7 +10,8 @@
       "name": "Bandage",
       "item": 3530,
       "icon": "inv_misc_bandage_14",
-      "desc": "Heals over 8 sec while you stand still. Any damage interrupts it. Wool Bandage around level 20."
+      "desc": "Heals over 8 sec while you stand still. Any damage interrupts it. Wool Bandage around level 20.",
+      "wowheadName": "Wool Bandage"
     }
   }
 }

@@ -1,0 +1,485 @@
+{
+  "note": "WoW Forever races. Skyborne is one race with a version for each faction. Racial ids checked against Wowhead (npm run check).",
+  "races": [
+    {
+      "id": "dwarf",
+      "name": "Dwarf",
+      "faction": "Alliance",
+      "classes": [
+        "warrior",
+        "paladin",
+        "hunter",
+        "rogue",
+        "priest",
+        "shaman"
+      ],
+      "racials": [
+        "stoneform",
+        "findtreasure",
+        "chastise",
+        "desperateprayer"
+      ]
+    },
+    {
+      "id": "gnome",
+      "name": "Gnome",
+      "faction": "Alliance",
+      "classes": [
+        "warrior",
+        "rogue",
+        "mage",
+        "warlock",
+        "priest"
+      ],
+      "racials": [
+        "escapeartist",
+        "eurekawarrior",
+        "eurekarogue",
+        "eurekamage",
+        "eurekawarlock",
+        "eurekapriest",
+        "confoundingflash",
+        "contingencyplan"
+      ]
+    },
+    {
+      "id": "human",
+      "name": "Human",
+      "faction": "Alliance",
+      "classes": [
+        "warrior",
+        "paladin",
+        "hunter",
+        "rogue",
+        "priest",
+        "mage",
+        "warlock"
+      ],
+      "racials": [
+        "willtosurvive",
+        "perception",
+        "divinegrace",
+        "feedback"
+      ]
+    },
+    {
+      "id": "nightelf",
+      "name": "Night Elf",
+      "faction": "Alliance",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "priest",
+        "druid"
+      ],
+      "racials": [
+        "shadowmeld",
+        "eluneslight",
+        "elunesgrace",
+        "starshards"
+      ]
+    },
+    {
+      "id": "skyborne-highorder",
+      "name": "Skyborne (High Order)",
+      "faction": "Alliance",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "mage",
+        "druid"
+      ],
+      "racials": [
+        "walkonair",
+        "readleyline"
+      ]
+    },
+    {
+      "id": "orc",
+      "name": "Orc",
+      "faction": "Horde",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "shaman",
+        "warlock",
+        "mage"
+      ],
+      "racials": [
+        "bloodfury",
+        "shattercurse"
+      ]
+    },
+    {
+      "id": "tauren",
+      "name": "Tauren",
+      "faction": "Horde",
+      "classes": [
+        "warrior",
+        "hunter",
+        "shaman",
+        "druid"
+      ],
+      "racials": [
+        "warstomp",
+        "cultivation"
+      ]
+    },
+    {
+      "id": "troll",
+      "name": "Troll",
+      "faction": "Horde",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "priest",
+        "shaman",
+        "mage",
+        "warlock"
+      ],
+      "racials": [
+        "berserking",
+        "rapidregeneration",
+        "hexofweakness",
+        "shadowguard"
+      ]
+    },
+    {
+      "id": "undead",
+      "name": "Undead",
+      "faction": "Horde",
+      "classes": [
+        "warrior",
+        "rogue",
+        "priest",
+        "mage",
+        "warlock",
+        "paladin"
+      ],
+      "racials": [
+        "willoftheforsaken",
+        "cannibalize",
+        "darksacrifice",
+        "touchofweakness"
+      ]
+    },
+    {
+      "id": "skyborne-windshaper",
+      "name": "Skyborne (Windshaper)",
+      "faction": "Horde",
+      "classes": [
+        "warrior",
+        "hunter",
+        "rogue",
+        "shaman",
+        "druid"
+      ],
+      "racials": [
+        "walkonair",
+        "skysight"
+      ]
+    }
+  ],
+  "abilities": {
+    "stoneform": {
+      "name": "Stoneform",
+      "spell": 20594,
+      "icon": "spell_shadow_unholystrength",
+      "level": 1,
+      "desc": "Removes bleeds, poisons and diseases and cuts physical damage taken for 8 sec. 3 min cooldown."
+    },
+    "findtreasure": {
+      "name": "Find Treasure",
+      "spell": 2481,
+      "icon": "racial_dwarf_findtreasure",
+      "level": 1,
+      "desc": "Shows nearby treasure on the minimap."
+    },
+    "chastise": {
+      "name": "Chastise",
+      "spell": 1277331,
+      "icon": "spell_holy_chastise",
+      "level": 20,
+      "desc": "Holy damage that briefly roots a humanoid. New priest racial.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "desperateprayer": {
+      "name": "Desperate Prayer",
+      "spell": 13908,
+      "icon": "spell_holy_restoration",
+      "level": 10,
+      "desc": "Instant self-heal. 10 min cooldown.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "escapeartist": {
+      "name": "Escape Artist",
+      "spell": 20589,
+      "icon": "ability_rogue_trip",
+      "level": 1,
+      "desc": "Breaks roots and snares. 2 min cooldown."
+    },
+    "eurekawarrior": {
+      "name": "Eureka!",
+      "spell": 1259813,
+      "icon": "inv_gnometoy",
+      "level": 1,
+      "desc": "Cheaper, harder-hitting attacks for 8 sec. New in Forever.",
+      "classes": [
+        "warrior"
+      ]
+    },
+    "eurekarogue": {
+      "name": "Eureka!",
+      "spell": 1259812,
+      "icon": "inv_gnometoy",
+      "level": 1,
+      "desc": "Cheaper, harder-hitting attacks for 8 sec. New in Forever.",
+      "classes": [
+        "rogue"
+      ]
+    },
+    "eurekamage": {
+      "name": "Eureka!",
+      "spell": 1259817,
+      "icon": "inv_gnometoy",
+      "level": 1,
+      "desc": "Cheaper, harder-hitting spells for 8 sec. New in Forever.",
+      "classes": [
+        "mage"
+      ]
+    },
+    "eurekawarlock": {
+      "name": "Eureka!",
+      "spell": 1259821,
+      "icon": "inv_gnometoy",
+      "level": 1,
+      "desc": "Cheaper, harder-hitting spells for 8 sec. New in Forever.",
+      "classes": [
+        "warlock"
+      ]
+    },
+    "eurekapriest": {
+      "name": "Eureka!",
+      "spell": 1259823,
+      "icon": "inv_gnometoy",
+      "level": 1,
+      "desc": "Cheaper, stronger damage and healing for 8 sec. New in Forever.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "confoundingflash": {
+      "name": "Confounding Flash",
+      "spell": 1277455,
+      "icon": "ability_paladin_blindinglight2",
+      "level": 10,
+      "desc": "Confuses nearby enemies for 3 sec. New priest racial.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "contingencyplan": {
+      "name": "Contingency Plan",
+      "spell": 1277462,
+      "icon": "ability_priest_soulwarding",
+      "level": 20,
+      "desc": "Ward on an ally that shields and heals them when they drop low. New priest racial.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "willtosurvive": {
+      "name": "Will to Survive",
+      "spell": 1259718,
+      "icon": "spell_shadow_charm",
+      "level": 1,
+      "desc": "Breaks stuns. 3 min cooldown. New in Forever."
+    },
+    "perception": {
+      "name": "Perception",
+      "spell": 20600,
+      "icon": "spell_nature_sleep",
+      "level": 1,
+      "desc": "Much better stealth detection for 20 sec."
+    },
+    "divinegrace": {
+      "name": "Divine Grace",
+      "spell": 1277370,
+      "icon": "ability_priest_savinggrace",
+      "level": 10,
+      "desc": "Instant heal on an ally below half health. New priest racial.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "feedback": {
+      "name": "Feedback",
+      "spell": 13896,
+      "icon": "spell_shadow_ritualofsacrifice",
+      "level": 20,
+      "desc": "Spells cast at you burn the caster’s mana.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "shadowmeld": {
+      "name": "Shadowmeld",
+      "spell": 20580,
+      "icon": "ability_ambush",
+      "level": 1,
+      "desc": "Hide while standing still."
+    },
+    "eluneslight": {
+      "name": "Elune's Light",
+      "spell": 1259799,
+      "icon": "spell_nature_moonglow",
+      "level": 1,
+      "desc": "More crit chance for 15 sec. New in Forever."
+    },
+    "elunesgrace": {
+      "name": "Elune's Grace",
+      "spell": 2651,
+      "icon": "spell_holy_elunesgrace",
+      "level": 20,
+      "desc": "Harder to hit with melee and ranged for 15 sec.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "starshards": {
+      "name": "Starshards",
+      "spell": 10797,
+      "icon": "spell_arcane_starfire",
+      "level": 10,
+      "desc": "Channeled Arcane damage.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "walkonair": {
+      "name": "Walk on Air",
+      "spell": 1259416,
+      "icon": "inv_elemental_primal_air",
+      "level": 1,
+      "desc": "Glide down while steering. 1.5 min cooldown."
+    },
+    "readleyline": {
+      "name": "Read Leyline",
+      "spell": 1259705,
+      "icon": "ability_mage_incantersabsorbtion",
+      "level": 1,
+      "desc": "Faster health and mana regeneration for 15 sec, doubled near a leyline."
+    },
+    "bloodfury": {
+      "name": "Blood Fury",
+      "spell": 20572,
+      "icon": "racial_orc_berserkerstrength",
+      "level": 1,
+      "desc": "More attack power and spell power for 15 sec. 2 min cooldown."
+    },
+    "shattercurse": {
+      "name": "Shatter Curse",
+      "spell": 1299026,
+      "icon": "spell_nature_removecurse",
+      "level": 1,
+      "desc": "Removes curses and lowers magic damage taken. New in Forever."
+    },
+    "warstomp": {
+      "name": "War Stomp",
+      "spell": 20549,
+      "icon": "ability_warstomp",
+      "level": 1,
+      "desc": "Stuns nearby enemies for 2 sec."
+    },
+    "cultivation": {
+      "name": "Cultivation",
+      "spell": 20552,
+      "icon": "inv_misc_flower_01",
+      "level": 1,
+      "desc": "Grows a copy of a nearby herb. Now an active ability."
+    },
+    "berserking": {
+      "name": "Berserking",
+      "spell": 20554,
+      "icon": "racial_troll_berserk",
+      "level": 1,
+      "desc": "Faster attacks and casts for 15 sec. 3 min cooldown."
+    },
+    "rapidregeneration": {
+      "name": "Rapid Regeneration",
+      "spell": 1260270,
+      "icon": "ability_racial_regeneratin",
+      "level": 1,
+      "desc": "Channel to regenerate half your health. New in Forever."
+    },
+    "hexofweakness": {
+      "name": "Hex of Weakness",
+      "spell": 9035,
+      "icon": "spell_shadow_fingerofdeath",
+      "level": 10,
+      "desc": "Lowers the target’s attack power and healing taken.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "shadowguard": {
+      "name": "Shadowguard",
+      "spell": 18137,
+      "icon": "spell_nature_lightningshield",
+      "level": 20,
+      "desc": "Attackers that hit you take Shadow damage.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "willoftheforsaken": {
+      "name": "Will of the Forsaken",
+      "spell": 7744,
+      "icon": "spell_shadow_raisedead",
+      "level": 1,
+      "desc": "Breaks charm, fear and sleep. 2 min cooldown."
+    },
+    "cannibalize": {
+      "name": "Cannibalize",
+      "spell": 20577,
+      "icon": "ability_racial_cannibalize",
+      "level": 1,
+      "desc": "Eat a nearby corpse to regenerate health and mana."
+    },
+    "darksacrifice": {
+      "name": "Dark Sacrifice",
+      "spell": 1277324,
+      "icon": "spell_holy_powerinfusion_shadow",
+      "level": 20,
+      "desc": "Turn health into mana over 15 sec. New priest racial.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "touchofweakness": {
+      "name": "Touch of Weakness",
+      "spell": 2652,
+      "icon": "spell_shadow_deadofnight",
+      "level": 10,
+      "desc": "The next melee attacker takes Shadow damage and hits softer.",
+      "classes": [
+        "priest"
+      ]
+    },
+    "skysight": {
+      "name": "Skysight",
+      "spell": 1259686,
+      "icon": "ability_skyreach_lens_flare",
+      "level": 1,
+      "desc": "Faster movement for 30 sec, doubled near an elemental convergence."
+    }
+  }
+}

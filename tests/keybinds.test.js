@@ -42,12 +42,12 @@ const { serve, OUT } = require('./env');
     // ---- 1. layout ----
     ok((await p.textContent('h1')) === 'forever keybind' && (await p.$eval('#setupSel', e => e.selectedOptions[0].textContent)) === 'Warrior', 'standalone page with a default Warrior setup');
     ok((await p.inputValue('#levelIn')) === '20' && (await p.textContent('#saveState')).startsWith('Saved on this device'), 'level set to 20 and saved');
-    ok((await p.$$('#kbB1 .kb-slot')).length === 12 && (await p.$$('#kbB2 .kb-slot')).length === 12 && (await p.$$('#kbB3 .kb-slot')).length === 12 && (await p.$$('#kbSt .kb-slot')).length === 2, '12/12/12 slots + 2 stances');
+    ok((await p.$$('#kbB1 .kb-slot')).length === 12 && (await p.$$('#kbB2 .kb-slot')).length === 12 && (await p.$$('#kbB3 .kb-slot')).length === 12 && (await p.$$('#kbSt .kb-slot')).length === 3, '12/12/12 slots + 3 stances');
     const b1 = []; for (let i = 0; i < 12; i++) b1.push((await key('b1-' + i)) + '=' + (await name('b1-' + i)));
     console.log('  bar1 battle:', b1.join(', '));
     ok(b1.join(',') === 'M4=Charge,s-M4=Mocking Blow,M5=Overpower,3=Execute,4=Rend,Q=Hamstring,s-Q=Shield Bash,E=Thunder Clap,C=Retaliation,=,=,=', 'bar 1 Battle plan + short labels');
     const b2 = []; for (let i = 0; i < 12; i++) b2.push((await key('b2-' + i)) + '=' + (await name('b2-' + i)));
-    ok(b2.join(',') === '1=Heroic Strike,s-1=Cleave,2=Sunder Armor,R=Battle Shout,T=Demoralizing Shout,F=Bloodrage,G=Shoot / Throw,V=,s-C=Intimidating Shout,c-1=Healing Potion,c-2=Bandage,=', 'bar 2 plan: ' + b2.join(','));
+    ok(b2.join(',') === '1=Heroic Strike,s-1=Cleave,2=Sunder Armor,R=Battle Shout,T=Demoralizing Shout,F=Bloodrage,G=Shoot / Throw,V=Victory Rush,s-C=Intimidating Shout,c-1=Healing Potion,c-2=Bandage,s-2=Slam', 'bar 2 plan: ' + b2.join(','));
     ok((await p.$$('#kbB3 .kb-empty')).length === 12 && (await p.$$('#kbB3 .kb-key')).length === 0, 'bar 3 empty and unbound');
     ok((await key('st-battle')) === 'Z' && (await key('st-def')) === 'X' && (await cls('st-battle')).includes('kb-on'), 'stance bar Z/X, Battle active');
     ok(await p.$eval('#kbBody', e => e.style.getPropertyValue('--kb-st')) === 'var(--rage)' && (await p.textContent('#kbB1 .kb-st')) === 'Battle Stance', 'bar 1 frame shows Battle (red)');
@@ -93,7 +93,7 @@ const { serve, OUT } = require('./env');
     ok((await cls('st-def')).includes('kb-on') && (await name('b1-0')) === 'Taunt' && (await key('b1-0')) === 'M4', 'X switches to Defensive, bar 1 swaps, keys stay');
     ok(await p.$eval('#kbBody', e => e.style.getPropertyValue('--kb-st')) === 'var(--mana)' && (await p.textContent('#kbB1 .kb-st')) === 'Defensive Stance', 'bar 1 frame shows Defensive (blue)');
     const def = []; for (let i = 0; i < 12; i++) def.push(await name('b1-' + i));
-    ok(def.join(',') === 'Taunt,,Revenge,Shield Block,Rend,Disarm,Shield Bash,,Shield Wall,,,', 'Defensive page plan: ' + def.join(','));
+    ok(def.join(',') === 'Taunt,,Revenge,Shield Block,Rend,Disarm,Shield Bash,Thunder Clap,Shield Wall,,,', 'Defensive page plan: ' + def.join(','));
     ok((await cls('b1-8')).includes('kb-dim'), 'Shield Wall dimmed (28)');
     await mouse('mousedown', 3, { shiftKey: true });
     ok((await out()).includes('Empty slot'), 'Shift+M4 on Defensive page is empty');
@@ -110,10 +110,10 @@ const { serve, OUT } = require('./env');
     await p.fill('#kbJson', ''); await p.click('.brand');
 
     // ---- 3. arrange ----
-    ok(await p.isVisible('#kbBookWrap') && (await p.$$('#kbBook .kb-sp')).length === 25, 'spellbook shows 25 entries');
+    ok(await p.isVisible('#kbBookWrap') && (await p.$$('#kbBook .kb-sp')).length === 32, 'spellbook shows 32 entries (30 abilities, potion, bandage)');
     ok((await p.textContent('#kbBook')).includes('Execute') && await p.$eval('#kbBook [data-k="execute"]', e => e.className.includes('kb-dim')), 'spellbook dims Execute');
     await p.$eval('#kbB1', e => e.scrollIntoView({ block: 'center' })); await p.dragAndDrop('#kbBook [data-k="hamstring"]', '#kbBars [data-slot="b3-0"]');
-    ok((await name('b3-0')) === 'Hamstring' && (await slot('b3-0').locator('.kb-mark').textContent()) === 'B', 'drag book→slot; fixed-bar marker "B"');
+    ok((await name('b3-0')) === 'Hamstring' && (await slot('b3-0').locator('.kb-mark').textContent()) === 'BZ', 'drag book→slot; fixed-bar marker "BZ" (Battle or Berserker)');
     await p.$eval('#kbB1', e => e.scrollIntoView({ block: 'center' })); await p.dragAndDrop('#kbBars [data-slot="b3-0"]', '#kbBars [data-slot="b2-0"]');
     ok((await name('b2-0')) === 'Hamstring' && (await name('b3-0')) === 'Heroic Strike', 'drag slot→filled slot swaps');
     await p.$eval('#kbB1', e => e.scrollIntoView({ block: 'center' })); await p.dragAndDrop('#kbBars [data-slot="b2-0"]', '#kbBars [data-slot="b3-0"]');

@@ -39,15 +39,20 @@ Feedback round after sprint 1:
 - **D1 Mouse view:** a standard 5-button mouse beside the keyboard: Mouse 4 and 5, middle click and modifier + wheel,
   following stance and modifier layer like the keyboard, with click, drop and Keybind mode support.
 
-## Sprint 2: Engine and first classes (14 points)
+### Sprint 2: Engine and first classes (14 points)
 
-| # | Item | Pts | Notes |
-|---|---|---|---|
-| C1 | Bar-swap engine | 5 | Generalize stances to anything that swaps action bar 1: warrior stances, druid Bear and Cat forms, rogue Stealth, plus abilities only usable in some forms. Which forms swap bars in Forever needs checking. |
-| C2.0 | Data format and checking script | 2 | A script that checks every ability id and icon against Wowhead's Forever data. |
-| C2.1 | Warrior | 2 | Move from Classic to Forever stance rules (Thunder Clap in Defensive, Victory Rush, Tactical Mastery), cover 1–60, add Berserker Stance at 30. |
-| C2.2 | Druid | 3 | The hardest class: several forms, many form-only abilities. |
-| C3 | Races and racials | 2 | Race per setup, racials in the spellbook (Stoneform and so on). Research Forever's race list: the patch notes mention a new "Skyborne" racial. A plain race selector until the start screen (N) arrives. |
+| # | Item | Pts |
+|---|---|---|
+| C1 | Bar-swap engine: stances, forms with or without their own page, a caster form you return to by pressing the active form, Prowl inside Cat Form with its own page, page tabs beside action bar 1 | 5 |
+| C2.0 | `npm run check`: every ability's id, name, icon, level and stance or form rule against Wowhead's Forever tooltips | 2 |
+| C2.1 | Warrior on Forever rules, 1–60: Berserker Stance and its page, Victory Rush, Slam, Thunder Clap in Defensive Stance | 2 |
+| C2.2 | Druid: caster, Bear, Aquatic, Cat, Travel and Prowl; Faerie Fire in Bear and Cat; Barkskin and Nature's Grasp in any form; Revive and the new Ferocious Bite rank | 3 |
+| C3 | Races: all ten (Skyborne has a High Order and a Windshaper version), race per setup, racials in the spellbook | 2 |
+
+Open questions for sprint 2, to check in game:
+
+- Does Moonkin Form get its own action bar 1 page in Forever? It didn't in vanilla. It's planned without one.
+- Ravage and Pounce are set to need Prowl, as in Classic; their tooltips only say Cat Form.
 
 ## Sprint 3: More classes (17 points)
 
@@ -60,7 +65,7 @@ Feedback round after sprint 1:
 | C2.7 | Hunter | 2 | |
 | C2.9 | Warlock | 2 | |
 | C5 | Pet bar | 3 | Hunter and Warlock. |
-| C4 | Talent abilities per spec | 3 | Mortal Strike, Shield Slam, Holy Shock and the like, for the right spec. |
+| C4 | Talent abilities per spec | 3 | Mortal Strike, Shield Slam, Holy Shock and the like, for the right spec. Druid: Moonkin Form (a stance with no page of its own; it can cast everything but heals), Feral Charge, Insect Swarm, Lacerate, Swiftmend, Nature's Swiftness, Primal Bite, Shifting Power, Wild Growth (already researched). |
 
 If this sprint runs long, Warlock and the pet bar can move to sprint 4.
 

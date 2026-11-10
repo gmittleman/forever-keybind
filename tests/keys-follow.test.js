@@ -39,9 +39,9 @@ const { serve } = require('./env');
     // within one bar 1 page the whole column moves, so the other stance keeps its key too
     await drag('#kbBars [data-slot="b1-5"]', '#kbBars [data-slot="b1-7"]');
     ok((await at('b1-7')) === 'Hamstring@Q' && (await at('b1-5')) === 'Thunder Clap@E', 'Battle: Hamstring keeps Q, Thunder Clap keeps E');
-    ok((await out()).includes('Disarm (Defensive Stance) shares a key with it, so it moved too'), 'readout: Disarm moved too — ' + (await out()));
+    ok((await out()).includes('Disarm (Defensive Stance), Thunder Clap (Defensive Stance), Hamstring (Berserker Stance) share a key with it, so they moved too'), 'readout: the other pages moved too — ' + (await out()));
     await p.keyboard.press('x');
-    ok((await at('b1-7')) === 'Disarm@Q' && (await at('b1-5')) === '@E', 'Defensive: Disarm moved along and keeps Q');
+    ok((await at('b1-7')) === 'Disarm@Q' && (await at('b1-5')) === 'Thunder Clap@E', 'Defensive: Disarm and Thunder Clap moved along and keep Q and E');
     await p.keyboard.press('z');
     await reset();
 
@@ -61,8 +61,8 @@ const { serve } = require('./env');
     await reset();
 
     // tap flow follows the same rule
-    await slot('b2-3').click(); await slot('b2-11').click();
-    ok((await at('b2-11')) === 'Battle Shout@R' && (await at('b2-3')) === '@', 'tap move: Battle Shout keeps R');
+    await slot('b2-3').click(); await slot('b3-11').click();
+    ok((await at('b3-11')) === 'Battle Shout@R' && (await at('b2-3')) === '@', 'tap move: Battle Shout keeps R');
     await reset();
 
     // across stances in the same column: both stay on the column's key
@@ -81,7 +81,7 @@ const { serve } = require('./env');
     await p.dragAndDrop('#kbBars [data-slot="b1-7"]', '#kbKeys .kk[data-base="Q"]');
     ok((await capName('Q')) === 'Thunder Clap' && (await at('b1-5')) === 'Thunder Clap@Q' && (await at('b1-7')) === 'Hamstring@E', 'drag Thunder Clap onto Q key: it takes Q');
     await p.keyboard.press('x');
-    ok((await at('b1-5')) === 'Disarm@Q' && (await at('b1-7')) === '@E', 'key drop does not move the other stance');
+    ok((await at('b1-5')) === 'Disarm@Q' && (await at('b1-7')) === 'Thunder Clap@E', 'key drop does not move the other stance');
     await p.keyboard.press('z');
 
     // saved and still consistent after reload

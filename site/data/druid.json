@@ -1,0 +1,658 @@
+{
+  "id": "druid",
+  "name": "Druid",
+  "color": "#FF7C0A",
+  "stateWord": "form",
+  "base": {
+    "id": "caster",
+    "name": "Caster Form",
+    "abbr": "Ca",
+    "color": "var(--hp)"
+  },
+  "stances": [
+    {
+      "id": "bear",
+      "ability": "bear",
+      "abbr": "B",
+      "color": "var(--rage)"
+    },
+    {
+      "id": "aquatic",
+      "ability": "aquatic",
+      "abbr": "A",
+      "color": "var(--mana)",
+      "page": false
+    },
+    {
+      "id": "cat",
+      "ability": "cat",
+      "abbr": "C",
+      "color": "var(--energy)"
+    },
+    {
+      "id": "travel",
+      "ability": "travel",
+      "abbr": "T",
+      "color": "var(--gold)",
+      "page": false
+    }
+  ],
+  "hidden": [
+    {
+      "id": "prowl",
+      "ability": "prowl",
+      "within": "cat",
+      "abbr": "P",
+      "color": "var(--xp)"
+    }
+  ],
+  "aliases": {
+    "Dire Bear Form": "bear"
+  },
+  "castIn": [
+    "caster"
+  ],
+  "use": {
+    "droar": [
+      "bear"
+    ],
+    "growl": [
+      "bear"
+    ],
+    "maul": [
+      "bear"
+    ],
+    "enrage": [
+      "bear"
+    ],
+    "bash": [
+      "bear"
+    ],
+    "swipe": [
+      "bear"
+    ],
+    "claw": [
+      "cat"
+    ],
+    "prowl": [
+      "cat"
+    ],
+    "rip": [
+      "cat"
+    ],
+    "shred": [
+      "cat"
+    ],
+    "fbite": [
+      "cat"
+    ],
+    "rake": [
+      "cat"
+    ],
+    "dash": [
+      "cat"
+    ],
+    "croar": [
+      "bear"
+    ],
+    "cower": [
+      "cat"
+    ],
+    "ravage": [
+      "prowl"
+    ],
+    "trackhum": [
+      "cat"
+    ],
+    "frenzied": [
+      "bear"
+    ],
+    "pounce": [
+      "prowl"
+    ],
+    "ff": [
+      "caster",
+      "bear",
+      "cat"
+    ],
+    "barkskin": [
+      "caster",
+      "bear",
+      "aquatic",
+      "cat",
+      "travel"
+    ],
+    "ngrasp": [
+      "caster",
+      "bear",
+      "aquatic",
+      "cat",
+      "travel"
+    ]
+  },
+  "book": [
+    "wrath",
+    "htouch",
+    "motw",
+    "rejuv",
+    "moonfire",
+    "thorns",
+    "roots",
+    "droar",
+    "growl",
+    "maul",
+    "ngrasp",
+    "moonglade",
+    "regrowth",
+    "enrage",
+    "revive",
+    "bash",
+    "curepoison",
+    "swipe",
+    "ff",
+    "hibernate",
+    "claw",
+    "prowl",
+    "rip",
+    "shred",
+    "rebirth",
+    "starfire",
+    "soothe",
+    "fbite",
+    "rake",
+    "decurse",
+    "abolish",
+    "dash",
+    "croar",
+    "cower",
+    "tranquility",
+    "ravage",
+    "trackhum",
+    "frenzied",
+    "pounce",
+    "hurricane",
+    "innervate",
+    "barkskin",
+    "gotw"
+  ],
+  "abilities": {
+    "bear": {
+      "name": "Bear Form",
+      "spell": 5487,
+      "icon": "ability_racial_bearform",
+      "level": 10,
+      "desc": "Tanking form with Rage. Druid quest at 10. Dire Bear Form at 40 takes its place."
+    },
+    "aquatic": {
+      "name": "Aquatic Form",
+      "spell": 1066,
+      "icon": "ability_druid_aquaticform",
+      "level": 16,
+      "desc": "Swim faster and breathe underwater."
+    },
+    "cat": {
+      "name": "Cat Form",
+      "spell": 768,
+      "icon": "ability_druid_catform",
+      "level": 20,
+      "desc": "Melee form with Energy and combo points. Druid quest at 20."
+    },
+    "travel": {
+      "name": "Travel Form",
+      "spell": 783,
+      "icon": "ability_druid_travelform",
+      "level": 30,
+      "desc": "Run 40% faster outdoors."
+    },
+    "wrath": {
+      "name": "Wrath",
+      "spell": 5176,
+      "icon": "spell_nature_abolishmagic",
+      "level": 1,
+      "desc": "Nature nuke. Your main caster damage early on."
+    },
+    "htouch": {
+      "name": "Healing Touch",
+      "spell": 5185,
+      "icon": "spell_nature_healingtouch",
+      "level": 1,
+      "desc": "Big single-target heal with a cast time."
+    },
+    "motw": {
+      "name": "Mark of the Wild",
+      "spell": 1126,
+      "icon": "spell_nature_regeneration",
+      "level": 1,
+      "desc": "Armor and stats buff. Keep it on yourself and the group."
+    },
+    "rejuv": {
+      "name": "Rejuvenation",
+      "spell": 774,
+      "icon": "spell_nature_rejuvenation",
+      "level": 4,
+      "desc": "Heal over time."
+    },
+    "moonfire": {
+      "name": "Moonfire",
+      "spell": 8921,
+      "icon": "spell_nature_starfall",
+      "level": 4,
+      "desc": "Instant Arcane damage plus a DoT. Good for pulling."
+    },
+    "thorns": {
+      "name": "Thorns",
+      "spell": 467,
+      "icon": "spell_nature_thorns",
+      "level": 6,
+      "desc": "Damages melee attackers. Great on a bear or a tank."
+    },
+    "roots": {
+      "name": "Entangling Roots",
+      "spell": 339,
+      "icon": "spell_nature_stranglevines",
+      "level": 8,
+      "desc": "Roots the target in place."
+    },
+    "droar": {
+      "name": "Demoralizing Roar",
+      "spell": 99,
+      "icon": "ability_druid_demoralizingroar",
+      "level": 10,
+      "desc": "Lowers nearby enemies’ attack power."
+    },
+    "growl": {
+      "name": "Growl",
+      "spell": 6795,
+      "icon": "ability_physical_taunt",
+      "level": 10,
+      "desc": "Taunt. 8 sec cooldown in Forever."
+    },
+    "maul": {
+      "name": "Maul",
+      "spell": 6807,
+      "icon": "ability_druid_maul",
+      "level": 10,
+      "desc": "Rage dump on your next swing."
+    },
+    "ngrasp": {
+      "name": "Nature's Grasp",
+      "spell": 16689,
+      "icon": "spell_nature_natureswrath",
+      "level": 10,
+      "desc": "Roots the next melee attacker. Baseline in Forever and castable in any form.",
+      "wowheadUse": false
+    },
+    "moonglade": {
+      "name": "Teleport: Moonglade",
+      "spell": 18960,
+      "icon": "spell_arcane_teleportmoonglade",
+      "level": 10,
+      "desc": "Teleports you to Moonglade."
+    },
+    "regrowth": {
+      "name": "Regrowth",
+      "spell": 8936,
+      "icon": "spell_nature_resistnature",
+      "level": 12,
+      "desc": "Direct heal plus a heal over time."
+    },
+    "enrage": {
+      "name": "Enrage",
+      "spell": 5229,
+      "icon": "ability_druid_enrage",
+      "level": 12,
+      "desc": "Rage now and over time, at the cost of armor."
+    },
+    "revive": {
+      "name": "Revive",
+      "spell": 437138,
+      "icon": "ability_druid_lunarguidance",
+      "level": 12,
+      "desc": "Out-of-combat resurrection. New in Forever."
+    },
+    "bash": {
+      "name": "Bash",
+      "spell": 5211,
+      "icon": "ability_druid_bash",
+      "level": 14,
+      "desc": "Stun. 1 min cooldown."
+    },
+    "curepoison": {
+      "name": "Cure Poison",
+      "spell": 8946,
+      "icon": "spell_nature_nullifypoison",
+      "level": 14,
+      "desc": "Removes one poison."
+    },
+    "swipe": {
+      "name": "Swipe",
+      "spell": 779,
+      "icon": "inv_misc_monsterclaw_03",
+      "level": 16,
+      "desc": "Hits up to 3 nearby enemies."
+    },
+    "ff": {
+      "name": "Faerie Fire",
+      "spell": 770,
+      "icon": "spell_nature_faeriefire",
+      "level": 18,
+      "desc": "Lowers armor and stops stealth. In Forever it also works in Bear and Cat Form, free with a 6 sec cooldown.",
+      "wowheadUse": false
+    },
+    "hibernate": {
+      "name": "Hibernate",
+      "spell": 2637,
+      "icon": "spell_nature_sleep",
+      "level": 18,
+      "desc": "Sleeps a beast or dragonkin."
+    },
+    "claw": {
+      "name": "Claw",
+      "spell": 1082,
+      "icon": "ability_druid_rake",
+      "level": 20,
+      "desc": "Basic Cat attack, 1 combo point."
+    },
+    "prowl": {
+      "name": "Prowl",
+      "spell": 5215,
+      "icon": "ability_ambush",
+      "level": 20,
+      "desc": "Stealth in Cat Form. Action bar 1 switches to your Prowl page."
+    },
+    "rip": {
+      "name": "Rip",
+      "spell": 1079,
+      "icon": "ability_ghoulfrenzy",
+      "level": 20,
+      "desc": "Bleed finisher."
+    },
+    "shred": {
+      "name": "Shred",
+      "spell": 5221,
+      "icon": "spell_shadow_vampiricaura",
+      "level": 20,
+      "desc": "Big attack from behind, 1 combo point."
+    },
+    "rebirth": {
+      "name": "Rebirth",
+      "spell": 20484,
+      "icon": "spell_nature_reincarnation",
+      "level": 20,
+      "desc": "Combat resurrection."
+    },
+    "starfire": {
+      "name": "Starfire",
+      "spell": 2912,
+      "icon": "spell_arcane_starfire",
+      "level": 20,
+      "desc": "Slow, heavy Arcane nuke."
+    },
+    "soothe": {
+      "name": "Soothe Animal",
+      "spell": 2908,
+      "icon": "ability_hunter_beastsoothe",
+      "level": 22,
+      "desc": "Shrinks a beast’s aggro range."
+    },
+    "fbite": {
+      "name": "Ferocious Bite",
+      "spell": 1328618,
+      "icon": "ability_druid_ferociousbite",
+      "level": 24,
+      "desc": "Damage finisher that also spends extra Energy. New rank at 24 in Forever."
+    },
+    "rake": {
+      "name": "Rake",
+      "spell": 1822,
+      "icon": "ability_druid_disembowel",
+      "level": 24,
+      "desc": "Bleed attack, 1 combo point."
+    },
+    "decurse": {
+      "name": "Remove Curse",
+      "spell": 2782,
+      "icon": "spell_holy_removecurse",
+      "level": 24,
+      "desc": "Removes one curse."
+    },
+    "abolish": {
+      "name": "Abolish Poison",
+      "spell": 2893,
+      "icon": "spell_nature_nullifypoison_02",
+      "level": 26,
+      "desc": "Removes poisons over time."
+    },
+    "dash": {
+      "name": "Dash",
+      "spell": 1850,
+      "icon": "ability_druid_dash",
+      "level": 26,
+      "desc": "Run faster in Cat Form, even while prowling."
+    },
+    "croar": {
+      "name": "Challenging Roar",
+      "spell": 5209,
+      "icon": "ability_druid_challangingroar",
+      "level": 28,
+      "desc": "Taunts all nearby enemies."
+    },
+    "cower": {
+      "name": "Cower",
+      "spell": 8998,
+      "icon": "ability_druid_cower",
+      "level": 28,
+      "desc": "Lowers your threat."
+    },
+    "tranquility": {
+      "name": "Tranquility",
+      "spell": 740,
+      "icon": "spell_nature_tranquility",
+      "level": 30,
+      "desc": "Channeled group heal."
+    },
+    "ravage": {
+      "name": "Ravage",
+      "spell": 6785,
+      "icon": "ability_druid_ravage",
+      "level": 32,
+      "desc": "Big opener from Prowl, from behind.",
+      "wowheadUse": false
+    },
+    "trackhum": {
+      "name": "Track Humanoids",
+      "spell": 5225,
+      "icon": "ability_tracking",
+      "level": 32,
+      "desc": "Shows humanoids on the minimap."
+    },
+    "frenzied": {
+      "name": "Frenzied Regeneration",
+      "spell": 22842,
+      "icon": "ability_bullrush",
+      "level": 36,
+      "desc": "Turns Rage into health."
+    },
+    "pounce": {
+      "name": "Pounce",
+      "spell": 9005,
+      "icon": "ability_druid_supriseattack",
+      "level": 36,
+      "desc": "Stun opener from Prowl, with a bleed.",
+      "wowheadUse": false
+    },
+    "hurricane": {
+      "name": "Hurricane",
+      "spell": 16914,
+      "icon": "spell_nature_cyclone",
+      "level": 40,
+      "desc": "Channeled area damage. No cooldown in Forever."
+    },
+    "innervate": {
+      "name": "Innervate",
+      "spell": 29166,
+      "icon": "spell_nature_lightning",
+      "level": 40,
+      "desc": "Big mana regeneration for you or a healer."
+    },
+    "barkskin": {
+      "name": "Barkskin",
+      "spell": 22812,
+      "icon": "spell_nature_stoneclawtotem",
+      "level": 44,
+      "desc": "Less damage taken. Usable in any form in Forever.",
+      "wowheadUse": false
+    },
+    "gotw": {
+      "name": "Gift of the Wild",
+      "spell": 21849,
+      "icon": "spell_nature_regeneration",
+      "level": 50,
+      "desc": "Mark of the Wild for the whole group."
+    }
+  },
+  "starter": {
+    "stances": {
+      "bear": "Z",
+      "cat": "X",
+      "aquatic": "Shift+Z",
+      "travel": "Shift+X"
+    },
+    "bar1": [
+      {
+        "key": "1",
+        "caster": "wrath",
+        "bear": "maul",
+        "cat": "claw",
+        "prowl": "ravage"
+      },
+      {
+        "key": "2",
+        "caster": "moonfire",
+        "bear": "swipe",
+        "cat": "rake",
+        "prowl": "pounce"
+      },
+      {
+        "key": "3",
+        "caster": "starfire",
+        "bear": "droar",
+        "cat": "shred",
+        "prowl": "shred"
+      },
+      {
+        "key": "4",
+        "caster": "roots",
+        "bear": "growl",
+        "cat": "rip"
+      },
+      {
+        "key": "Q",
+        "caster": "ff",
+        "bear": "ff",
+        "cat": "ff"
+      },
+      {
+        "key": "E",
+        "caster": "rejuv",
+        "bear": "bash",
+        "cat": "fbite"
+      },
+      {
+        "key": "R",
+        "caster": "regrowth",
+        "bear": "enrage",
+        "cat": "dash",
+        "prowl": "dash"
+      },
+      {
+        "key": "F",
+        "caster": "htouch",
+        "bear": "frenzied",
+        "cat": "prowl",
+        "prowl": "prowl"
+      },
+      {
+        "key": "C",
+        "caster": "hibernate",
+        "bear": "croar",
+        "cat": "cower"
+      },
+      {
+        "key": "T",
+        "caster": "soothe",
+        "cat": "trackhum"
+      }
+    ],
+    "bars": [
+      [
+        [
+          "Shift+1",
+          "barkskin"
+        ],
+        [
+          "Shift+2",
+          "ngrasp"
+        ],
+        [
+          "Shift+3",
+          "innervate"
+        ],
+        [
+          "Shift+4",
+          "decurse"
+        ],
+        [
+          "Shift+5",
+          "abolish"
+        ],
+        [
+          "Shift+E",
+          "hurricane"
+        ],
+        [
+          "Shift+R",
+          "motw"
+        ],
+        [
+          "Shift+T",
+          "thorns"
+        ],
+        [
+          "Shift+F",
+          "rebirth"
+        ],
+        [
+          "Shift+C",
+          "tranquility"
+        ],
+        [
+          "Ctrl+1",
+          "potion"
+        ],
+        [
+          "Ctrl+2",
+          "bandage"
+        ]
+      ],
+      [
+        [
+          "Shift+Q",
+          "revive"
+        ],
+        [
+          "Shift+G",
+          "gotw"
+        ],
+        [
+          "Ctrl+3",
+          "moonglade"
+        ],
+        [
+          "Ctrl+4",
+          "curepoison"
+        ]
+      ]
+    ]
+  }
+}

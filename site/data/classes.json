@@ -1,7 +1,7 @@
 {
   "classes": [
     { "id": "warrior", "name": "Warrior", "color": "#C69B6D", "ready": true },
-    { "id": "druid", "name": "Druid", "color": "#FF7C0A", "ready": false },
+    { "id": "druid", "name": "Druid", "color": "#FF7C0A", "ready": true },
     { "id": "hunter", "name": "Hunter", "color": "#AAD372", "ready": false },
     { "id": "mage", "name": "Mage", "color": "#3FC7EB", "ready": false },
     { "id": "paladin", "name": "Paladin", "color": "#F48CBA", "ready": false },

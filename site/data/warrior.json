@@ -2,7 +2,6 @@
   "id": "warrior",
   "name": "Warrior",
   "color": "#C79C6E",
-  "note": "Stance rules are being moved from Classic to Forever (sprint 2).",
   "stances": [
     {
       "id": "battle",
@@ -15,9 +14,7 @@
       "ability": "defstance",
       "abbr": "D",
       "color": "var(--mana)"
-    }
-  ],
-  "laterStances": [
+    },
     {
       "id": "berserker",
       "ability": "berserker",
@@ -34,7 +31,8 @@
       "def"
     ],
     "tclap": [
-      "battle"
+      "battle",
+      "def"
     ],
     "hamstring": [
       "battle",
@@ -108,10 +106,17 @@
     "disarm",
     "cleave",
     "retaliation",
+    "victory",
     "ishout",
     "execute",
     "cshout",
-    "swall"
+    "swall",
+    "intercept",
+    "brage",
+    "slam",
+    "whirlwind",
+    "pummel",
+    "reck"
   ],
   "abilities": {
     "bstance": {
@@ -127,6 +132,13 @@
       "icon": "ability_warrior_defensivestance",
       "level": 10,
       "desc": "Less damage taken and more threat. Class quest at 10."
+    },
+    "berserker": {
+      "name": "Berserker Stance",
+      "spell": 2458,
+      "icon": "ability_racial_avatar",
+      "level": 30,
+      "desc": "More crit, more damage taken. Class quest at 30. Intercept, Whirlwind and Pummel need it."
     },
     "hstrike": {
       "name": "Heroic Strike",
@@ -147,7 +159,8 @@
       "spell": 7918,
       "icon": "ability_marksmanship",
       "level": 1,
-      "desc": "Ranged attack with your gun, bow or thrown weapon. Good for pulling."
+      "desc": "Ranged attack with your gun, bow or thrown weapon. Good for pulling.",
+      "wowheadName": "Shoot Gun"
     },
     "charge": {
       "name": "Charge",
@@ -261,6 +274,13 @@
       "level": 20,
       "desc": "Counterattack every melee hit. 15 min cooldown."
     },
+    "victory": {
+      "name": "Victory Rush",
+      "spell": 402927,
+      "icon": "ability_warrior_devastate",
+      "level": 20,
+      "desc": "Free attack after a kill that heals you for 10% of your health. New in Forever."
+    },
     "ishout": {
       "name": "Intimidating Shout",
       "spell": 5246,
@@ -289,19 +309,26 @@
       "level": 28,
       "desc": "Big damage reduction. Own 15 min cooldown in Forever."
     },
-    "berserker": {
-      "name": "Berserker Stance",
-      "spell": 2458,
-      "icon": "ability_racial_avatar",
-      "level": 30,
-      "desc": "More crit, more damage taken. Class quest at 30."
-    },
     "intercept": {
       "name": "Intercept",
       "spell": 20252,
       "icon": "ability_rogue_sprint",
       "level": 30,
       "desc": "Berserker Stance charge with a stun."
+    },
+    "brage": {
+      "name": "Berserker Rage",
+      "spell": 18499,
+      "icon": "spell_nature_ancestralguardian",
+      "level": 30,
+      "desc": "Breaks and prevents fear."
+    },
+    "slam": {
+      "name": "Slam",
+      "spell": 1464,
+      "icon": "ability_warrior_decisivestrike",
+      "level": 30,
+      "desc": "Big hit with a cast time that resets your swing."
     },
     "whirlwind": {
       "name": "Whirlwind",
@@ -317,13 +344,6 @@
       "level": 38,
       "desc": "Interrupt in Berserker Stance."
     },
-    "brage": {
-      "name": "Berserker Rage",
-      "spell": 18499,
-      "icon": "spell_nature_ancestralguardian",
-      "level": 30,
-      "desc": "Breaks and prevents fear."
-    },
     "reck": {
       "name": "Recklessness",
       "spell": 1719,
@@ -335,13 +355,15 @@
   "starter": {
     "stances": {
       "battle": "Z",
-      "def": "X"
+      "def": "X",
+      "berserker": "Shift+Z"
     },
     "bar1": [
       {
         "key": "Mouse4",
         "battle": "charge",
-        "def": "taunt"
+        "def": "taunt",
+        "berserker": "intercept"
       },
       {
         "key": "Shift+Mouse4",
@@ -350,36 +372,43 @@
       {
         "key": "Mouse5",
         "battle": "overpower",
-        "def": "revenge"
+        "def": "revenge",
+        "berserker": "whirlwind"
       },
       {
         "key": "3",
         "battle": "execute",
-        "def": "sblock"
+        "def": "sblock",
+        "berserker": "execute"
       },
       {
         "key": "4",
         "battle": "rend",
-        "def": "rend"
+        "def": "rend",
+        "berserker": "brage"
       },
       {
         "key": "Q",
         "battle": "hamstring",
-        "def": "disarm"
+        "def": "disarm",
+        "berserker": "hamstring"
       },
       {
         "key": "Shift+Q",
         "battle": "sbash",
-        "def": "sbash"
+        "def": "sbash",
+        "berserker": "pummel"
       },
       {
         "key": "E",
-        "battle": "tclap"
+        "battle": "tclap",
+        "def": "tclap"
       },
       {
         "key": "C",
         "battle": "retaliation",
-        "def": "swall"
+        "def": "swall",
+        "berserker": "reck"
       }
     ],
     "bars": [
@@ -414,7 +443,7 @@
         ],
         [
           "V",
-          null
+          "victory"
         ],
         [
           "Shift+C",
@@ -427,6 +456,10 @@
         [
           "Ctrl+2",
           "bandage"
+        ],
+        [
+          "Shift+2",
+          "slam"
         ]
       ],
       []

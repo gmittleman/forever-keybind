@@ -18,9 +18,9 @@ function whRefresh() { if (WH_MODE && window.$WowheadPower.refreshLinks) window.
 
 const BAR_LABEL = { st: 'Stance bar', b1: 'Action bar 1', b2: 'Action bar 2', b3: 'Action bar 3', b4: 'Action bar 4', b5: 'Action bar 5' };
 
-const data = { classes: [], common: null, cls: {} };
+const data = { classes: [], common: null, races: null, cls: {} };
 /* saved: everything in storage. setup: the open setup. M: its class model. L: its layout.
-   stance: the bar 1 page on show. held: picked up by a click. kb: Keybind mode on.
+   stance: the state the character is in (a stance, a form, Prowl); bar 1 shows its page. held: picked up by a click. kb: Keybind mode on.
    wait: the slot locked for binding in Keybind mode. hover: the slot under the mouse. */
 const st = { saved: null, setup: null, M: null, L: null, stance: null, held: null, kb: false, wait: null, hover: null, drag: null, wheelAt: 0, hold: {}, latch: {} };
 
@@ -31,11 +31,24 @@ async function json(path) {
 }
 async function classData(id) { return data.cls[id] || (data.cls[id] = await json('data/' + id + '.json')); }
 function classInfo(id) { return data.classes.find(c => c.id === id); }
+function raceInfo(id) { return data.races.races.find(r => r.id === id); }
+/* The races a class can be, and a race only if the class allows it (else null: no racials). */
+function racesFor(cls) { return data.races.races.filter(r => r.classes.includes(cls)); }
+function validRace(race, cls) { const r = raceInfo(race); return r && r.classes.includes(cls) ? r.id : null; }
+/* A race's racials for one class: Eureka! and the priest racials depend on the class. */
+function racials(race, cls) {
+  const r = raceInfo(race), out = {};
+  if (r) r.racials.forEach(k => { const a = data.races.abilities[k]; if (!a.classes || a.classes.includes(cls)) out[k] = a; });
+  return out;
+}
+async function modelFor(cls, race) { return model(await classData(cls), data.common, racials(race, cls)); }
+/* "Dwarf Warrior", or just "Warrior" before a race is chosen */
+function who(s) { const r = raceInfo(s.race); return (r ? r.name.replace(/ \(.*\)$/, '') + ' ' : '') + classInfo(s.cls).name; }
 
 /* ---------- Setups ---------- */
-async function makeSetup(name, cls, level) {
-  const M = model(await classData(cls), data.common);
-  return { id: store.newId(), name, cls, level, layout: M.fromStarter(), updated: Date.now() };
+async function makeSetup(name, cls, level, race) {
+  const M = await modelFor(cls, race);
+  return { id: store.newId(), name, cls, race: validRace(race, cls), level, layout: M.fromStarter(), updated: Date.now() };
 }
 function setupById(id) { return st.saved.setups.find(s => s.id === id); }
 
@@ -43,10 +56,11 @@ async function openSetup(id) {
   const s = setupById(id);
   st.setup = s;
   st.saved.active = s.id;
-  st.M = model(await classData(s.cls), data.common);
+  s.race = validRace(s.race, s.cls);
+  st.M = await modelFor(s.cls, s.race);
   const c = st.M.check(s.layout);
   st.L = c.L || st.M.fromStarter();
-  st.stance = st.M.stances[0].id;
+  st.stance = st.M.start;
   st.held = null; st.wait = null;
   renderSetupBar();
   build(); paint(); idle();
@@ -68,6 +82,8 @@ function renderSetupBar() {
   const s = st.setup, ci = classInfo(s.cls);
   const label = x => x.name === classInfo(x.cls).name ? x.name : x.name + ' (' + classInfo(x.cls).name + ')';
   $('setupSel').innerHTML = st.saved.setups.map(x => '<option value="' + x.id + '"' + (x.id === s.id ? ' selected' : '') + '>' + esc(label(x)) + '</option>').join('');
+  $('raceSel').innerHTML = (s.race ? '' : '<option value="" selected>Choose race</option>') +
+    racesFor(s.cls).map(r => '<option value="' + r.id + '"' + (r.id === s.race ? ' selected' : '') + '>' + esc(r.name) + '</option>').join('');
   $('setupCls').innerHTML = '<span class="cls-dot" style="background:' + ci.color + '"></span>' + esc(ci.name);
   $('levelIn').value = s.level;
   $('barCount').innerHTML = '<span class="lbl">Extra bars</span>' +
@@ -84,20 +100,33 @@ function setupDialog(kind) {
   if (kind === 'new') {
     $('dlgCls').innerHTML = data.classes.map(c => '<option value="' + c.id + '"' + (c.ready ? '' : ' disabled') + (c.id === st.setup.cls ? ' selected' : '') + '>' + esc(c.name) + (c.ready ? '' : ' (coming soon)') + '</option>').join('');
     $('dlgLevel').value = st.setup.level;
-    name.value = classInfo(st.setup.cls).name + ' ' + (st.saved.setups.filter(x => x.cls === st.setup.cls).length + 1);
+    dlgRaces(st.setup.race);
+    name.value = autoName(st.setup.cls);
   } else name.value = kind === 'rename' ? st.setup.name : st.setup.name + ' copy';
   dlg.dataset.kind = kind;
   dlg.returnValue = '';
   dlg.showModal();
   name.select();
 }
+/* The race list follows the class picked in the dialog, keeping the race when the new class allows it. */
+function dlgRaces(keep) {
+  const cls = $('dlgCls').value, race = validRace(keep, cls) || (racesFor(cls)[0] || {}).id;
+  $('dlgRace').innerHTML = racesFor(cls).map(r => '<option value="' + r.id + '"' + (r.id === race ? ' selected' : '') + '>' + esc(r.name) + ' (' + r.faction + ')</option>').join('');
+}
+/* "Druid 2": the default name, which follows the class until you type your own */
+function autoName(cls) { return classInfo(cls).name + ' ' + (st.saved.setups.filter(x => x.cls === cls).length + 1); }
+$('dlgCls').addEventListener('change', () => {
+  const n = $('dlgName');
+  if (data.classes.some(c => n.value === autoName(c.id))) n.value = autoName($('dlgCls').value);
+  dlgRaces($('dlgRace').value);
+});
 $('setupDlg').addEventListener('close', async () => {
   const dlg = $('setupDlg'), kind = dlg.dataset.kind, name = $('dlgName').value.trim().slice(0, 40);
   if (dlg.returnValue !== 'ok' || !name) return;
   if (kind === 'rename') { st.setup.name = name; saveNow(); return renderSetupBar(); }
   let s;
   if (kind === 'duplicate') s = Object.assign({}, st.setup, { id: store.newId(), name, layout: JSON.parse(JSON.stringify(st.L)), updated: Date.now() });
-  else s = await makeSetup(name, $('dlgCls').value, clampLevel($('dlgLevel').value));
+  else s = await makeSetup(name, $('dlgCls').value, clampLevel($('dlgLevel').value), $('dlgRace').value);
   st.saved.setups.push(s);
   await openSetup(s.id);
   saveNow();
@@ -124,6 +153,17 @@ $('setupBar').addEventListener('click', e => {
 });
 /* Clicking anywhere else closes the setup menu */
 document.addEventListener('click', e => { if (!e.target.closest('#setupMenu')) $('setupMenu').open = false; });
+/* Changing race swaps the racials. Ones from the old race come off the bars. */
+$('raceSel').addEventListener('change', async e => {
+  const old = st.M, race = validRace(e.target.value, st.setup.cls);
+  const M = await modelFor(st.setup.cls, race), gone = [];
+  const strip = row => row.map(k => { if (k && old.racial(k) && !M.ability(k)) { if (!gone.includes(old.name(k))) gone.push(old.name(k)); return null; } return k; });
+  Object.keys(st.L.bar1).forEach(p => { st.L.bar1[p] = strip(st.L.bar1[p]); });
+  st.L.bars = st.L.bars.map(strip);
+  st.setup.race = race; st.M = M; st.held = null;
+  saveNow(); renderSetupBar(); build(); paint();
+  say('', 'Now a ' + who(st.setup), gone.length ? 'Took ' + gone.join(', ') + ' off your bars: ' + (gone.length > 1 ? 'they were' : 'it was') + ' a racial of your old race.' : 'Your new racials are in the spellbook.');
+});
 $('levelIn').addEventListener('change', e => {
   st.setup.level = clampLevel(e.target.value);
   e.target.value = st.setup.level;
@@ -147,6 +187,9 @@ function setKb(on) {
 
 /* ---------- Drawing ---------- */
 const lvl = () => st.setup.level;
+/* 'stance' for warriors, 'form' for druids */
+const word = () => st.M.cls.stateWord || 'stance';
+const short = id => st.M.stanceName(id).replace(/ (Stance|Form)$/, '');
 function initials(n) {
   const w = n.replace(/[^A-Za-z ]/g, '').split(/\s+/).filter(Boolean);
   return w.length > 1 ? w[0][0] + w[1][0] : (w[0] || '?').slice(0, 2);
@@ -170,7 +213,7 @@ function info(id) {
   const M = st.M, r = { k: null, cls: [], extra: '', warn: [] };
   let k, only = null;
   const stn = isStance(id);
-  if (stn) { const s = M.stance(id.slice(3)); k = s.ability; if (s.id === st.stance) r.cls.push('kb-on'); }
+  if (stn) { const s = M.state(id.slice(3)); k = s.ability; if (s.id === M.shown(st.stance)) r.cls.push('kb-on'); }
   else k = M.get(st.L, ref(id));
   if (!k) { r.cls.push('kb-empty'); return r; }
   r.k = k;
@@ -198,7 +241,7 @@ function paintBook(el) {
   const M = st.M, k = el.dataset.k, a = M.ability(k), dim = M.level(k) > lvl(), only = M.only(k);
   el.className = 'kb-sp' + (dim ? ' kb-dim' : '') + (st.held && st.held.from === 'book' && st.held.k === k ? ' kb-held' : '');
   el.setAttribute('draggable', 'true');
-  const meta = (a.item ? 'Item' : 'Level ' + M.level(k)) + ' · ' + (only ? M.stanceList(only).replace(/ Stance/g, '') : 'Any stance');
+  const meta = (a.item ? 'Item' : (M.racial(k) ? 'Racial · ' : '') + 'Level ' + M.level(k)) + ' · ' + (only ? M.stanceList(only).replace(/ (Stance|Form)/g, '') : 'Any ' + word());
   el.setAttribute('aria-label', a.name + '. ' + meta);
   el.innerHTML = '<span class="kb-btn">' + icon(k) + (dim ? '<span class="kb-lv">' + M.level(k) + '</span>' : '') + '</span>' +
     '<span class="kb-spt"><span class="kb-spn">' + esc(a.name) + '</span><span class="kb-spm">' + esc(meta) + '</span></span>';
@@ -263,14 +306,14 @@ function paintKeys() {
 
 /* Builds bars, spellbook and keyboard for the open setup. */
 function build() {
-  const bar = (id, title, ids, right) =>
+  const bar = (id, title, ids, right, after) =>
     '<div class="kb-bar" id="' + id + '"><div class="kb-bar-h"><b>' + title + '</b><span class="kb-bar-r">' + (right || '') + '</span></div><div class="kb-slots">' +
-    ids.map(s => '<div class="kb-slot" data-slot="' + s + '" role="button" tabindex="0"></div>').join('') + '</div></div>';
+    ids.map(s => '<div class="kb-slot" data-slot="' + s + '" role="button" tabindex="0"></div>').join('') + '</div>' + (after || '') + '</div>';
   const extra = st.L.bars.map((_, n) => 'b' + (n + 2));
   /* Stacked like the game: stance bar on top, then the highest bar down to 2, action bar 1 at the bottom. */
   $('kbBars').innerHTML = bar('kbSt', 'Stance bar', st.M.stances.map(s => 'st-' + s.id)) +
-    [...extra].reverse().map(b => bar('kbB' + b.slice(1), BAR_LABEL[b], rowIds(b), 'All stances')).join('') +
-    bar('kbB1', 'Action bar 1', rowIds('b1'));
+    [...extra].reverse().map(b => bar('kbB' + b.slice(1), BAR_LABEL[b], rowIds(b), 'All ' + word() + 's')).join('') +
+    bar('kbB1', 'Action bar 1', rowIds('b1'), '', '<div class="kb-pages" id="kbPages" role="group" aria-label="Action bar 1 pages"></div>');
   $('kbLegend').innerHTML = ['b1', ...extra, 'st'].map(b => '<span class="kk-' + b + '">' + BAR_LABEL[b] + '</span>').join('');
   $('kbBook').innerHTML = st.M.book.map(k => '<div class="kb-sp" data-k="' + k + '" role="button" tabindex="0"></div>').join('');
   $('kbKeys').innerHTML = ROWS.map(row => row.map(c => {
@@ -289,14 +332,16 @@ function build() {
 }
 /* Repaints in place, so a drag that starts on a slot survives a stance switch. */
 function paint() {
-  const s = st.M.stance(st.stance), b1 = $('kbB1');
-  $('kbBody').style.setProperty('--kb-st', s.color);
+  const M = st.M, page = M.pageOf(st.stance), s = M.state(M.shown(st.stance)), b1 = $('kbB1');
+  $('kbBody').style.setProperty('--kb-st', s.color || M.state(page).color);
   document.body.classList.toggle('kbmode', st.kb);
   $('kbModeBtn').setAttribute('aria-pressed', st.kb ? 'true' : 'false');
-  b1.querySelector('.kb-bar-r').innerHTML = '<span class="kb-st">' + esc(st.M.stanceName(s.id)) + '</span>';
+  /* The state you're in, and a tab per bar 1 page with the one on show lit. Travel Form lights Caster. */
+  b1.querySelector('.kb-bar-r').innerHTML = '<span class="kb-st">' + esc(M.stanceName(st.stance)) + '</span>';
+  $('kbPages').innerHTML = M.pages.map(p => '<button type="button" class="kb-pg" data-page="' + p.id + '" aria-pressed="' + (p.id === page) + '" title="Show the ' + esc(M.stanceName(p.id)) + ' page">' + esc(short(p.id)) + '</button>').join('');
   document.querySelectorAll('#kbBars .kb-slot').forEach(el => paintSlot(el, el.dataset.slot));
   document.querySelectorAll('#kbBook .kb-sp').forEach(paintBook);
-  $('kbSum').textContent = st.M.summary(st.L, st.setup.name + ': ' + classInfo(st.setup.cls).name + ', level ' + lvl(), lvl());
+  $('kbSum').textContent = st.M.summary(st.L, st.setup.name + ': ' + who(st.setup) + ', level ' + lvl(), lvl());
   paintKeys();
   tt.style.display = 'none';
   whRefresh();
@@ -332,19 +377,34 @@ function flashKey(key) {
 
 /* ---------- Actions ---------- */
 function switchStance(s) { if (s !== st.stance) { st.stance = s; paint(); } }
+/* What action bar 1 shows after entering a state. */
+function pageNote(n) {
+  const M = st.M, p = M.pageOf(n);
+  return 'Action bar 1 ' + (p === n ? 'now shows your ' : 'keeps your ') + M.stanceName(p) + ' page.';
+}
+/* Pressing a stance or form button, or an ability that enters a state (Prowl). Pressing the active
+   form again goes back to caster form, as in the game. */
+function enterState(t, label, w) {
+  const M = st.M, was = st.stance, res = M.enter(was, t);
+  if (res.warn) return say(label, M.stanceName(t), 'You’re in ' + M.stanceName(was) + '.', [res.warn].concat(w));
+  switchStance(res.next);
+  if (res.next !== t) return say(label, M.stanceName(t), 'Left ' + M.stanceName(t) + ', back in ' + M.stanceName(res.next) + '. ' + pageNote(res.next), w);
+  say(label, M.stanceName(t), pageNote(t), w);
+}
 function press(id, key) {
   const M = st.M, label = K.short(key), w = [];
+  flash(id); if (key) flashKey(key);
   if (isStance(id)) {
-    const s = M.stance(id.slice(3));
-    switchStance(s.id); flash(id); if (key) flashKey(key);
+    const s = M.state(id.slice(3));
     if (M.level(s.ability) > lvl()) w.push('Not learned yet: level ' + M.level(s.ability) + ' (you’re ' + lvl() + ').');
-    return say(label, M.stanceName(s.id), 'Action bar 1 now shows your ' + M.stanceName(s.id) + ' page.', w);
+    return enterState(s.id, label, w);
   }
   const k = M.get(st.L, ref(id));
-  flash(id); if (key) flashKey(key);
   if (!k) return say(label, 'Empty slot', M.slotName(id, st.stance));
-  if (!M.works(k, st.stance)) w.push('Can’t be used in ' + M.stanceName(st.stance) + '. Needs ' + M.stanceList(M.only(k) || []) + '.');
   if (M.level(k) > lvl()) w.push('Not learned yet: level ' + M.level(k) + ' (you’re ' + lvl() + ').');
+  const s = M.stateFor(k);
+  if (s && M.works(k, st.stance)) return enterState(s.id, label, w);
+  if (!M.works(k, st.stance)) w.unshift('Can’t be used in ' + M.stanceName(st.stance) + '. Needs ' + M.stanceList(M.only(k) || M.states.filter(x => M.rule(k).includes(x.id))) + '.');
   say(label, M.name(k), (key ? K.long(key) + ' · ' : '') + M.slotName(id, st.stance), w);
 }
 function done(msg, sub, warns) { saveNow(); paint(); say('', msg, sub || '', warns); }
@@ -369,7 +429,7 @@ function drop(src, r, onKey) {
 function removeHeld(src) { st.M.set(st.L, src.ref, null); done('Removed ' + st.M.name(src.k) + ' from ' + st.M.slotName(src.ref.id, src.ref.st) + '.'); }
 /* Click-to-move: the first click picks up, the next places. Stance slots switch stance instead. */
 function arrange(id, onKey) {
-  if (isStance(id)) { switchStance(id.slice(3)); return idle(); }
+  if (isStance(id)) { const res = st.M.enter(st.stance, id.slice(3)); switchStance(res.next); return res.warn ? say('', st.M.stanceName(id.slice(3)), res.warn) : idle(); }
   const r = ref(id), k = st.M.get(st.L, r), h = st.held;
   if (h) {
     st.held = null;
@@ -413,20 +473,20 @@ async function tool(act, b) {
     saveNow(); renderSetupBar(); build(); paint(); idle(); return msg('Back to the starter layout.');
   }
   if (act === 'export') {
-    const s = st.setup, json = JSON.stringify({ app: 'forever-keybind', v: store.VERSION, setup: { name: s.name, cls: s.cls, level: s.level, layout: st.L } }, null, 2);
+    const s = st.setup, json = JSON.stringify({ app: 'forever-keybind', v: store.VERSION, setup: { name: s.name, cls: s.cls, race: s.race, level: s.level, layout: st.L } }, null, 2);
     $('kbJson').value = json; copyText(b, json);
     return msg('The setup is in the box above and copied to your clipboard.');
   }
   if (act === 'import') {
     let o;
     try { o = JSON.parse($('kbJson').value); } catch (e) { return msg('Couldn’t read that JSON. Paste a whole exported setup into the box, then press Import JSON.'); }
-    /* forever-keybind exports carry a setup; Fuffenforge's older exports only a warrior layout */
-    const src = o && o.setup ? o.setup : { name: 'Imported', cls: 'warrior', level: 60, layout: o && o.layout ? o.layout : o };
+    /* forever-keybind exports carry a setup; Fuffenforge's older exports only a layout, from its Dwarf Warrior */
+    const src = o && o.setup ? o.setup : { name: 'Imported', cls: 'warrior', race: 'dwarf', level: 60, layout: o && o.layout ? o.layout : o };
     const ci = classInfo(src.cls);
     if (!ci || !ci.ready) return msg('That setup is for a class this site doesn’t support yet.');
-    const M = model(await classData(src.cls), data.common), c = M.check(src.layout);
+    const race = validRace(src.race, src.cls), M = await modelFor(src.cls, race), c = M.check(src.layout);
     if (c.error) return msg(c.error);
-    const s = { id: store.newId(), name: String(src.name || 'Imported').slice(0, 40), cls: src.cls, level: clampLevel(src.level), layout: c.L, updated: Date.now() };
+    const s = { id: store.newId(), name: String(src.name || 'Imported').slice(0, 40), cls: src.cls, race, level: clampLevel(src.level), layout: c.L, updated: Date.now() };
     st.saved.setups.push(s);
     await openSetup(s.id); saveNow();
     return msg('Imported as the setup “' + s.name + '”.' + (c.notes.length ? ' ' + c.notes.join(' ') : ''));
@@ -445,6 +505,7 @@ body.addEventListener('click', e => {
   const t = e.target;
   let x;
   if (t.closest('.kb-ico')) e.preventDefault();
+  if ((x = t.closest('.kb-pg'))) { switchStance(x.dataset.page); return idle(); }
   if ((x = t.closest('.kb-slot'))) {
     const id = x.dataset.slot;
     if (st.kb) { st.wait = st.wait === id ? null : id; paint(); return idle(); }
@@ -494,14 +555,22 @@ body.addEventListener('dragstart', e => {
   try { e.dataTransfer.setData('text/plain', st.M.name(st.drag.k)); } catch (x) { /* some browsers refuse */ }
 });
 /* Dragging over a stance button or key switches bar 1, so you can drop on the other stance's page. */
+/* A page tab does the same, which is how a druid reaches the caster page mid-drag. */
+function dragState(t) {
+  const pg = t.closest('.kb-pg');
+  if (pg) return pg.dataset.page;
+  const tg = dropTarget(t);
+  return tg && isStance(tg.id) ? tg.id.slice(3) : null;
+}
 body.addEventListener('dragenter', e => {
-  const tg = st.drag && dropTarget(e.target);
-  if (tg && isStance(tg.id)) switchStance(tg.id.slice(3));
+  const s = st.drag && dragState(e.target);
+  if (s) switchStance(s);
 });
 body.addEventListener('dragover', e => {
   if (!st.drag) return;
+  const s = dragState(e.target);
+  if (s) { switchStance(s); return; }
   const tg = dropTarget(e.target), bk = !tg && st.drag.from === 'slot' && e.target.closest('#kbBookWrap');
-  if (tg && isStance(tg.id)) { switchStance(tg.id.slice(3)); return; }
   if (tg || bk) { e.preventDefault(); e.dataTransfer.dropEffect = 'move'; }
   over(tg ? tg.el : bk || null);
 });
@@ -666,7 +735,7 @@ $('mnCopy').addEventListener('click', e => copyText(e.target, 'https://forever-k
 /* ---------- Start ---------- */
 async function start() {
   $('iconNote').textContent = WH_MODE ? 'Icons and tooltips are live from Wowhead.' : 'Wowhead didn’t load, so abilities show their initials instead of icons.';
-  [data.classes, data.common] = await Promise.all([json('data/classes.json').then(d => d.classes), json('data/common.json')]);
+  [data.classes, data.common, data.races] = await Promise.all([json('data/classes.json').then(d => d.classes), json('data/common.json'), json('data/races.json')]);
   let saved = store.load();
   if (saved) saved.setups = saved.setups.filter(s => s && classInfo(s.cls) && classInfo(s.cls).ready && s.layout);
   if (!saved || !saved.setups.length) {

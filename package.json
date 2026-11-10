@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "test": "node tests/run-all.js",
-    "serve": "node -e \"require('./tests/server').serve().then(s => console.log('Serving site/ at ' + s.url))\""
+    "serve": "node -e \"require('./tests/server').serve().then(s => console.log('Serving site/ at ' + s.url))\"",
+    "check": "node tools/wowhead.js check",
+    "lookup": "node tools/wowhead.js lookup"
   },
   "devDependencies": {
     "playwright": "1.63.0"
