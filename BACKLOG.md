@@ -32,10 +32,12 @@ Feedback round after sprint 1:
 - Full-screen desktop layout: bars and keyboard fit above the fold, with the spellbook as an always-visible sidebar
   with search.
 - Modes replaced by one view plus Keybind mode (hover a slot and press a key).
-- Bar order: stance bar on top, extra bars numbered down from it, action bar 1 at the bottom.
+- Bar order like the game: stance bar on top, then the highest extra bar down to action bar 2, action bar 1 at the bottom.
 - Desktop-only note for phones and tablets.
 - Like WoW, dropping an ability on a filled slot picks up the one it replaces.
 - Main area capped at 1600px and centered; action bars packed tight; square keyboard keys sized to the space.
+- **D1 Mouse view:** a standard 5-button mouse beside the keyboard: Mouse 4 and 5, middle click and modifier + wheel,
+  following stance and modifier layer like the keyboard, with click, drop and Keybind mode support.
 
 ## Sprint 2: Engine and first classes (14 points)
 
@@ -81,7 +83,7 @@ Order to be decided by feedback.
 
 | # | Item | Pts | Notes |
 |---|---|---|---|
-| D | Mouse view | 5 | Choose how many buttons your mouse has (3, 5, 7, 12-button MMO grid). Browsers only see left, right, middle and Mouse 4/5; extra buttons are usually mapped to keyboard keys by the mouse's software, so practicing them means telling the site which key each sends. |
+| D2 | Choose and change your mouse | 4 | Pick a mouse (3, 5, 7 buttons or a 12-button MMO side grid) and left-handed. Browsers only see left, right, middle and Mouse 4/5; extra buttons are usually mapped to keyboard keys by the mouse's software, so the site asks which key each one sends, then draws and practices them. The 5-button mouse (D1) is done. |
 | G | Keyboard layouts | 3 | Nordic (Å Ä Ö), QWERTZ, AZERTY, UK. |
 | H | Drill mode | 5 | "Press Charge!" prompts with reaction time and streaks, plus rotation drills. |
 | I | Reach heat map and score | 3 | Color keys by distance from WASD, flag awkward combos like Shift + mouse while strafing. |

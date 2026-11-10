@@ -2,7 +2,7 @@
 
 Plan your WoW Forever action bars, see them on a keyboard, and practice until they're muscle memory.
 
-Everything fits on one desktop screen: your bars, a QWERTY keyboard showing every bind, and the spellbook beside them.
+Everything fits on one desktop screen: your bars, a QWERTY keyboard and a 5-button mouse showing every bind, and the spellbook beside them.
 
 - **Press your keys** (keys, Mouse 4/5, modifier + wheel) to see what fires, with warnings for the wrong stance or an ability you haven't learned yet. Shift, Ctrl and Alt switch the keyboard to that layer.
 - **Drag** abilities from the spellbook onto slots or keyboard keys, or click to pick up and click to place. Like in WoW, dropping on a filled slot picks up the ability that was there. Abilities keep their keys when you move them on the bars.
@@ -81,7 +81,7 @@ blocked. GitHub runs the whole suite on every push.
 | `keyboard.test.js` | Keyboard view: layers, held and latched modifiers, stance swaps, key clicks and drops |
 | `keys-follow.test.js` | Keys moving with abilities when you rearrange |
 | `setups-bars.test.js` | Number of bars, level, setups, storage problems, imports, and `keys.js` |
-| `layout.test.js` | Keyboard above the fold at common screen sizes, Keybind mode, spellbook search, click-to-move, the phone note |
+| `layout.test.js` | Keyboard and mouse above the fold at common screen sizes, the mouse view, Keybind mode, spellbook search, click-to-move and pick-up, the phone note |
 
 ## Hosting
 

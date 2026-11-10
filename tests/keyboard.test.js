@@ -30,17 +30,18 @@ const { serve, OUT } = require('./env');
     ok((await capName('3')) === 'Execute' && (await capCls('3')).includes('kb-dim') && (await cap('3').locator('.kb-lv').textContent()) === '24', '3: Execute dimmed, level 24');
     ok((await capCls('Y')).includes('kk-free') && (await capName('Y')) === '', 'Y: free');
     ok((await capName('\\')) === '' && (await p.$$(capSel('\\'))).length === 1, 'backslash key exists');
-    ok((await p.textContent('#kbOff')).includes('M4 Charge') && (await p.textContent('#kbOff')).includes('M5 Overpower'), 'mouse binds listed under the keyboard');
-    ok((await mod('Shift').textContent()).includes('3 binds') && (await mod('Ctrl').textContent()).includes('2 binds'), 'modifier keys count their binds');
+    const mouseName = async b => ((await p.locator(`#kbMouse .kk[data-base="${b}"] .kk-n`).textContent({ timeout: 300 }).catch(() => '')) || '').trim();
+    ok((await mouseName('Mouse4')) === 'Charge' && (await mouseName('Mouse5')) === 'Overpower' && (await p.textContent('#kbOff')) === '', 'Mouse 4 and 5 binds shown on the mouse, nothing left over');
+    ok((await mod('Shift').textContent()).includes('4 binds') && (await mod('Ctrl').textContent()).includes('2 binds'), 'modifier keys count their binds');
     ok(await p.$eval('#kbBody', e => e.style.getPropertyValue('--kb-st')) === 'var(--rage)', 'legend gets the stance color');
     // hold Shift on the real keyboard
     await p.keyboard.down('Shift');
-    ok((await capName('Q')) === 'Shield Bash' && (await capName('1')) === 'Cleave' && (await capName('C')) === 'Intimidating Shout' && (await layer()).startsWith('Keyboard: Shift layer'), 'holding Shift shows the Shift layer');
-    ok((await mod('Shift').getAttribute('class')).includes('kk-on') && (await p.textContent('#kbOff')).includes('s-M4 Mocking Blow'), 'Shift key lit, Shift mouse bind listed');
+    ok((await capName('Q')) === 'Shield Bash' && (await capName('1')) === 'Cleave' && (await capName('C')) === 'Intimidating Shout' && (await layer()).startsWith('Keyboard and mouse: Shift layer'), 'holding Shift shows the Shift layer');
+    ok((await mod('Shift').getAttribute('class')).includes('kk-on') && (await mouseName('Mouse4')) === 'Mocking Blow', 'Shift key lit, Shift + Mouse 4 shows Mocking Blow on the mouse');
     await p.keyboard.press('q');
     ok((await capCls('Q')).includes('kb-hit') && (await p.textContent('#kbOut')).includes('Shield Bash'), 'Shift+Q flashes the Q key');
     await p.keyboard.up('Shift');
-    ok((await capName('Q')) === 'Hamstring' && (await layer()).startsWith('Keyboard: no modifier'), 'releasing Shift goes back');
+    ok((await capName('Q')) === 'Hamstring' && (await layer()).startsWith('Keyboard and mouse: no modifier'), 'releasing Shift goes back');
     // stance switch updates bar 1 keys only
     await p.keyboard.press('x');
     ok((await capName('Q')) === 'Disarm' && (await capCls('Q')).includes('kk-b1') && (await capName('1')) === 'Heroic Strike' && (await capName('E')) === 'Empty slot', 'Defensive: bar 1 keys swap, bar 2 stays, E empty');
@@ -71,7 +72,7 @@ const { serve, OUT } = require('./env');
     await cap('Y').click();
     ok((await p.getAttribute('#kbBars [data-slot="b3-0"]', 'class')).includes('kb-wait'), 'Rebind: clicking a bound key selects its slot');
     await p.keyboard.press('Escape'); await mod('Alt').click();
-    ok((await layer()).startsWith('Keyboard: no modifier'), 'Alt unlatched');
+    ok((await layer()).startsWith('Keyboard and mouse: no modifier'), 'Alt unlatched');
     // arrange: drag from spellbook onto a key, tap keys to pick up and place
     await kbMode(false);
     await cap('1').scrollIntoViewIfNeeded();

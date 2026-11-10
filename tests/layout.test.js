@@ -27,6 +27,8 @@ const { serve, OUT } = require('./env');
     ok(r.kbd <= r.vh, `${w}×${h}: keyboard fully above the fold (bottom ${Math.round(r.kbd)} of ${r.vh})`);
     ok(r.key >= 44, `${w}×${h}: keys at least 44px tall (${Math.round(r.key)})`);
     ok(r.book.left > r.stage.right && r.book.top < 120 && r.book.bottom <= r.vh, `${w}×${h}: spellbook beside the bars, full height`);
+    const mb = await p.$eval('#kbMouse', e => { const b = e.getBoundingClientRect(); return { bottom: b.bottom, right: b.right }; });
+    ok(mb.bottom <= r.vh && mb.right <= r.book.left, `${w}×${h}: mouse beside the keyboard, above the fold`);
     ok(r.sw <= w, `${w}×${h}: no sideways scroll`);
     const k = await p.$eval('#kbKeys .kk[data-base="Q"]', e => { const b = e.getBoundingClientRect(); return [b.width, b.height]; });
     ok(Math.abs(k[0] - k[1]) < 1, `${w}×${h}: keys are square (${Math.round(k[0])}×${Math.round(k[1])})`);
@@ -35,9 +37,9 @@ const { serve, OUT } = require('./env');
   }
   {
     const { ctx, p } = await open({ width: 2560, height: 1300 });
-    const r = await p.evaluate(() => { const box = s => document.querySelector(s).getBoundingClientRect(); return { work: box('.work'), stage: box('.stage'), book: box('#kbBookWrap'), kbd: box('#kbKeys'), b1: box('#kbB1') }; });
+    const r = await p.evaluate(() => { const box = s => document.querySelector(s).getBoundingClientRect(); return { work: box('.work'), stage: box('.stage'), book: box('#kbBookWrap'), kbd: box('.kbd-row'), b1: box('#kbB1') }; });
     ok(r.work.width <= 1600 && Math.abs((r.work.left + r.work.right) / 2 - 1280) < 2, '2560 wide: work area capped at 1600px and centered');
-    ok(r.book.left - r.stage.right <= 20 && Math.abs(r.b1.width - r.kbd.width) < 2, '2560 wide: spellbook right beside the bars; bars as wide as the keyboard');
+    ok(r.book.left - r.stage.right <= 20 && Math.abs(r.b1.width - r.kbd.width) < 2, '2560 wide: spellbook right beside the bars; bars as wide as keyboard + mouse');
     await ctx.close();
   }
   {
@@ -45,7 +47,7 @@ const { serve, OUT } = require('./env');
     await p.click('[data-bars="4"]');
     const r = await p.evaluate(() => ({ kbd: document.querySelector('#kbKeys').getBoundingClientRect().bottom, vh: innerHeight }));
     ok(r.kbd <= r.vh + 40, `1366×768 with 4 extra bars: keyboard still (nearly) above the fold (${Math.round(r.kbd)} of ${r.vh})`);
-    ok((await p.$$eval('#kbBars .kb-bar b', x => x.map(y => y.textContent).join(' | '))) === 'Stance bar | Action bar 2 | Action bar 3 | Action bar 4 | Action bar 5 | Action bar 1', 'bar order: stance, 2–5, 1 at the bottom');
+    ok((await p.$$eval('#kbBars .kb-bar b', x => x.map(y => y.textContent).join(' | '))) === 'Stance bar | Action bar 5 | Action bar 4 | Action bar 3 | Action bar 2 | Action bar 1', 'bar order: stance, 5 down to 2, 1 at the bottom');
     await ctx.close();
   }
 
@@ -119,6 +121,44 @@ const { serve, OUT } = require('./env');
     ok(await p.isVisible('[data-setup="rename"]'), 'the ⋯ menu opens');
     await p.click('.brand');
     ok(!(await p.isVisible('[data-setup="rename"]')), 'clicking elsewhere closes it');
+    await ctx.close();
+  }
+
+  // ---- the mouse ----
+  console.log('\n=== mouse ===');
+  {
+    const { ctx, p } = await open({ width: 1440, height: 900 });
+    const cell = b => p.locator(`#kbMouse .kk[data-base="${b}"]`);
+    const cellName = async b => ((await cell(b).locator('.kk-n').textContent({ timeout: 300 }).catch(() => '')) || '').trim();
+    const out = () => p.textContent('#kbOut');
+    ok((await cellName('Mouse4')) === 'Charge' && (await cellName('Mouse5')) === 'Overpower' && (await cellName('Mouse3')) === '', 'mouse: M4 Charge, M5 Overpower, middle free');
+    ok((await cell('Mouse4').getAttribute('class')).includes('kk-b1'), 'mouse: Mouse 4 has the action bar 1 color');
+    ok((await cell('WheelUp').getAttribute('class')).includes('kk-off') && (await cell('WheelUp').textContent()).includes('Scroll'), 'mouse: plain wheel just scrolls');
+    await p.evaluate(() => document.body.dispatchEvent(new MouseEvent('mousedown', { button: 3, bubbles: true, cancelable: true })));
+    ok((await cell('Mouse4').getAttribute('class')).includes('kb-hit') && (await out()).includes('Charge'), 'mouse: pressing Mouse 4 flashes it on the mouse');
+    await p.keyboard.press('x');
+    ok((await cellName('Mouse4')) === 'Taunt' && (await cellName('Mouse5')) === 'Revenge', 'mouse: follows the stance like bar 1');
+    await p.keyboard.press('z');
+    await cell('WheelUp').click();
+    ok((await out()).includes('The wheel needs a modifier'), 'mouse: clicking the plain wheel explains');
+    await cell('Mouse5').click();
+    ok((await out()).includes('Overpower'), 'mouse: clicking a button presses it');
+    // bind Shift + wheel up by clicking: lock a slot in Keybind mode, latch Shift, click wheel up
+    await p.click('#kbModeBtn'); await p.click('#kbBars [data-slot="b3-0"]');
+    await p.click('#kbKeys .kk[data-mod="Shift"]');
+    ok(!(await cell('WheelUp').getAttribute('class')).includes('kk-off'), 'mouse: with Shift on, the wheel is bindable');
+    await cell('WheelUp').click();
+    ok((await p.textContent('#kbBars [data-slot="b3-0"] .kb-key')) === 's-WU', 'mouse: Keybind mode + click binds Shift + wheel up');
+    await p.click('#kbKeys .kk[data-mod="Shift"]'); await p.click('#kbModeBtn');
+    // drop an ability on a mouse button: it takes that button
+    await p.click('#kbBook [data-k="taunt"]'); await cell('Mouse3').click();
+    ok((await p.textContent('#kbOut')).includes('Free key'), 'mouse: an unbound button has no slot to drop on');
+    await p.keyboard.press('Escape');
+    await p.dragAndDrop('#kbBook [data-k="hamstring"]', '#kbMouse .kk[data-base="Mouse5"]');
+    ok((await cellName('Mouse5')) === 'Hamstring' && (await out()).includes('Picked up Overpower'), 'mouse: drop on M5 replaces Overpower and picks it up');
+    await p.keyboard.press('Escape');
+    ok(p.errs.length === 0, 'mouse: no page errors ' + p.errs.join(' | '));
+    await p.screenshot({ path: OUT + '/mouse-1440.png' });
     await ctx.close();
   }
 

@@ -39,10 +39,10 @@ const { serve, OUT } = require('./env');
   console.log('\n=== extra action bars ===');
   {
     const { ctx, p } = await fresh(), h = helpers(p);
-    ok((await h.bars()) === 'Stance bar | Action bar 2 | Action bar 3 | Action bar 1', 'starter: 2 extra bars, numbered down from the stance bar, bar 1 at the bottom');
+    ok((await h.bars()) === 'Stance bar | Action bar 3 | Action bar 2 | Action bar 1', 'starter: 2 extra bars, highest on top, bar 1 at the bottom');
     ok(await p.getAttribute('[data-bars="2"]', 'aria-pressed') === 'true', 'bar count shows 2');
     await p.click('[data-bars="4"]');
-    ok((await h.bars()) === 'Stance bar | Action bar 2 | Action bar 3 | Action bar 4 | Action bar 5 | Action bar 1', '4 extra bars: bar 5 just above bar 1');
+    ok((await h.bars()) === 'Stance bar | Action bar 5 | Action bar 4 | Action bar 3 | Action bar 2 | Action bar 1', '4 extra bars: bar 5 on top');
     ok((await p.$$('#kbBars .kb-slot')).length === 2 + 12 * 5, '62 slots');
     ok((await p.$$eval('.kb-legend span', s => s.map(x => x.textContent).join(','))) === 'Action bar 1,Action bar 2,Action bar 3,Action bar 4,Action bar 5,Stance bar', 'keyboard legend lists every bar');
     // put an ability on bar 5 and bind it, see it on the keyboard in its own color
@@ -59,7 +59,7 @@ const { serve, OUT } = require('./env');
     ok(p.dialogs.pop().includes('1 ability and 1 keybind') && (await h.bars()).includes('Action bar 5'), 'removing a bar with content asks first; Cancel keeps it');
     ok(await p.getAttribute('[data-bars="4"]', 'aria-pressed') === 'true', 'count stays at 4 after Cancel');
     p.answer = true; await p.click('[data-bars="3"]');
-    ok((await h.bars()) === 'Stance bar | Action bar 2 | Action bar 3 | Action bar 4 | Action bar 1', 'OK removes bar 5');
+    ok((await h.bars()) === 'Stance bar | Action bar 4 | Action bar 3 | Action bar 2 | Action bar 1', 'OK removes bar 5');
     await p.keyboard.press('y');
     ok(!(await p.textContent('#kbOut')).includes('Cleave') && (await p.getAttribute('#kbKeys .kk[data-base="Y"]', 'class')).includes('kk-free'), 'its keybind Y is gone too');
     const n = p.dialogs.length; await p.click('[data-bars="1"]');

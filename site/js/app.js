@@ -213,6 +213,11 @@ const ROWS = [
   keyRow('Z X C V B N M , . /', [['Shift', 9, 'mod']], [['Shift', 11, 'mod']]),
   [['Ctrl', 5, 'mod'], ['Win', 5, 'off'], ['Alt', 5, 'mod'], ['Space', 25], ['Alt', 5, 'mod'], ['Win', 5, 'off'], ['Menu', 5, 'off'], ['Ctrl', 5, 'mod']]
 ];
+/* A 5-button mouse: [key, label, column, row, rows tall, 'off' if not bindable]. Same grid units as the keyboard keys. */
+const MOUSE = [
+  ['Left', 'Left', 1, 1, 2, 'off'], ['WheelUp', 'Wheel up', 2, 1, 1], ['Right', 'Right', 3, 1, 2, 'off'],
+  ['Mouse3', 'Middle', 2, 2, 1], ['Mouse5', 'M5', 1, 3, 1], ['WheelDown', 'Wheel down', 2, 3, 1], ['Mouse4', 'M4', 1, 4, 1]
+];
 /* The modifier layer on show: held on the real keyboard, or latched by clicking a modifier key. */
 function layerMods() { const r = {}; ['Ctrl', 'Alt', 'Shift'].forEach(m => { r[m] = !!(st.hold[m] || st.latch[m]); }); return r; }
 function layer() { const m = layerMods(); return (m.Ctrl ? 'Ctrl+' : '') + (m.Alt ? 'Alt+' : '') + (m.Shift ? 'Shift+' : ''); }
@@ -220,9 +225,16 @@ function paintKeys() {
   const box = $('kbKeys');
   if (!box) return;
   const M = st.M, m = layerMods(), pre = layer(), shown = {}, off = [];
-  box.querySelectorAll('.kk[data-base]').forEach(el => {
-    const b = el.dataset.base, key = pre + b, id = M.find(st.L, key);
+  document.querySelectorAll('#kbKeys .kk[data-base], #kbMouse .kk[data-base]').forEach(el => {
+    const b = el.dataset.base, key = pre + b, id = M.find(st.L, key), label = esc(el.dataset.label || b);
     let cls = 'kk', body = '';
+    /* the wheel only binds with a modifier; without one it just scrolls */
+    if (!pre && /^Wheel/.test(b)) {
+      el.className = 'kk kk-off kk-wheel'; el.removeAttribute('draggable');
+      el.setAttribute('aria-label', el.dataset.label + ': scrolls. Hold Shift, Ctrl or Alt to bind it.');
+      el.innerHTML = '<span class="kk-l">' + label + '</span><span class="kk-c">Scroll</span>';
+      return;
+    }
     shown[b] = 1;
     if (id) {
       const i = info(id);
@@ -232,7 +244,7 @@ function paintKeys() {
     } else { cls += ' kk-free'; el.setAttribute('aria-label', K.long(key) + ': not bound'); }
     if (id && !isStance(id) && M.get(st.L, ref(id))) el.setAttribute('draggable', 'true'); else el.removeAttribute('draggable');
     el.className = cls;
-    el.innerHTML = '<span class="kk-l">' + esc(b) + '</span>' + body;
+    el.innerHTML = '<span class="kk-l">' + label + '</span>' + body;
   });
   box.querySelectorAll('.kk[data-mod]').forEach(el => {
     const md = el.dataset.mod, n = Object.values(st.L.keys).filter(key => { const s = K.split(key); return s.mods === md + '+' && shown[s.base]; }).length;
@@ -245,8 +257,8 @@ function paintKeys() {
     const key = st.L.keys[id], s = K.split(key);
     if (s.mods === pre && !shown[s.base]) { const i = info(id); off.push(K.short(key) + ' ' + (i.k ? M.name(i.k) : '(empty)')); }
   });
-  $('kbLayer').textContent = 'Keyboard: ' + (pre ? pre.slice(0, -1).replace(/\+/g, ' + ') + ' layer' : 'no modifier') + '. Hold Shift, Ctrl or Alt, or click them to keep a layer on.';
-  $('kbOff').textContent = off.length ? 'Mouse and other keys in this layer: ' + off.join(' · ') + '.' : '';
+  $('kbLayer').textContent = 'Keyboard and mouse: ' + (pre ? pre.slice(0, -1).replace(/\+/g, ' + ') + ' layer' : 'no modifier') + '. Hold Shift, Ctrl or Alt, or click them to keep a layer on.';
+  $('kbOff').textContent = off.length ? 'Other keys in this layer: ' + off.join(' · ') + '.' : '';
 }
 
 /* Builds bars, spellbook and keyboard for the open setup. */
@@ -255,9 +267,9 @@ function build() {
     '<div class="kb-bar" id="' + id + '"><div class="kb-bar-h"><b>' + title + '</b><span class="kb-bar-r">' + (right || '') + '</span></div><div class="kb-slots">' +
     ids.map(s => '<div class="kb-slot" data-slot="' + s + '" role="button" tabindex="0"></div>').join('') + '</div></div>';
   const extra = st.L.bars.map((_, n) => 'b' + (n + 2));
-  /* Stance bar on top, extra bars numbered downward, action bar 1 at the bottom like the game's main bar. */
+  /* Stacked like the game: stance bar on top, then the highest bar down to 2, action bar 1 at the bottom. */
   $('kbBars').innerHTML = bar('kbSt', 'Stance bar', st.M.stances.map(s => 'st-' + s.id)) +
-    extra.map(b => bar('kbB' + b.slice(1), BAR_LABEL[b], rowIds(b), 'All stances')).join('') +
+    [...extra].reverse().map(b => bar('kbB' + b.slice(1), BAR_LABEL[b], rowIds(b), 'All stances')).join('') +
     bar('kbB1', 'Action bar 1', rowIds('b1'));
   $('kbLegend').innerHTML = ['b1', ...extra, 'st'].map(b => '<span class="kk-' + b + '">' + BAR_LABEL[b] + '</span>').join('');
   $('kbBook').innerHTML = st.M.book.map(k => '<div class="kb-sp" data-k="' + k + '" role="button" tabindex="0"></div>').join('');
@@ -267,6 +279,11 @@ function build() {
     if (c[2] === 'off') return '<div class="kk kk-off"' + w + '><span class="kk-l">' + c[0] + '</span></div>';
     return '<div class="kk" data-base="' + esc(c[0]) + '"' + w + '></div>';
   }).join('')).join('');
+  $('kbMouse').innerHTML = '<div class="mouse-body" aria-hidden="true"></div>' + MOUSE.map(([b, label, col, row, span, kind]) => {
+    const pos = ' style="grid-column:' + col + ';grid-row:' + row + ' / span ' + span + '"';
+    return kind === 'off' ? '<div class="kk kk-off"' + pos + '><span class="kk-l">' + label + '</span></div>'
+      : '<div class="kk" data-base="' + b + '" data-label="' + label + '"' + pos + '></div>';
+  }).join('');
   $('clsNote').textContent = st.M.cls.note || '';
   filterBook();
 }
@@ -310,7 +327,7 @@ function flash(id) { flashEl(document.querySelector('#kbBars [data-slot="' + id 
 function flashKey(key) {
   const s = K.split(key);
   if (s.mods !== layer()) return;
-  flashEl([...document.querySelectorAll('#kbKeys .kk[data-base]')].find(el => el.dataset.base === s.base));
+  flashEl([...document.querySelectorAll('#kbKeys .kk[data-base], #kbMouse .kk[data-base]')].find(el => el.dataset.base === s.base));
 }
 
 /* ---------- Actions ---------- */
@@ -436,6 +453,7 @@ body.addEventListener('click', e => {
   if ((x = t.closest('.kk[data-mod]'))) { st.latch[x.dataset.mod] = !st.latch[x.dataset.mod]; paintKeys(); return whRefresh(); }
   if ((x = t.closest('.kk[data-base]'))) {
     const key = layer() + x.dataset.base, bound = st.M.find(st.L, key);
+    if (!K.validKey(key)) return say('', 'The wheel needs a modifier', 'Hold Shift, Ctrl or Alt, or click one on the keyboard, to bind or try a wheel combo.');
     if (st.kb) {
       if (st.wait) return bind(st.wait, key);
       if (bound) { st.wait = bound; paint(); return idle(); }
@@ -616,15 +634,15 @@ const MAX_W = 1600, SIDE = 18 * 2 + 290 + 14; /* page padding, spellbook and the
 function sizeKeys() {
   const GAP = 4, PAD = 9; /* padding plus border on each side */
   const head = kbdWrap.querySelector('.kb-kbd-h').offsetHeight + 5, foot = $('kbOff').offsetHeight + 6;
-  const fromW = (Math.min(innerWidth, MAX_W) - SIDE - 59 * GAP - 2 * PAD) / 60;
+  /* keyboard: 60 columns; mouse: 3 keys wide; 10px between them */
+  const fromW = (Math.min(innerWidth, MAX_W) - SIDE - 59 * GAP - 2 * PAD - 10 - 2 * PAD - 11 * GAP) / 72;
   const fromH = ((kbdWrap.clientHeight - head - foot - 4 * GAP - 2 * PAD) / 5 - 3 * GAP) / 4;
   const kc = Math.max(8, Math.min(16, Math.floor(Math.min(fromW, fromH)))), ku = 4 * kc + 3 * GAP;
-  const kbd = $('kbKeys');
-  kbd.style.setProperty('--kc', kc + 'px');
-  kbd.style.setProperty('--ku', ku + 'px');
-  kbd.classList.toggle('kk-small', ku < 60);
+  kbdWrap.style.setProperty('--kc', kc + 'px');
+  kbdWrap.style.setProperty('--ku', ku + 'px');
+  kbdWrap.classList.toggle('kk-small', ku < 60);
   const bars = $('kbB1') ? $('kbB1').offsetWidth : 0;
-  root.style.setProperty('--stage-w', Math.max(60 * kc + 59 * GAP + 2 * PAD, bars) + 'px');
+  root.style.setProperty('--stage-w', Math.max(60 * kc + 59 * GAP + 2 * PAD + 10 + 3 * ku + 2 * GAP + 2 * PAD, bars) + 'px');
 }
 new ResizeObserver(sizeKeys).observe(kbdWrap);
 addEventListener('resize', sizeKeys);
