@@ -24,7 +24,7 @@ Ideas and bug reports are welcome as GitHub issues.
 |---|---|---|
 | A | Standalone app: own repo and site, per-class data files, code split into modules | 8 |
 | B | Choose 1–4 extra action bars | 3 |
-| E | Several named setups, saved indicator, versioned saves, import of older Fuffenforge exports | 3 |
+| E | Several named setups, saved indicator, versioned saves; export and import a setup as JSON (copy and paste), including older Fuffenforge exports | 3 |
 | J | Browser tests run on GitHub on every push | 1 |
 
 Feedback round after sprint 1:
@@ -64,12 +64,13 @@ Feedback round after sprint 1:
 
 If this sprint runs long, Warlock and the pet bar can move to sprint 4.
 
-## Sprint 4: Launch (17 points)
+## Sprint 4: Launch (19 points)
 
 | # | Item | Pts | Notes |
 |---|---|---|---|
 | C2.6 | Shaman | 2 | Lots of totems. |
 | F | Share links | 3 | The whole setup packed into the URL. "Here's my Prot warrior setup: link" is what spreads on Reddit, and it moves setups between devices without accounts. |
+| P | Export and import as a file | 2 | Export downloads a `.json` file named after the setup; Import takes a file from a file picker or dropped onto the page, as well as pasted text. Export and Import move into the setup menu so they're above the fold. Copy-and-paste JSON already works (sprint 1). |
 | C6 | Starter layout per class and spec | 5 | A sensible starting point instead of a blank screen. |
 | K | Launch kit | 3 | Name and domain, landing text, link preview image, cookie-free analytics (Cloudflare Web Analytics), feedback link. |
 | N | Start screen | 3 | First visit and "New": Create new keybind setup → class → race → level. Returning visitors go straight to their last setup; existing setups can show as cards. |
