@@ -37,7 +37,7 @@ const { serve, OUT } = require('./env');
     const out = () => p.textContent('#kbOut');
     const mouse = (type, button, opts = {}) => p.evaluate(([t, bt, o]) => document.body.dispatchEvent(new MouseEvent(t, Object.assign({ button: bt, bubbles: true, cancelable: true }, o))), [type, button, opts]);
     const wheel = (dy, opts = {}) => p.evaluate(([d, o]) => document.body.dispatchEvent(new WheelEvent('wheel', Object.assign({ deltaY: d, bubbles: true, cancelable: true }, o))), [dy, opts]);
-    const modeBtn = m => p.click(`[data-mode="${m}"]`);
+    const kbMode = async on => { if ((await p.getAttribute('#kbModeBtn', 'aria-pressed')) !== String(on)) await p.click('#kbModeBtn'); };
 
     // ---- 1. layout ----
     ok((await p.textContent('h1')) === 'forever keybind' && (await p.$eval('#setupSel', e => e.selectedOptions[0].textContent)) === 'Warrior', 'standalone page with a default Warrior setup');
@@ -101,14 +101,15 @@ const { serve, OUT } = require('./env');
     ok((await name('b1-0')) === 'Charge', 'Z back to Battle');
     // click in practice mode
     await slot('b2-0').click();
-    ok((await out()).includes('Heroic Strike'), 'clicking a slot fires it');
+    ok((await out()).includes('Holding Heroic Strike'), 'clicking a slot picks it up');
+    await p.keyboard.press('Escape');
+    ok((await out()).includes('Press your keys'), 'Esc puts it back');
     // typing in the textarea is ignored
     await p.click('#kbJson'); await p.keyboard.type('q');
     ok((await p.inputValue('#kbJson')) === 'q' && !(await out()).includes('Hamstring'), 'typing in the textarea is not hijacked');
-    await p.fill('#kbJson', ''); await p.click('.top .tag');
+    await p.fill('#kbJson', ''); await p.click('.brand');
 
     // ---- 3. arrange ----
-    await modeBtn('arrange');
     ok(await p.isVisible('#kbBookWrap') && (await p.$$('#kbBook .kb-sp')).length === 25, 'spellbook shows 25 entries');
     ok((await p.textContent('#kbBook')).includes('Execute') && await p.$eval('#kbBook [data-k="execute"]', e => e.className.includes('kb-dim')), 'spellbook dims Execute');
     await p.$eval('#kbB1', e => e.scrollIntoView({ block: 'center' })); await p.dragAndDrop('#kbBook [data-k="hamstring"]', '#kbBars [data-slot="b3-0"]');
@@ -150,12 +151,12 @@ const { serve, OUT } = require('./env');
     await p.keyboard.press('z');
     ok((await name('b1-2')) === '', 'Overpower left Battle slot 3');
     // tap slot→spellbook removes
-    await p.keyboard.press('x'); await slot('b1-9').click(); await p.click('#kbBookWrap h3');
+    await p.keyboard.press('x'); await slot('b1-9').click(); await p.click('#kbBookWrap h2');
     ok((await name('b1-9')) === '' && (await out()).includes('Removed Overpower'), 'tap slot then spellbook removes');
     await p.keyboard.press('Escape');
 
     // ---- 4. rebind ----
-    await modeBtn('rebind');
+    await kbMode(true);
     await slot('b3-1').click();
     ok((await cls('b3-1')).includes('kb-wait'), 'click slot waits for a key');
     await p.keyboard.press('h');
@@ -178,7 +179,7 @@ const { serve, OUT } = require('./env');
     // stance keys can be rebound too
     await slot('st-def').click(); await p.keyboard.press('Shift+x');
     ok((await key('st-def')) === 's-X', 'stance rebound to s-X');
-    await modeBtn('practice');
+    await kbMode(false);
     await p.keyboard.press('z');
     await p.keyboard.press('x');
     ok(!(await cls('st-def')).includes('kb-on') && (await lastPrev()) === 'keydown:KeyX:false', 'plain X now unbound and ignored');
@@ -242,34 +243,12 @@ const { serve, OUT } = require('./env');
     await ctx.close();
   }
 
-  // ---- phone: tap to arrange ----
-  {
-    const ctx = await b.newContext({ ...devices['iPhone 13'] });
-    const p = await ctx.newPage(); p.setDefaultTimeout(5000);
-    const errs = []; p.on('pageerror', e => errs.push(e.message));
-    await p.route(/fonts\./, r => r.abort());
-    await p.goto(URL); await p.evaluate(() => localStorage.clear()); await p.reload(); await p.waitForTimeout(1500);
-    ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'phone: no sideways scroll');
-    ok(await p.$eval('#kbB1 .kb-slots', e => getComputedStyle(e).gridTemplateColumns.split(' ').length) === 6, 'phone: 6 slots per row');
-    await p.tap('[data-mode="arrange"]');
-    await p.tap('#kbBars [data-slot="b1-0"]');
-    await p.tap('#kbBars [data-slot="st-def"]');
-    await p.tap('#kbBars [data-slot="b1-1"]');
-    const n = await p.textContent('#kbBars [data-slot="b1-1"] .kb-name');
-    ok(n === 'Charge' && p.url() === URL, 'phone: tap pick up, switch stance, tap place (no Wowhead navigation)');
-    await p.tap('#kbBook [data-k="cleave"]'); await p.tap('#kbBars [data-slot="b3-0"]');
-    ok((await p.textContent('#kbBars [data-slot="b3-0"] .kb-name')) === 'Cleave', 'phone: tap from spellbook');
-    await p.screenshot({ path: OUT + '/kb-phone.png', fullPage: true });
-    ok(errs.length === 0, 'phone: no page errors ' + errs.join('|'));
-    await ctx.close();
-  }
 
   // ---- light theme screenshot, arrange mode with warnings ----
   {
     const ctx = await b.newContext({ viewport: { width: 1200, height: 900 }, colorScheme: 'light' });
     const p = await ctx.newPage(); p.setDefaultTimeout(5000);
     await p.goto(URL); await p.evaluate(() => localStorage.clear()); await p.reload(); await p.waitForTimeout(1500);
-    await p.click('[data-mode="arrange"]');
     await p.click('#kbBook [data-k="hamstring"]'); await p.click('#kbBars [data-slot="b3-0"]');
     await p.click('#kbBook [data-k="taunt"]'); await p.click('#kbBars [data-slot="b3-1"]');
     await p.click('#kbBars [data-slot="b1-0"]');

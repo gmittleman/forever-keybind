@@ -2,11 +2,14 @@
 
 Plan your WoW Forever action bars, see them on a keyboard, and practice until they're muscle memory.
 
-- **Practice:** press your keybinds (keys, Mouse 4/5, modifier + wheel) and see what fires, with warnings for the wrong stance or an ability you haven't learned yet.
-- **Arrange:** drag or tap abilities from the spellbook onto your bars. Abilities keep their keys when you move them.
-- **Rebind:** click a slot and press a key.
-- **Keyboard view:** every bind on a QWERTY keyboard, with Shift, Ctrl and Alt layers.
+Everything fits on one desktop screen: your bars, a QWERTY keyboard showing every bind, and the spellbook beside them.
+
+- **Press your keys** (keys, Mouse 4/5, modifier + wheel) to see what fires, with warnings for the wrong stance or an ability you haven't learned yet. Shift, Ctrl and Alt switch the keyboard to that layer.
+- **Drag** abilities from the spellbook onto slots or keyboard keys, or click to pick up and click to place. Abilities keep their keys when you move them on the bars.
+- **Keybind mode**, like WoW's /kb addons: hover a slot and press a key to bind it.
 - **Setups:** several named setups, saved automatically in your browser. No account needed. Export and import as JSON.
+
+It's made for desktop; phones and tablets get a note suggesting a computer.
 
 Not affiliated with or endorsed by Blizzard Entertainment. Ability names and icons belong to Blizzard; icons and
 tooltips are shown through [Wowhead](https://www.wowhead.com/forever).
@@ -74,10 +77,11 @@ blocked. GitHub runs the whole suite on every push.
 
 | File | Covers |
 |---|---|
-| `keybinds.test.js` | Bars, practice, arrange, rebind, saving, export and import, the Mouse 4 back button, phone tap flow |
+| `keybinds.test.js` | Bars, pressing keys, moving abilities, rebinding, saving, export and import, the Mouse 4 back button |
 | `keyboard.test.js` | Keyboard view: layers, held and latched modifiers, stance swaps, key clicks and drops |
 | `keys-follow.test.js` | Keys moving with abilities when you rearrange |
 | `setups-bars.test.js` | Number of bars, level, setups, storage problems, imports, and `keys.js` |
+| `layout.test.js` | Keyboard above the fold at common screen sizes, Keybind mode, spellbook search, click-to-move, the phone note |
 
 ## Hosting
 

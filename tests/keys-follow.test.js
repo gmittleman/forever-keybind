@@ -21,15 +21,13 @@ const { serve } = require('./env');
     const capName = async k => ((await cap(k).locator('.kk-n').textContent({ timeout: 200 }).catch(() => '')) || '').trim();
     const center = () => p.$eval('#kbB2', e => e.scrollIntoView({ block: 'center' }));
     const drag = async (from, to) => { await center(); await p.dragAndDrop(from, to); };
-    const reset = async () => { await p.click('[data-act="reset"]'); await p.click('[data-mode="arrange"]'); };
-    await p.click('[data-mode="arrange"]');
+    const reset = async () => { await p.click('[data-act="reset"]'); };
 
     // bar 2 → empty bar 3 slot: the key goes along, the old slot is left unbound
     await drag('#kbBars [data-slot="b2-0"]', '#kbBars [data-slot="b3-5"]');
     ok((await at('b3-5')) === 'Heroic Strike@1' && (await at('b2-0')) === '@', 'move to an empty slot: Heroic Strike keeps 1, old slot unbound');
     ok((await out()).includes('It keeps 1'), 'readout says it keeps its key');
-    await p.keyboard.press('1');   // arrange mode: 1 does nothing, but practice will
-    await p.click('[data-mode="practice"]'); await p.keyboard.press('1');
+    await p.keyboard.press('1');
     ok((await out()).includes('Heroic Strike'), 'pressing 1 still fires Heroic Strike');
     await reset();
 
@@ -92,15 +90,6 @@ const { serve } = require('./env');
     ok(errs.length === 0, 'no page errors ' + errs.join(' | '));
     await p.evaluate(() => localStorage.clear());
     await p.close();
-  }
-  { // phone: tap flow
-    const ctx = await b.newContext({ ...devices['iPhone 13'] }); const p = await ctx.newPage(); p.setDefaultTimeout(5000);
-    await p.goto(URL); await p.evaluate(() => localStorage.clear()); await p.reload(); await p.waitForTimeout(800);
-    await p.tap('[data-mode="arrange"]');
-    await p.tap('#kbBars [data-slot="b2-5"]'); await p.tap('#kbBars [data-slot="b3-0"]');
-    const k = await p.textContent('#kbBars [data-slot="b3-0"] .kb-key');
-    ok(k === 'F' && (await p.textContent('#kbBars [data-slot="b3-0"] .kb-name')) === 'Bloodrage', 'phone: tap Bloodrage to bar 3, keeps F');
-    await p.evaluate(() => localStorage.clear()); await ctx.close();
   }
   console.log('\n' + (fails.length ? fails.length + ' FAILED' : 'ALL PASSED'));
   process.exitCode = fails.length ? 1 : 0;

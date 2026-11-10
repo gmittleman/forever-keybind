@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>forever keybind – plan and practice your WoW Forever action bars</title>
 <meta name="description" content="Plan your WoW Forever action bars and keybinds, see them on a keyboard, and practice until they're muscle memory.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -17,37 +17,75 @@
 </head>
 <body>
 
-<header class="top">
-  <div>
-    <h1>forever keybind</h1>
-    <p class="tag">Plan your WoW Forever action bars, see them on a keyboard, and practice until they’re muscle memory.</p>
+<header class="top" id="setupBar">
+  <h1 class="brand"><img src="favicon.svg" alt="" width="26" height="26">forever keybind</h1>
+  <div class="setup">
+    <select id="setupSel" aria-label="Setup"></select>
+    <button type="button" class="copy" data-setup="new">New</button>
+    <details class="menu" id="setupMenu">
+      <summary class="copy" aria-label="More setup actions" title="More setup actions">⋯</summary>
+      <div class="menu-list">
+        <button type="button" data-setup="rename">Rename</button>
+        <button type="button" data-setup="duplicate">Duplicate</button>
+        <button type="button" data-setup="delete">Delete</button>
+      </div>
+    </details>
+    <span class="setup-cls" id="setupCls"></span>
+    <label class="lvl">Level <input id="levelIn" type="number" min="1" max="60" inputmode="numeric"></label>
+    <span class="specbar" id="barCount" role="group" aria-label="Extra action bars"></span>
+    <span class="save-state" id="saveState" aria-live="polite"></span>
   </div>
-  <button class="theme-toggle" id="themeToggle" type="button">Light / dark</button>
+  <div class="top-acts">
+    <button type="button" class="kbmode" id="kbModeBtn" aria-pressed="false" title="Hover a slot and press a key to bind it">Keybind mode</button>
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Switch light and dark" title="Light / dark">◐</button>
+  </div>
 </header>
 
-<main class="shell">
-  <section class="setup frame" id="setupBar" aria-label="Your setup">
-    <div class="setup-row">
-      <label for="setupSel">Setup</label>
-      <select id="setupSel"></select>
-      <span class="setup-acts">
-        <button type="button" class="copy" data-setup="new">New</button>
-        <button type="button" class="copy" data-setup="rename">Rename</button>
-        <button type="button" class="copy" data-setup="duplicate">Duplicate</button>
-        <button type="button" class="copy" data-setup="delete">Delete</button>
-      </span>
+<main class="work" id="kbBody">
+  <section class="stage" aria-label="Action bars and keyboard">
+    <div class="kb-out" id="kbOut" aria-live="polite"></div>
+    <div id="kbBars"></div>
+    <div class="kbd-wrap">
+      <div class="kb-kbd-h"><span id="kbLayer"></span><span class="kb-legend" id="kbLegend"></span></div>
+      <div class="kb-kbd" id="kbKeys"></div>
+      <p class="muted kb-off" id="kbOff"></p>
     </div>
-    <div class="setup-row">
-      <span class="setup-cls" id="setupCls"></span>
-      <label for="levelIn">Level</label>
-      <input id="levelIn" type="number" min="1" max="60" inputmode="numeric">
-      <span class="specbar" id="barCount" role="group" aria-label="Extra action bars"></span>
-    </div>
-    <p class="save-state" id="saveState" aria-live="polite"></p>
   </section>
-
-  <div id="kbBody" class="frame"><p class="muted">Loading…</p></div>
+  <aside class="book" id="kbBookWrap" aria-label="Spellbook">
+    <div class="book-h">
+      <h2>Spellbook</h2>
+      <input type="search" id="bookFilter" placeholder="Search" aria-label="Search the spellbook" autocomplete="off">
+    </div>
+    <p class="book-hint">Drag onto a slot or a key. Drag a slot here to clear it.</p>
+    <div class="kb-book" id="kbBook"></div>
+  </aside>
 </main>
+
+<section class="extras">
+  <div class="extra frame">
+    <h3>Save and share</h3>
+    <p class="muted">Every change saves automatically in this browser. Export a setup to back it up or move it to another device; importing adds it as a new setup.</p>
+    <div class="kb-tools">
+      <button type="button" class="copy" data-act="reset">Reset to starter layout</button>
+      <button type="button" class="copy" data-act="export">Export JSON</button>
+      <button type="button" class="copy" data-act="import">Import JSON</button>
+      <button type="button" class="copy" data-act="summary">Copy summary</button>
+    </div>
+    <textarea class="kb-json" id="kbJson" rows="5" spellcheck="false" aria-label="Setup JSON" placeholder="Export JSON puts your setup here. To import, paste an exported setup, then press Import JSON."></textarea>
+    <p class="muted" id="kbMsg" aria-live="polite"></p>
+  </div>
+  <div class="extra frame">
+    <h3>Summary</h3>
+    <pre class="kb-sum" id="kbSum"></pre>
+  </div>
+</section>
+
+<footer>
+  <p id="clsNote"></p>
+  <p>Not affiliated with or endorsed by Blizzard Entertainment. World of Warcraft and its ability names and icons are trademarks and property of Blizzard Entertainment.
+    Ability icons and tooltips via <a href="https://www.wowhead.com/forever" target="_blank" rel="noopener">Wowhead</a>. <span id="iconNote"></span></p>
+  <p>Open source (MIT) on <a href="https://github.com/gmittleman/forever-keybind" target="_blank" rel="noopener">GitHub</a>. Ideas and bug reports welcome there.</p>
+</footer>
 
 <dialog id="setupDlg">
   <form method="dialog" id="setupForm">
@@ -67,12 +105,15 @@
   </form>
 </dialog>
 
-<footer>
-  <p>Not affiliated with or endorsed by Blizzard Entertainment. World of Warcraft and its ability names and icons are trademarks and property of Blizzard Entertainment.
-    Ability icons and tooltips via <a href="https://www.wowhead.com/forever" target="_blank" rel="noopener">Wowhead</a>.</p>
-  <p id="iconNote"></p>
-  <p>Open source (MIT) on <a href="https://github.com/gmittleman/forever-keybind" target="_blank" rel="noopener">GitHub</a>. Ideas and bug reports welcome there.</p>
-</footer>
+<div class="mobile-note" id="mobileNote" hidden>
+  <div class="frame">
+    <img src="favicon.svg" alt="" width="56" height="56">
+    <h2>Open this on your computer</h2>
+    <p>forever keybind is made for planning keybinds with a real keyboard and mouse, so it only works well on a desktop or laptop.</p>
+    <p>Open <b>forever-keybind.pages.dev</b> there and your binds will be ready to practice.</p>
+    <p class="mn-acts"><button type="button" class="copy" id="mnCopy">Copy link</button> <button type="button" class="copy" id="mnAnyway">Show it anyway</button></p>
+  </div>
+</div>
 <div id="tt" role="tooltip"></div>
 </body>
 </html>

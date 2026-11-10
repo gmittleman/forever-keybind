@@ -20,6 +20,7 @@ const { serve, OUT } = require('./env');
     const mod = m => p.locator(`#kbKeys .kk[data-mod="${m}"]`).first();
     const slotName = id => p.textContent(`#kbBars [data-slot="${id}"] .kb-name`);
     const layer = () => p.textContent('#kbLayer');
+    const kbMode = async on => { if ((await p.getAttribute('#kbModeBtn', 'aria-pressed')) !== String(on)) await p.click('#kbModeBtn'); };
 
     ok((await p.$$('#kbKeys .kk')).length === 61, '61 keys drawn');
     ok(await p.$eval('#kbKeys', k => getComputedStyle(k).gridTemplateColumns.split(' ').length) === 60, '60-column grid');
@@ -34,20 +35,20 @@ const { serve, OUT } = require('./env');
     ok(await p.$eval('#kbBody', e => e.style.getPropertyValue('--kb-st')) === 'var(--rage)', 'legend gets the stance color');
     // hold Shift on the real keyboard
     await p.keyboard.down('Shift');
-    ok((await capName('Q')) === 'Shield Bash' && (await capName('1')) === 'Cleave' && (await capName('C')) === 'Intimidating Shout' && (await layer()).startsWith('Showing Shift'), 'holding Shift shows the Shift layer');
+    ok((await capName('Q')) === 'Shield Bash' && (await capName('1')) === 'Cleave' && (await capName('C')) === 'Intimidating Shout' && (await layer()).startsWith('Keyboard: Shift layer'), 'holding Shift shows the Shift layer');
     ok((await mod('Shift').getAttribute('class')).includes('kk-on') && (await p.textContent('#kbOff')).includes('s-M4 Mocking Blow'), 'Shift key lit, Shift mouse bind listed');
     await p.keyboard.press('q');
     ok((await capCls('Q')).includes('kb-hit') && (await p.textContent('#kbOut')).includes('Shield Bash'), 'Shift+Q flashes the Q key');
     await p.keyboard.up('Shift');
-    ok((await capName('Q')) === 'Hamstring' && (await layer()).startsWith('Showing no modifier'), 'releasing Shift goes back');
+    ok((await capName('Q')) === 'Hamstring' && (await layer()).startsWith('Keyboard: no modifier'), 'releasing Shift goes back');
     // stance switch updates bar 1 keys only
     await p.keyboard.press('x');
     ok((await capName('Q')) === 'Disarm' && (await capCls('Q')).includes('kk-b1') && (await capName('1')) === 'Heroic Strike' && (await capName('E')) === 'Empty slot', 'Defensive: bar 1 keys swap, bar 2 stays, E empty');
-    ok(await p.$eval('#kbBody', e => e.style.getPropertyValue('--kb-st')) === 'var(--mana)' && (await layer()).includes('Defensive Stance'), 'keyboard follows Defensive Stance');
+    ok(await p.$eval('#kbBody', e => e.style.getPropertyValue('--kb-st')) === 'var(--mana)' && (await p.textContent('#kbB1 .kb-st')) === 'Defensive Stance', 'keyboard follows Defensive Stance');
     await p.keyboard.press('q');
     ok((await capCls('Q')).includes('kb-hit'), 'Q flashes on the keyboard');
     await p.keyboard.press('z');
-    // latch with clicks (phones)
+    // latch modifiers with clicks
     await mod('Ctrl').click();
     ok((await capName('1')) === 'Healing Potion' && (await capName('2')) === 'Bandage' && (await mod('Ctrl').getAttribute('aria-pressed')) === 'true', 'clicking Ctrl latches the Ctrl layer');
     await cap('1').click();
@@ -60,9 +61,8 @@ const { serve, OUT } = require('./env');
     ok((await capCls('X')).includes('kb-on') && (await capName('Q')) === 'Disarm', 'clicking the X key switches stance');
     await cap('Z').click();
     // put Taunt on bar 3, bind it to Alt+Y by clicking keys
-    await p.click('[data-mode="arrange"]');
     await p.click('#kbBook [data-k="taunt"]'); await p.click('#kbBars [data-slot="b3-0"]');
-    await p.click('[data-mode="rebind"]');
+    await kbMode(true);
     await p.click('#kbBars [data-slot="b3-0"]');
     await mod('Alt').click(); await cap('Y').click(); await mod('Alt').click();
     ok((await p.textContent('#kbBars [data-slot="b3-0"] .kb-key')) === 'a-Y', 'Rebind: click slot, latch Alt, click Y binds a-Y');
@@ -71,16 +71,16 @@ const { serve, OUT } = require('./env');
     await cap('Y').click();
     ok((await p.getAttribute('#kbBars [data-slot="b3-0"]', 'class')).includes('kb-wait'), 'Rebind: clicking a bound key selects its slot');
     await p.keyboard.press('Escape'); await mod('Alt').click();
-    ok((await layer()).startsWith('Showing no modifier'), 'Alt unlatched');
+    ok((await layer()).startsWith('Keyboard: no modifier'), 'Alt unlatched');
     // arrange: drag from spellbook onto a key, tap keys to pick up and place
-    await p.click('[data-mode="arrange"]');
+    await kbMode(false);
     await cap('1').scrollIntoViewIfNeeded();
     await p.dragAndDrop('#kbBook [data-k="cleave"]', capSel('1'));
     ok((await slotName('b2-0')) === 'Cleave' && (await capName('1')) === 'Cleave', 'drag spellbook → key 1 fills its slot');
-    await cap('2').click(); await cap('1').click();
-    ok((await slotName('b2-0')) === 'Sunder Armor' && (await slotName('b2-2')) === 'Cleave', 'tap key 2 then key 1 swaps their slots');
+    await p.click('#kbBars [data-slot="b2-2"]'); await cap('1').click();
+    ok((await slotName('b2-0')) === 'Sunder Armor' && (await slotName('b2-2')) === 'Cleave', 'pick up Sunder Armor, click key 1: Sunder takes 1, Cleave takes 2');
     await cap('Y').click();
-    ok((await p.textContent('#kbOut')).includes('Free key'), 'Arrange: a free key has no slot to drop on');
+    ok((await p.textContent('#kbOut')).includes('Free key'), 'clicking a free key says so');
     // drag the Q key over the X key, drop on E (Defensive page)
     await cap('Q').scrollIntoViewIfNeeded();
     const q = await cap('Q').boundingBox(), xk = await cap('X').boundingBox();
@@ -104,18 +104,6 @@ const { serve, OUT } = require('./env');
     }
     await p.evaluate(() => localStorage.clear());
     await p.close();
-  }
-  { // phone
-    const ctx = await b.newContext({ ...devices['iPhone 13'] }); const p = await ctx.newPage(); p.setDefaultTimeout(5000);
-    await p.goto(URL); await p.evaluate(() => localStorage.clear()); await p.reload(); await p.waitForTimeout(1200);
-    ok(await p.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'phone: page has no sideways scroll');
-    ok(await p.$eval('.kb-kbd-scroll', e => e.scrollWidth > e.clientWidth), 'phone: keyboard scrolls inside its box');
-    await p.tap('#kbKeys .kk[data-mod="Shift"]');
-    ok((await p.textContent('#kbLayer')).startsWith('Showing Shift'), 'phone: tap Shift latches');
-    const shotTop = await p.$eval('#kbKeys', e => e.getBoundingClientRect().top + scrollY);
-    await p.screenshot({ path: OUT + '/kbd-phone.png', clip: { x: 0, y: shotTop - 60, width: 390, height: 520 }, fullPage: true });
-    await p.evaluate(() => localStorage.clear());
-    await ctx.close();
   }
   console.log('\n' + (fails.length ? fails.length + ' FAILED' : 'ALL PASSED'));
   process.exitCode = fails.length ? 1 : 0;
