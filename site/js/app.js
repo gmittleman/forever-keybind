@@ -16,13 +16,13 @@ const WH = 'https://www.wowhead.com/forever/';
 const WH_MODE = !!window.$WowheadPower;
 function whRefresh() { if (WH_MODE && window.$WowheadPower.refreshLinks) window.$WowheadPower.refreshLinks(); }
 
-const BAR_LABEL = { st: 'Stance bar', b1: 'Action bar 1', b2: 'Action bar 2', b3: 'Action bar 3', b4: 'Action bar 4', b5: 'Action bar 5' };
+const BAR_LABEL = { st: 'Stance bar', p: 'Pet bar', b1: 'Action bar 1', b2: 'Action bar 2', b3: 'Action bar 3', b4: 'Action bar 4', b5: 'Action bar 5' };
 
 const data = { classes: [], common: null, races: null, cls: {} };
 /* saved: everything in storage. setup: the open setup. M: its class model. L: its layout.
-   stance: the state the character is in (a stance, a form, Prowl); bar 1 shows its page. held: picked up by a click. kb: Keybind mode on.
+   stance: the state the character is in (a stance, a form, Prowl); bar 1 shows its page. pet: the pet bar page. held: picked up by a click. kb: Keybind mode on.
    wait: the slot locked for binding in Keybind mode. hover: the slot under the mouse. */
-const st = { saved: null, setup: null, M: null, L: null, stance: null, held: null, kb: false, wait: null, hover: null, drag: null, wheelAt: 0, hold: {}, latch: {} };
+const st = { saved: null, setup: null, M: null, L: null, stance: null, pet: null, held: null, kb: false, wait: null, hover: null, drag: null, wheelAt: 0, hold: {}, latch: {} };
 
 async function json(path) {
   const r = await fetch(path);
@@ -41,14 +41,19 @@ function racials(race, cls) {
   if (r) r.racials.forEach(k => { const a = data.races.abilities[k]; if (!a.classes || a.classes.includes(cls)) out[k] = a; });
   return out;
 }
-async function modelFor(cls, race) { return model(await classData(cls), data.common, racials(race, cls)); }
+async function modelFor(cls, race, talents) {
+  const r = raceInfo(race);
+  return model(await classData(cls), data.common, racials(race, cls), talents, { race: r ? r.id : null, faction: r ? r.faction : null });
+}
+/* Only the class's talent abilities count as taken talents. */
+async function validTalents(cls, list) { const c = await classData(cls); return (Array.isArray(list) ? list : []).filter(k => c.abilities[k] && c.abilities[k].talent); }
 /* "Dwarf Warrior", or just "Warrior" before a race is chosen */
 function who(s) { const r = raceInfo(s.race); return (r ? r.name.replace(/ \(.*\)$/, '') + ' ' : '') + classInfo(s.cls).name; }
 
 /* ---------- Setups ---------- */
 async function makeSetup(name, cls, level, race) {
-  const M = await modelFor(cls, race);
-  return { id: store.newId(), name, cls, race: validRace(race, cls), level, layout: M.fromStarter(), updated: Date.now() };
+  const talents = await validTalents(cls, (await classData(cls)).starter.talents), M = await modelFor(cls, race, talents);
+  return { id: store.newId(), name, cls, race: validRace(race, cls), level, talents, layout: M.fromStarter(), updated: Date.now() };
 }
 function setupById(id) { return st.saved.setups.find(s => s.id === id); }
 
@@ -57,10 +62,12 @@ async function openSetup(id) {
   st.setup = s;
   st.saved.active = s.id;
   s.race = validRace(s.race, s.cls);
-  st.M = await modelFor(s.cls, s.race);
+  s.talents = await validTalents(s.cls, s.talents);
+  st.M = await modelFor(s.cls, s.race, s.talents);
   const c = st.M.check(s.layout);
   st.L = c.L || st.M.fromStarter();
   st.stance = st.M.start;
+  st.pet = st.M.petStart;
   st.held = null; st.wait = null;
   renderSetupBar();
   build(); paint(); idle();
@@ -80,7 +87,7 @@ function saveNow() {
 
 function renderSetupBar() {
   const s = st.setup, ci = classInfo(s.cls);
-  const label = x => x.name === classInfo(x.cls).name ? x.name : x.name + ' (' + classInfo(x.cls).name + ')';
+  const label = x => x.name.startsWith(classInfo(x.cls).name) ? x.name : x.name + ' (' + classInfo(x.cls).name + ')';
   $('setupSel').innerHTML = st.saved.setups.map(x => '<option value="' + x.id + '"' + (x.id === s.id ? ' selected' : '') + '>' + esc(label(x)) + '</option>').join('');
   $('raceSel').innerHTML = (s.race ? '' : '<option value="" selected>Choose race</option>') +
     racesFor(s.cls).map(r => '<option value="' + r.id + '"' + (r.id === s.race ? ' selected' : '') + '>' + esc(r.name) + '</option>').join('');
@@ -125,7 +132,7 @@ $('setupDlg').addEventListener('close', async () => {
   if (dlg.returnValue !== 'ok' || !name) return;
   if (kind === 'rename') { st.setup.name = name; saveNow(); return renderSetupBar(); }
   let s;
-  if (kind === 'duplicate') s = Object.assign({}, st.setup, { id: store.newId(), name, layout: JSON.parse(JSON.stringify(st.L)), updated: Date.now() });
+  if (kind === 'duplicate') s = Object.assign({}, st.setup, { id: store.newId(), name, talents: st.setup.talents.slice(), layout: JSON.parse(JSON.stringify(st.L)), updated: Date.now() });
   else s = await makeSetup(name, $('dlgCls').value, clampLevel($('dlgLevel').value), $('dlgRace').value);
   st.saved.setups.push(s);
   await openSetup(s.id);
@@ -156,13 +163,14 @@ document.addEventListener('click', e => { if (!e.target.closest('#setupMenu')) $
 /* Changing race swaps the racials. Ones from the old race come off the bars. */
 $('raceSel').addEventListener('change', async e => {
   const old = st.M, race = validRace(e.target.value, st.setup.cls);
-  const M = await modelFor(st.setup.cls, race), gone = [];
-  const strip = row => row.map(k => { if (k && old.racial(k) && !M.ability(k)) { if (!gone.includes(old.name(k))) gone.push(old.name(k)); return null; } return k; });
+  const M = await modelFor(st.setup.cls, race, st.setup.talents), gone = [];
+  /* racials of the old race, and spells of the other faction (mage portals) */
+  const strip = row => row.map(k => { if (k && !M.isPet(k) && !M.book.includes(k)) { if (!gone.includes(old.name(k))) gone.push(old.name(k)); return null; } return k; });
   Object.keys(st.L.bar1).forEach(p => { st.L.bar1[p] = strip(st.L.bar1[p]); });
   st.L.bars = st.L.bars.map(strip);
   st.setup.race = race; st.M = M; st.held = null;
   saveNow(); renderSetupBar(); build(); paint();
-  say('', 'Now a ' + who(st.setup), gone.length ? 'Took ' + gone.join(', ') + ' off your bars: ' + (gone.length > 1 ? 'they were' : 'it was') + ' a racial of your old race.' : 'Your new racials are in the spellbook.');
+  say('', 'Now a ' + who(st.setup), gone.length ? 'Took ' + gone.join(', ') + ' off your bars: ' + (gone.length > 1 ? 'they don’t' : 'it doesn’t') + ' go with your new race.' : 'Your new racials are in the spellbook.');
 });
 $('levelIn').addEventListener('change', e => {
   st.setup.level = clampLevel(e.target.value);
@@ -205,19 +213,26 @@ function icon(k) {
     '<span class="kb-fb" aria-hidden="true">' + esc(initials(a.name)) + '</span>' +
     (a.icon ? '<img src="' + ICONS + a.icon + '.jpg" alt="" draggable="false" onerror="this.remove()">' : '') + '</a>';
 }
-function ref(id) { return st.M.ref(id, st.stance); }
+function ref(id) { return st.M.ref(id, st.stance, st.pet); }
+/* The page a slot shows: the state for action bar 1, the pet for the pet bar */
+function here(id) { return barOf(id) === 'p' ? st.pet : st.stance; }
 function isHeld(id) { return !!(st.held && st.held.ref && st.held.ref.id === id && st.held.ref.st === (isStance(id) ? null : ref(id).st)); }
 
 /* What a slot shows right now: ability, state classes, badges and warnings. Slots and keyboard keys share it. */
 function info(id) {
   const M = st.M, r = { k: null, cls: [], extra: '', warn: [] };
   let k, only = null;
-  const stn = isStance(id);
+  const stn = isStance(id), pet = barOf(id) === 'p';
   if (stn) { const s = M.state(id.slice(3)); k = s.ability; if (s.id === M.shown(st.stance)) r.cls.push('kb-on'); }
   else k = M.get(st.L, ref(id));
   if (!k) { r.cls.push('kb-empty'); return r; }
   r.k = k;
-  if (M.level(k) > lvl()) { r.cls.push('kb-dim'); r.extra += '<span class="kb-lv">' + M.level(k) + '</span>'; r.warn.push('learned at level ' + M.level(k)); }
+  if (!M.taken(k)) { r.cls.push('kb-dim'); r.extra += '<span class="kb-lv">T</span>'; r.warn.push('talent not taken'); }
+  else if (M.level(k) > lvl()) { r.cls.push('kb-dim'); r.extra += '<span class="kb-lv">' + M.level(k) + '</span>'; r.warn.push('learned at level ' + M.level(k)); }
+  if (pet) {
+    if (!M.petWorks(k, st.pet)) { r.cls.push('kb-red'); r.warn.push('your ' + M.petName(st.pet) + ' doesn’t have it'); }
+    return r;
+  }
   if (!stn && !M.works(k, st.stance)) { r.cls.push('kb-red'); r.warn.push('can’t be used in ' + M.stanceName(st.stance)); }
   if (!stn && barOf(id) !== 'b1') only = M.only(k);
   if (only) {
@@ -233,20 +248,34 @@ function paintSlot(el, id) {
   if (isHeld(id)) cls.push('kb-held');
   el.className = cls.join(' ');
   if (k && !isStance(id)) el.setAttribute('draggable', 'true'); else el.removeAttribute('draggable');
-  el.setAttribute('aria-label', st.M.slotName(id, st.stance) + '. ' + (key ? K.long(key) : 'Unbound') + '. ' + (k ? st.M.name(k) : 'Empty') + (i.warn.length ? '. ' + i.warn.join(', ') : ''));
+  el.setAttribute('aria-label', st.M.slotName(id, here(id)) + '. ' + (key ? K.long(key) : 'Unbound') + '. ' + (k ? st.M.name(k) : 'Empty') + (i.warn.length ? '. ' + i.warn.join(', ') : ''));
   el.innerHTML = '<span class="kb-btn">' + (k ? icon(k) : '') + (st.wait === id ? '<span class="kb-key">…</span>' : key ? '<span class="kb-key">' + esc(K.short(key)) + '</span>' : '') + i.extra + '</span>' +
     '<span class="kb-name">' + (k ? esc(st.M.name(k)) : '') + '</span>';
 }
 function paintBook(el) {
-  const M = st.M, k = el.dataset.k, a = M.ability(k), dim = M.level(k) > lvl(), only = M.only(k);
+  const M = st.M, k = el.dataset.k, a = M.ability(k), took = M.taken(k), dim = !took || M.level(k) > lvl();
+  const only = !a.pet && M.only(k);
   el.className = 'kb-sp' + (dim ? ' kb-dim' : '') + (st.held && st.held.from === 'book' && st.held.k === k ? ' kb-held' : '');
   el.setAttribute('draggable', 'true');
-  const meta = (a.item ? 'Item' : (M.racial(k) ? 'Racial · ' : '') + 'Level ' + M.level(k)) + ' · ' + (only ? M.stanceList(only).replace(/ (Stance|Form)/g, '') : 'Any ' + word());
-  el.setAttribute('aria-label', a.name + '. ' + meta);
-  el.innerHTML = '<span class="kb-btn">' + icon(k) + (dim ? '<span class="kb-lv">' + M.level(k) + '</span>' : '') + '</span>' +
-    '<span class="kb-spt"><span class="kb-spn">' + esc(a.name) + '</span><span class="kb-spm">' + esc(meta) + '</span></span>';
+  const where = a.pet ? (a.pets ? a.pets.map(x => M.petName(x)).join(', ') : '')
+    : only ? M.stanceList(only).replace(/ (Stance|Form)/g, '') : M.restricts ? 'Any ' + word() : '';
+  const meta = [a.item ? 'Item' : (M.racial(k) ? 'Racial · ' : '') + 'Level ' + M.level(k), where].filter(Boolean).join(' · ');
+  el.setAttribute('aria-label', a.name + '. ' + meta + (M.talent(k) ? '. ' + a.tree + ' talent, ' + (took ? 'taken' : 'not taken') : ''));
+  el.innerHTML = '<span class="kb-btn">' + icon(k) + (!took ? '<span class="kb-lv">T</span>' : dim ? '<span class="kb-lv">' + M.level(k) + '</span>' : '') + '</span>' +
+    '<span class="kb-spt"><span class="kb-spn">' + esc(a.name) + '</span><span class="kb-spm">' + esc(meta) + '</span></span>' +
+    (M.talent(k) ? '<button type="button" class="kb-take" aria-pressed="' + took + '" title="' + (took ? 'You took this talent. Click to remove it.' : 'Click if you took this talent.') + '">' + (took ? 'Taken' : 'Take') + '</button>' : '');
 }
-
+/* Spellbook groups: class abilities, a group per talent tree, racials, items, then the pet's. */
+function bookGroups() {
+  const M = st.M, groups = [];
+  const add = (t, k) => { let g = groups.find(x => x.t === t); if (!g) groups.push(g = { t, ks: [] }); g.ks.push(k); };
+  M.book.forEach(k => {
+    const a = M.ability(k);
+    add(a.item ? 'Items' : M.racial(k) ? 'Racials' : a.talent ? a.tree + ' talents' : classInfo(st.setup.cls).name, k);
+  });
+  if (M.pet) M.pet.book.forEach(k => { const a = M.ability(k); add(a.pets && a.pets.length === 1 ? M.petName(a.pets[0]) : 'Pet', k); });
+  return groups;
+}
 /* US QWERTY main block: [key, width in quarter keys, 'mod' or 'off' (not bindable here)]. Each row is 60 wide. */
 const keyRow = (keys, before, after) => (before || []).concat(keys.split(' ').map(b => [b, 4]), after || []);
 const ROWS = [
@@ -283,7 +312,7 @@ function paintKeys() {
       const i = info(id);
       cls += ' kk-' + barOf(id) + ' ' + i.cls.join(' ') + (st.wait === id ? ' kb-wait' : '') + (isHeld(id) ? ' kb-held' : '');
       body = i.k ? '<span class="kb-btn">' + icon(i.k) + i.extra + '</span><span class="kk-n">' + esc(M.name(i.k)) + '</span>' : '<span class="kk-n kk-e">Empty slot</span>';
-      el.setAttribute('aria-label', K.long(key) + ': ' + (i.k ? M.name(i.k) : 'empty slot') + ', ' + M.slotName(id, st.stance) + (i.warn.length ? ', ' + i.warn.join(', ') : ''));
+      el.setAttribute('aria-label', K.long(key) + ': ' + (i.k ? M.name(i.k) : 'empty slot') + ', ' + M.slotName(id, here(id)) + (i.warn.length ? ', ' + i.warn.join(', ') : ''));
     } else { cls += ' kk-free'; el.setAttribute('aria-label', K.long(key) + ': not bound'); }
     if (id && !isStance(id) && M.get(st.L, ref(id))) el.setAttribute('draggable', 'true'); else el.removeAttribute('draggable');
     el.className = cls;
@@ -309,13 +338,16 @@ function build() {
   const bar = (id, title, ids, right, after) =>
     '<div class="kb-bar" id="' + id + '"><div class="kb-bar-h"><b>' + title + '</b><span class="kb-bar-r">' + (right || '') + '</span></div><div class="kb-slots">' +
     ids.map(s => '<div class="kb-slot" data-slot="' + s + '" role="button" tabindex="0"></div>').join('') + '</div>' + (after || '') + '</div>';
-  const extra = st.L.bars.map((_, n) => 'b' + (n + 2));
-  /* Stacked like the game: stance bar on top, then the highest bar down to 2, action bar 1 at the bottom. */
-  $('kbBars').innerHTML = bar('kbSt', 'Stance bar', st.M.stances.map(s => 'st-' + s.id)) +
-    [...extra].reverse().map(b => bar('kbB' + b.slice(1), BAR_LABEL[b], rowIds(b), 'All ' + word() + 's')).join('') +
-    bar('kbB1', 'Action bar 1', rowIds('b1'), '', '<div class="kb-pages" id="kbPages" role="group" aria-label="Action bar 1 pages"></div>');
-  $('kbLegend').innerHTML = ['b1', ...extra, 'st'].map(b => '<span class="kk-' + b + '">' + BAR_LABEL[b] + '</span>').join('');
-  $('kbBook').innerHTML = st.M.book.map(k => '<div class="kb-sp" data-k="' + k + '" role="button" tabindex="0"></div>').join('');
+  const M = st.M, extra = st.L.bars.map((_, n) => 'b' + (n + 2));
+  /* Stacked like the game: stance bar and pet bar on top, then the highest bar down to 2, action bar 1 at the
+     bottom. Classes without stances have no stance bar, and bar 1 only gets page tabs when it has pages. */
+  $('kbBars').innerHTML = (M.stances.length ? bar('kbSt', 'Stance bar', M.stances.map(s => 'st-' + s.id)) : '') +
+    (M.pet ? bar('kbPet', 'Pet bar', rowIds('p'), '', M.petPages.length > 1 ? '<div class="kb-pages" id="kbPetTabs" role="group" aria-label="Pets"></div>' : '') : '') +
+    [...extra].reverse().map(b => bar('kbB' + b.slice(1), BAR_LABEL[b], rowIds(b), M.restricts ? 'All ' + word() + 's' : '')).join('') +
+    bar('kbB1', 'Action bar 1', rowIds('b1'), '', M.pages.length > 1 ? '<div class="kb-pages" id="kbPages" role="group" aria-label="Action bar 1 pages"></div>' : '');
+  $('kbLegend').innerHTML = ['b1', ...extra, M.pet && 'p', M.stances.length && 'st'].filter(Boolean).map(b => '<span class="kk-' + b + '">' + BAR_LABEL[b] + '</span>').join('');
+  $('kbBook').innerHTML = bookGroups().map(g => '<div class="kb-bh">' + esc(g.t) + '</div>' +
+    g.ks.map(k => '<div class="kb-sp" data-k="' + k + '" role="button" tabindex="0"></div>').join('')).join('');
   $('kbKeys').innerHTML = ROWS.map(row => row.map(c => {
     const w = ' style="grid-column:span ' + c[1] + '"';
     if (c[2] === 'mod') return '<div class="kk kk-mod" data-mod="' + c[0] + '" role="button" tabindex="0"' + w + '></div>';
@@ -333,12 +365,13 @@ function build() {
 /* Repaints in place, so a drag that starts on a slot survives a stance switch. */
 function paint() {
   const M = st.M, page = M.pageOf(st.stance), s = M.state(M.shown(st.stance)), b1 = $('kbB1');
-  $('kbBody').style.setProperty('--kb-st', s.color || M.state(page).color);
+  $('kbBody').style.setProperty('--kb-st', s.color || M.state(page).color || 'var(--gold)');
   document.body.classList.toggle('kbmode', st.kb);
   $('kbModeBtn').setAttribute('aria-pressed', st.kb ? 'true' : 'false');
   /* The state you're in, and a tab per bar 1 page with the one on show lit. Travel Form lights Caster. */
-  b1.querySelector('.kb-bar-r').innerHTML = '<span class="kb-st">' + esc(M.stanceName(st.stance)) + '</span>';
-  $('kbPages').innerHTML = M.pages.map(p => '<button type="button" class="kb-pg" data-page="' + p.id + '" aria-pressed="' + (p.id === page) + '" title="Show the ' + esc(M.stanceName(p.id)) + ' page">' + esc(short(p.id)) + '</button>').join('');
+  b1.querySelector('.kb-bar-r').innerHTML = M.hasStates ? '<span class="kb-st">' + esc(M.stanceName(st.stance)) + '</span>' : '';
+  if ($('kbPetTabs')) $('kbPetTabs').innerHTML = M.petPages.map(p => '<button type="button" class="kb-pg" data-pet="' + p.id + '" aria-pressed="' + (p.id === st.pet) + '" title="Show the ' + esc(p.name) + '’s pet bar">' + esc(p.name) + '</button>').join('');
+  if ($('kbPages')) $('kbPages').innerHTML = M.pages.map(p => '<button type="button" class="kb-pg" data-page="' + p.id + '" aria-pressed="' + (p.id === page) + '" title="Show the ' + esc(M.stanceName(p.id)) + ' page">' + esc(short(p.id)) + '</button>').join('');
   document.querySelectorAll('#kbBars .kb-slot').forEach(el => paintSlot(el, el.dataset.slot));
   document.querySelectorAll('#kbBook .kb-sp').forEach(paintBook);
   $('kbSum').textContent = st.M.summary(st.L, st.setup.name + ': ' + who(st.setup) + ', level ' + lvl(), lvl());
@@ -349,6 +382,11 @@ function paint() {
 function filterBook() {
   const q = $('bookFilter').value.trim().toLowerCase();
   document.querySelectorAll('#kbBook .kb-sp').forEach(el => { el.hidden = !!q && !st.M.name(el.dataset.k).toLowerCase().includes(q); });
+  document.querySelectorAll('#kbBook .kb-bh').forEach(h => {
+    let n = h.nextElementSibling, any = false;
+    while (n && !n.classList.contains('kb-bh')) { if (!n.hidden) any = true; n = n.nextElementSibling; }
+    h.hidden = !any;
+  });
 }
 $('bookFilter').addEventListener('input', filterBook);
 
@@ -388,22 +426,40 @@ function enterState(t, label, w) {
   const M = st.M, was = st.stance, res = M.enter(was, t);
   if (res.warn) return say(label, M.stanceName(t), 'You’re in ' + M.stanceName(was) + '.', [res.warn].concat(w));
   switchStance(res.next);
+  /* one page (paladin auras, Shadowform): nothing on the bars changes */
+  if (M.pages.length < 2) return say(label, M.stanceName(t), res.next !== t ? M.stanceName(t) + ' is off.' : M.stanceName(t) + ' is on.', w);
   if (res.next !== t) return say(label, M.stanceName(t), 'Left ' + M.stanceName(t) + ', back in ' + M.stanceName(res.next) + '. ' + pageNote(res.next), w);
   say(label, M.stanceName(t), pageNote(t), w);
 }
 function press(id, key) {
   const M = st.M, label = K.short(key), w = [];
   flash(id); if (key) flashKey(key);
+  const learned = k => {
+    if (!M.taken(k)) w.push('Talent not taken: ' + M.name(k) + ' is a ' + M.ability(k).tree + ' talent.');
+    else if (M.level(k) > lvl()) w.push('Not learned yet: level ' + M.level(k) + ' (you’re ' + lvl() + ').');
+  };
   if (isStance(id)) {
     const s = M.state(id.slice(3));
-    if (M.level(s.ability) > lvl()) w.push('Not learned yet: level ' + M.level(s.ability) + ' (you’re ' + lvl() + ').');
+    learned(s.ability);
     return enterState(s.id, label, w);
   }
   const k = M.get(st.L, ref(id));
-  if (!k) return say(label, 'Empty slot', M.slotName(id, st.stance));
-  if (M.level(k) > lvl()) w.push('Not learned yet: level ' + M.level(k) + ' (you’re ' + lvl() + ').');
-  const s = M.stateFor(k);
-  if (s && M.works(k, st.stance)) return enterState(s.id, label, w);
+  if (!k) return say(label, 'Empty slot', M.slotName(id, here(id)));
+  learned(k);
+  if (barOf(id) === 'p') {
+    if (!M.petWorks(k, st.pet)) w.unshift('Your ' + M.petName(st.pet) + ' doesn’t have it.');
+    return say(label, M.name(k), (key ? K.long(key) + ' · ' : '') + M.slotName(id, st.pet), w);
+  }
+  const s = M.stateFor(k), pg = M.petFor(k);
+  if (s && M.works(k, st.stance)) {
+    /* Vanish while already in Stealth keeps you there; only Stealth itself toggles */
+    if (s.ability !== k && st.stance === s.id) return say(label, M.name(k), 'You stay in ' + M.stanceName(s.id) + '.', w);
+    return enterState(s.id, label, w);
+  }
+  if (pg) {
+    if (pg.id !== st.pet) { st.pet = pg.id; paint(); }
+    return say(label, M.name(k), 'The pet bar now shows your ' + pg.name + '’s abilities.', w);
+  }
   if (!M.works(k, st.stance)) w.unshift('Can’t be used in ' + M.stanceName(st.stance) + '. Needs ' + M.stanceList(M.only(k) || M.states.filter(x => M.rule(k).includes(x.id))) + '.');
   say(label, M.name(k), (key ? K.long(key) + ' · ' : '') + M.slotName(id, st.stance), w);
 }
@@ -416,6 +472,8 @@ function drop(src, r, onKey) {
   if (b === src.k) b = null;
   const res = st.M.drop(st.L, src, r, onKey);
   if (!res) return paint();
+  /* a pet ability onto a player bar, or the other way: nothing moved, and it stays in hand */
+  if (res.error) { st.held = src.from === 'book' || src.ref ? src : null; paint(); return say('', 'Can’t go there', res.error); }
   let pick = '';
   if (b && src.from === 'book') {
     st.held = { from: 'book', k: b };
@@ -438,6 +496,14 @@ function arrange(id, onKey) {
   }
   if (!k) return say('', 'Empty slot', 'Drag an ability here from the spellbook, or click one there first.');
   st.held = { from: 'slot', ref: r, k }; paint(); idle();
+}
+/* Taking a talent makes its ability count as learned; the setup keeps the list. */
+function toggleTalent(k) {
+  const M = st.M, on = !M.taken(k);
+  M.take(k, on);
+  st.setup.talents = M.talents();
+  saveNow(); paint();
+  say('', (on ? 'Took ' : 'Removed ') + M.name(k), on ? 'It counts as learned from level ' + M.level(k) + '.' : 'It shows as not taken wherever it is on your bars.');
 }
 function bookPick(k) {
   const h = st.held;
@@ -473,7 +539,7 @@ async function tool(act, b) {
     saveNow(); renderSetupBar(); build(); paint(); idle(); return msg('Back to the starter layout.');
   }
   if (act === 'export') {
-    const s = st.setup, json = JSON.stringify({ app: 'forever-keybind', v: store.VERSION, setup: { name: s.name, cls: s.cls, race: s.race, level: s.level, layout: st.L } }, null, 2);
+    const s = st.setup, json = JSON.stringify({ app: 'forever-keybind', v: store.VERSION, setup: { name: s.name, cls: s.cls, race: s.race, level: s.level, talents: s.talents, layout: st.L } }, null, 2);
     $('kbJson').value = json; copyText(b, json);
     return msg('The setup is in the box above and copied to your clipboard.');
   }
@@ -484,9 +550,10 @@ async function tool(act, b) {
     const src = o && o.setup ? o.setup : { name: 'Imported', cls: 'warrior', race: 'dwarf', level: 60, layout: o && o.layout ? o.layout : o };
     const ci = classInfo(src.cls);
     if (!ci || !ci.ready) return msg('That setup is for a class this site doesn’t support yet.');
-    const race = validRace(src.race, src.cls), M = await modelFor(src.cls, race), c = M.check(src.layout);
+    const race = validRace(src.race, src.cls), talents = await validTalents(src.cls, src.talents);
+    const M = await modelFor(src.cls, race, talents), c = M.check(src.layout);
     if (c.error) return msg(c.error);
-    const s = { id: store.newId(), name: String(src.name || 'Imported').slice(0, 40), cls: src.cls, race, level: clampLevel(src.level), layout: c.L, updated: Date.now() };
+    const s = { id: store.newId(), name: String(src.name || 'Imported').slice(0, 40), cls: src.cls, race, level: clampLevel(src.level), talents, layout: c.L, updated: Date.now() };
     st.saved.setups.push(s);
     await openSetup(s.id); saveNow();
     return msg('Imported as the setup “' + s.name + '”.' + (c.notes.length ? ' ' + c.notes.join(' ') : ''));
@@ -505,7 +572,9 @@ body.addEventListener('click', e => {
   const t = e.target;
   let x;
   if (t.closest('.kb-ico')) e.preventDefault();
+  if ((x = t.closest('.kb-pg[data-pet]'))) { st.pet = x.dataset.pet; paint(); return idle(); }
   if ((x = t.closest('.kb-pg'))) { switchStance(x.dataset.page); return idle(); }
+  if ((x = t.closest('.kb-take'))) return toggleTalent(x.closest('.kb-sp').dataset.k);
   if ((x = t.closest('.kb-slot'))) {
     const id = x.dataset.slot;
     if (st.kb) { st.wait = st.wait === id ? null : id; paint(); return idle(); }
@@ -557,7 +626,9 @@ body.addEventListener('dragstart', e => {
 /* Dragging over a stance button or key switches bar 1, so you can drop on the other stance's page. */
 /* A page tab does the same, which is how a druid reaches the caster page mid-drag. */
 function dragState(t) {
-  const pg = t.closest('.kb-pg');
+  const pt = t.closest('.kb-pg[data-pet]');
+  if (pt) { if (st.pet !== pt.dataset.pet) { st.pet = pt.dataset.pet; paint(); } return null; }
+  const pg = t.closest('.kb-pg[data-page]');
   if (pg) return pg.dataset.page;
   const tg = dropTarget(t);
   return tg && isStance(tg.id) ? tg.id.slice(3) : null;
@@ -588,7 +659,8 @@ document.addEventListener('dragend', () => { if (st.drag) { st.drag = null; over
 const tt = $('tt');
 function tip(k) {
   const a = st.M.ability(k);
-  return '<div class="t-name y">' + esc(a.name) + '</div><div class="gr">' + (a.item ? 'Item' : 'Learned at level ' + st.M.level(k)) + '</div>' +
+  const how = a.item ? 'Item' : a.talent ? a.tree + ' talent, from level ' + st.M.level(k) : (a.pet ? 'Pet ability, ' : '') + 'Learned at level ' + st.M.level(k);
+  return '<div class="t-name y">' + esc(a.name) + '</div><div class="gr">' + esc(how) + '</div>' +
     (a.desc ? '<div style="margin-top:4px">' + esc(a.desc) + '</div>' : '');
 }
 function place(x, y) {

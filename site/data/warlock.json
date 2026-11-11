@@ -1,0 +1,957 @@
+{
+  "id": "warlock",
+  "name": "Warlock",
+  "color": "#8788EE",
+  "base": {
+    "id": "warlock",
+    "name": "Warlock",
+    "color": "var(--xp)"
+  },
+  "stances": [],
+  "use": {},
+  "book": [
+    "shadowbolt",
+    "demonskin",
+    "summonimp",
+    "immolate",
+    "shoot",
+    "corruption",
+    "curseofweakness",
+    "lifetap",
+    "baneofagony",
+    "fear",
+    "createhealthstone",
+    "drainsoul",
+    "summonvoidwalker",
+    "healthfunnel",
+    "curseofrecklessness",
+    "drainlife",
+    "unendingbreath",
+    "createsoulstone",
+    "searingpain",
+    "rainoffire",
+    "ritualofsummoning",
+    "summonsuccubus",
+    "summonincubus",
+    "demonarmor",
+    "curseoftheelements",
+    "eyeofkilrogg",
+    "drainmana",
+    "sensedemons",
+    "curseoftongues",
+    "detectinvisibility",
+    "createfirestone",
+    "banish",
+    "hellfire",
+    "summonfelhunter",
+    "subjugatedemon",
+    "shadowward",
+    "createspellstone",
+    "summonfelsteed",
+    "howlofterror",
+    "deathcoil",
+    "soulfire",
+    "inferno",
+    "ritualofdoom",
+    "baneofdoom",
+    "summondreadsteed",
+    "amplifycurse",
+    "curseofexhaustion",
+    "siphonlife",
+    "wrack",
+    "demonicsacrifice",
+    "feldomination",
+    "soullink",
+    "shadowburn",
+    "conflagrate",
+    "baneofhavoc",
+    "incinerate"
+  ],
+  "abilities": {
+    "shadowbolt": {
+      "name": "Shadow Bolt",
+      "spell": 686,
+      "icon": "spell_shadow_shadowbolt",
+      "level": 1,
+      "desc": "Main Shadow nuke with a cast time."
+    },
+    "demonskin": {
+      "name": "Demon Skin",
+      "spell": 687,
+      "icon": "spell_shadow_ragingscream",
+      "level": 1,
+      "desc": "Self buff: armor and health regen for 30 min. Demon Armor replaces it at 20."
+    },
+    "summonimp": {
+      "name": "Summon Imp",
+      "spell": 688,
+      "icon": "spell_shadow_summonimp",
+      "level": 1,
+      "desc": "Summons your Imp (fire caster, Blood Pact)."
+    },
+    "immolate": {
+      "name": "Immolate",
+      "spell": 348,
+      "icon": "spell_fire_immolation",
+      "level": 1,
+      "desc": "Fire hit plus a burn over 15 sec."
+    },
+    "shoot": {
+      "name": "Shoot",
+      "spell": 5019,
+      "icon": "ability_shootwand",
+      "level": 1,
+      "desc": "Wand attack; the warlock's free filler. Not a warlock spell, needs a wand."
+    },
+    "corruption": {
+      "name": "Corruption",
+      "spell": 172,
+      "icon": "spell_shadow_abominationexplosion",
+      "level": 4,
+      "desc": "Shadow damage over time. Damage-over-time effects can crit in Forever."
+    },
+    "curseofweakness": {
+      "name": "Curse of Weakness",
+      "spell": 702,
+      "icon": "spell_shadow_curseofmannoroth",
+      "level": 4,
+      "desc": "Curse: reduces the target's physical damage. One Curse per warlock per target."
+    },
+    "lifetap": {
+      "name": "Life Tap",
+      "spell": 1454,
+      "icon": "spell_shadow_burningspirit",
+      "level": 6,
+      "desc": "Turns health into mana. Scales with Spirit in Forever."
+    },
+    "baneofagony": {
+      "name": "Bane of Agony",
+      "spell": 980,
+      "icon": "spell_shadow_curseofsargeras",
+      "level": 8,
+      "desc": "Bane: ramping Shadow damage over 24 sec. Was Curse of Agony; in Forever it is a Bane, so it stacks with your Curse."
+    },
+    "fear": {
+      "name": "Fear",
+      "spell": 5782,
+      "icon": "spell_shadow_possession",
+      "level": 8,
+      "desc": "Makes one target run in fear; damage may break it."
+    },
+    "createhealthstone": {
+      "name": "Create Healthstone",
+      "spell": 6201,
+      "icon": "inv_stone_04",
+      "level": 10,
+      "desc": "Conjures a Healthstone (instant heal item, bind the stone too)."
+    },
+    "drainsoul": {
+      "name": "Drain Soul",
+      "spell": 1120,
+      "icon": "spell_shadow_haunting",
+      "level": 10,
+      "desc": "Channel that gives Soul Shards. Forever: shard chance rises every tick until guaranteed."
+    },
+    "summonvoidwalker": {
+      "name": "Summon Voidwalker",
+      "spell": 697,
+      "icon": "spell_shadow_summonvoidwalker",
+      "level": 10,
+      "desc": "Summons your Voidwalker tank. Costs a Soul Shard."
+    },
+    "healthfunnel": {
+      "name": "Health Funnel",
+      "spell": 755,
+      "icon": "spell_shadow_lifedrain",
+      "level": 12,
+      "desc": "Channel your health into your demon."
+    },
+    "curseofrecklessness": {
+      "name": "Curse of Recklessness",
+      "spell": 704,
+      "icon": "spell_shadow_unholystrength",
+      "level": 14,
+      "desc": "Curse: lowers armor; the target won't flee or obey Fear."
+    },
+    "drainlife": {
+      "name": "Drain Life",
+      "spell": 689,
+      "icon": "spell_shadow_lifedrain02",
+      "level": 14,
+      "desc": "Channel that steals health from the target."
+    },
+    "unendingbreath": {
+      "name": "Unending Breath",
+      "spell": 5697,
+      "icon": "spell_shadow_demonbreath",
+      "level": 16,
+      "desc": "Lets a friendly target breathe underwater for 10 min."
+    },
+    "createsoulstone": {
+      "name": "Create Soulstone",
+      "spell": 693,
+      "icon": "inv_misc_orb_04",
+      "level": 18,
+      "desc": "Conjures a Soulstone: use it on a target so they can resurrect after dying."
+    },
+    "searingpain": {
+      "name": "Searing Pain",
+      "spell": 5676,
+      "icon": "spell_fire_soulburn",
+      "level": 18,
+      "desc": "Fast Fire nuke with high threat."
+    },
+    "rainoffire": {
+      "name": "Rain of Fire",
+      "spell": 5740,
+      "icon": "spell_shadow_rainoffire",
+      "level": 20,
+      "desc": "Channeled ground-targeted Fire AoE."
+    },
+    "ritualofsummoning": {
+      "name": "Ritual of Summoning",
+      "spell": 698,
+      "icon": "spell_shadow_twilight",
+      "level": 20,
+      "desc": "Opens a portal that summons a group member; needs 2 helpers to click it."
+    },
+    "summonsuccubus": {
+      "name": "Summon Succubus",
+      "spell": 712,
+      "icon": "spell_shadow_summonsuccubus",
+      "level": 20,
+      "desc": "Summons your Succubus (Seduction, Lash of Pain). Class quest at 20."
+    },
+    "summonincubus": {
+      "name": "Summon Incubus",
+      "spell": 713,
+      "icon": "ability_warlock_incubus",
+      "level": 20,
+      "desc": "Summons an Incubus, the male counterpart of the Succubus with the same abilities. New in Forever (separate class quest)."
+    },
+    "demonarmor": {
+      "name": "Demon Armor",
+      "spell": 706,
+      "icon": "spell_shadow_ragingscream",
+      "level": 20,
+      "desc": "Self buff: armor, Shadow resistance and health regen. Replaces Demon Skin."
+    },
+    "curseoftheelements": {
+      "name": "Curse of the Elements",
+      "spell": 440892,
+      "icon": "warlock_curse_shadow",
+      "level": 20,
+      "desc": "Curse: lowers all magic resistances and raises magic damage taken. Forever: all schools, learned at 20 (was 32), new icon and ids."
+    },
+    "eyeofkilrogg": {
+      "name": "Eye of Kilrogg",
+      "spell": 126,
+      "icon": "spell_shadow_evileye",
+      "level": 22,
+      "desc": "Summons a scouting eye and moves your view to it."
+    },
+    "drainmana": {
+      "name": "Drain Mana",
+      "spell": 5138,
+      "icon": "spell_shadow_siphonmana",
+      "level": 24,
+      "desc": "Channel that steals mana from the target."
+    },
+    "sensedemons": {
+      "name": "Sense Demons",
+      "spell": 5500,
+      "icon": "spell_shadow_metamorphosis",
+      "level": 24,
+      "desc": "Tracking: shows demons on the minimap."
+    },
+    "curseoftongues": {
+      "name": "Curse of Tongues",
+      "spell": 1714,
+      "icon": "spell_shadow_curseoftounges",
+      "level": 26,
+      "desc": "Curse: slows the target's casting by 50%."
+    },
+    "detectinvisibility": {
+      "name": "Detect Invisibility",
+      "spell": 132,
+      "icon": "spell_shadow_detectinvisibility",
+      "level": 26,
+      "desc": "Lets a friendly target see invisible units. Forever folds Lesser/normal/Greater into one spell with ranks (26, 38, 50)."
+    },
+    "createfirestone": {
+      "name": "Create Firestone",
+      "spell": 6366,
+      "icon": "inv_misc_gem_bloodstone_02",
+      "level": 28,
+      "desc": "Conjures a Firestone. Forever: using it puts a Fire imbue on your weapon (stacks with oils)."
+    },
+    "banish": {
+      "name": "Banish",
+      "spell": 710,
+      "icon": "spell_shadow_cripple",
+      "level": 28,
+      "desc": "Takes a demon or elemental out of the fight for up to 20 sec."
+    },
+    "hellfire": {
+      "name": "Hellfire",
+      "spell": 1949,
+      "icon": "spell_fire_incinerate",
+      "level": 30,
+      "desc": "Channeled Fire AoE around you that also burns you."
+    },
+    "summonfelhunter": {
+      "name": "Summon Felhunter",
+      "spell": 691,
+      "icon": "spell_shadow_summonfelhunter",
+      "level": 30,
+      "desc": "Summons your Felhunter (Spell Lock, Devour Magic). Class quest at 30."
+    },
+    "subjugatedemon": {
+      "name": "Subjugate Demon",
+      "spell": 1098,
+      "icon": "spell_shadow_enslavedemon",
+      "level": 30,
+      "desc": "Takes control of a demon for up to 5 min. Enslave Demon renamed in Forever."
+    },
+    "shadowward": {
+      "name": "Shadow Ward",
+      "spell": 6229,
+      "icon": "spell_shadow_antishadow",
+      "level": 32,
+      "desc": "Self shield that absorbs Shadow damage for 30 sec."
+    },
+    "createspellstone": {
+      "name": "Create Spellstone",
+      "spell": 2362,
+      "icon": "inv_misc_gem_sapphire_01",
+      "level": 36,
+      "desc": "Conjures a Spellstone. Forever: using it puts a Shadow damage and haste imbue on your weapon."
+    },
+    "summonfelsteed": {
+      "name": "Summon Felsteed",
+      "spell": 5784,
+      "icon": "spell_nature_swiftness",
+      "level": 40,
+      "desc": "Summons your warlock mount. Class quest at 40."
+    },
+    "howlofterror": {
+      "name": "Howl of Terror",
+      "spell": 5484,
+      "icon": "spell_shadow_deathscream",
+      "level": 40,
+      "desc": "AoE fear on up to 5 nearby enemies."
+    },
+    "deathcoil": {
+      "name": "Death Coil",
+      "spell": 6789,
+      "icon": "spell_shadow_deathcoil",
+      "level": 42,
+      "desc": "Instant Shadow hit that horrifies the target for 3 sec and heals you."
+    },
+    "soulfire": {
+      "name": "Soul Fire",
+      "spell": 6353,
+      "icon": "spell_fire_fireball02",
+      "level": 48,
+      "desc": "Huge, slow Fire nuke. Costs a Soul Shard."
+    },
+    "inferno": {
+      "name": "Inferno",
+      "spell": 1122,
+      "icon": "spell_shadow_summoninfernal",
+      "level": 50,
+      "desc": "Calls an Infernal down on an area, stunning enemies; it fights for you for 5 min. Outdoors only."
+    },
+    "ritualofdoom": {
+      "name": "Ritual of Doom",
+      "spell": 18540,
+      "icon": "spell_shadow_antimagicshell",
+      "level": 60,
+      "desc": "Group ritual (caster + 4) that summons a Doomguard and sacrifices a participant."
+    },
+    "baneofdoom": {
+      "name": "Bane of Doom",
+      "spell": 603,
+      "icon": "spell_shadow_auraofdarkness",
+      "level": 60,
+      "desc": "Bane: big Shadow hit after 1 min; may summon a Doomguard if it kills. Was Curse of Doom; can't be cast on players."
+    },
+    "summondreadsteed": {
+      "name": "Summon Dreadsteed",
+      "spell": 23161,
+      "icon": "ability_mount_dreadsteed",
+      "level": 60,
+      "desc": "Summons your epic warlock mount. Class quest at 60."
+    },
+    "amplifycurse": {
+      "name": "Amplify Curse",
+      "spell": 18288,
+      "icon": "spell_shadow_contagion",
+      "level": 20,
+      "talent": true,
+      "tree": "Affliction",
+      "tooltipLevel": 1,
+      "desc": "Boosts your next Curse of Weakness, Bane of Agony or Curse of Exhaustion."
+    },
+    "curseofexhaustion": {
+      "name": "Curse of Exhaustion",
+      "spell": 18223,
+      "icon": "spell_shadow_grimward",
+      "level": 25,
+      "talent": true,
+      "tree": "Affliction",
+      "tooltipLevel": 1,
+      "desc": "Curse: slows the target by 30% for 12 sec. Forever: a 16-point Affliction talent, stronger slow."
+    },
+    "siphonlife": {
+      "name": "Siphon Life",
+      "spell": 18265,
+      "icon": "spell_shadow_requiem",
+      "level": 30,
+      "talent": true,
+      "tree": "Affliction",
+      "desc": "Drains health from the target over 30 sec."
+    },
+    "wrack": {
+      "name": "Wrack",
+      "spell": 1316697,
+      "icon": "ability_deathknight_hemorrhagicfever",
+      "level": 40,
+      "talent": true,
+      "tree": "Affliction",
+      "desc": "Channeled Shadow damage that makes your Corruption, Bane of Agony and Siphon Life tick faster. New in Forever (31-point Affliction talent)."
+    },
+    "demonicsacrifice": {
+      "name": "Demonic Sacrifice",
+      "spell": 18788,
+      "icon": "spell_shadow_psychicscream",
+      "level": 20,
+      "talent": true,
+      "tree": "Demonology",
+      "tooltipLevel": 1,
+      "desc": "Sacrifices your demon for a 2-hour buff that depends on the demon. Reworked in Forever (11-point talent)."
+    },
+    "feldomination": {
+      "name": "Fel Domination",
+      "spell": 18708,
+      "icon": "spell_nature_removecurse",
+      "level": 25,
+      "talent": true,
+      "tree": "Demonology",
+      "tooltipLevel": 1,
+      "desc": "Your next demon summon is 6 sec faster and costs half mana. Forever: 16-point talent, 5 min cooldown."
+    },
+    "soullink": {
+      "name": "Soul Link",
+      "spell": 19028,
+      "icon": "spell_shadow_gathershadows",
+      "level": 30,
+      "talent": true,
+      "tree": "Demonology",
+      "tooltipLevel": 1,
+      "desc": "Your demon takes 30% of your damage taken; you both deal 3% more. Forever: 21-point talent."
+    },
+    "shadowburn": {
+      "name": "Shadowburn",
+      "spell": 17877,
+      "icon": "spell_shadow_scourgebuild",
+      "level": 20,
+      "talent": true,
+      "tree": "Destruction",
+      "desc": "Instant Shadow hit; refunds a shard if the target dies soon. Costs a Soul Shard."
+    },
+    "conflagrate": {
+      "name": "Conflagrate",
+      "spell": 1293817,
+      "icon": "spell_fire_fireball",
+      "level": 25,
+      "talent": true,
+      "tree": "Destruction",
+      "desc": "Instant Fire hit that needs and consumes your Immolate. Forever: 16-point talent with new ranks at 25 and 32."
+    },
+    "baneofhavoc": {
+      "name": "Bane of Havoc",
+      "spell": 1225228,
+      "icon": "ability_warlock_baneofhavoc",
+      "level": 30,
+      "talent": true,
+      "tree": "Destruction",
+      "tooltipLevel": 1,
+      "desc": "Bane on one target: 15% of your damage to other targets also hits it, for 5 min. New in Forever (21-point talent)."
+    },
+    "incinerate": {
+      "name": "Incinerate",
+      "spell": 412758,
+      "icon": "spell_fire_burnout",
+      "level": 40,
+      "talent": true,
+      "tree": "Destruction",
+      "desc": "Fire nuke with a 2.5 sec cast; 25% more if the target has Immolate. New in Forever (31-point Destruction talent)."
+    },
+    "petattack": {
+      "name": "Attack",
+      "icon": "ability_ghoulfrenzy",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Sends your demon to attack your target."
+    },
+    "petfollow": {
+      "name": "Follow",
+      "icon": "ability_tracking",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Calls your demon back to follow you."
+    },
+    "petstay": {
+      "name": "Stay",
+      "icon": "spell_nature_timestop",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Your demon holds its position."
+    },
+    "petaggressive": {
+      "name": "Aggressive",
+      "icon": "ability_racial_bloodrage",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Demon attacks anything in range."
+    },
+    "petdefensive": {
+      "name": "Defensive",
+      "icon": "ability_defend",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Demon attacks what attacks you or it."
+    },
+    "petpassive": {
+      "name": "Passive",
+      "icon": "ability_seal",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Demon never attacks on its own."
+    },
+    "petfirebolt": {
+      "name": "Firebolt",
+      "spell": 3110,
+      "icon": "spell_fire_firebolt",
+      "level": 1,
+      "pet": true,
+      "pets": [
+        "imp"
+      ],
+      "desc": "The Imp's ranged Fire bolt (autocast)."
+    },
+    "petbloodpact": {
+      "name": "Blood Pact",
+      "spell": 6307,
+      "icon": "spell_shadow_bloodboil",
+      "level": 4,
+      "pet": true,
+      "pets": [
+        "imp"
+      ],
+      "desc": "Party Stamina aura. Improved Imp no longer boosts it in Forever."
+    },
+    "petphaseshift": {
+      "name": "Phase Shift",
+      "spell": 4511,
+      "icon": "spell_shadow_impphaseshift",
+      "level": 12,
+      "pet": true,
+      "pets": [
+        "imp"
+      ],
+      "desc": "The Imp phases out and can't be attacked unless it attacks."
+    },
+    "petfireshield": {
+      "name": "Fire Shield",
+      "spell": 2947,
+      "icon": "spell_fire_firearmor",
+      "level": 14,
+      "pet": true,
+      "pets": [
+        "imp"
+      ],
+      "desc": "Puts a Fire damage shield on a party member (not on the Imp)."
+    },
+    "pettorment": {
+      "name": "Torment",
+      "spell": 3716,
+      "icon": "spell_shadow_gathershadows",
+      "level": 10,
+      "pet": true,
+      "pets": [
+        "voidwalker"
+      ],
+      "desc": "Single-target taunt (autocast)."
+    },
+    "petsacrifice": {
+      "name": "Sacrifice",
+      "spell": 7812,
+      "icon": "spell_shadow_sacrificialshield",
+      "level": 16,
+      "pet": true,
+      "pets": [
+        "voidwalker"
+      ],
+      "desc": "Kills the Voidwalker to give you a damage shield."
+    },
+    "petconsumeshadows": {
+      "name": "Consume Shadows",
+      "spell": 17767,
+      "icon": "spell_shadow_antishadow",
+      "level": 18,
+      "pet": true,
+      "pets": [
+        "voidwalker"
+      ],
+      "desc": "Out-of-combat self heal."
+    },
+    "petsuffering": {
+      "name": "Suffering",
+      "spell": 17735,
+      "icon": "spell_shadow_blackplague",
+      "level": 24,
+      "pet": true,
+      "pets": [
+        "voidwalker"
+      ],
+      "desc": "AoE taunt around the Voidwalker."
+    },
+    "petlashofpain": {
+      "name": "Lash of Pain",
+      "spell": 7814,
+      "icon": "spell_shadow_curse",
+      "level": 20,
+      "pet": true,
+      "pets": [
+        "succubus",
+        "incubus"
+      ],
+      "desc": "Instant Shadow attack (autocast)."
+    },
+    "petsoothingkiss": {
+      "name": "Soothing Kiss",
+      "spell": 6360,
+      "icon": "spell_shadow_soothingkiss",
+      "level": 22,
+      "pet": true,
+      "pets": [
+        "succubus",
+        "incubus"
+      ],
+      "desc": "Lowers the Succubus' threat on the target."
+    },
+    "petseduction": {
+      "name": "Seduction",
+      "spell": 6358,
+      "icon": "spell_shadow_mindsteal",
+      "level": 26,
+      "pet": true,
+      "pets": [
+        "succubus",
+        "incubus"
+      ],
+      "desc": "Crowd control on a humanoid for up to 15 sec; damage breaks it."
+    },
+    "petlesserinvisibility": {
+      "name": "Lesser Invisibility",
+      "spell": 7870,
+      "icon": "spell_magic_lesserinvisibilty",
+      "level": 32,
+      "pet": true,
+      "pets": [
+        "succubus",
+        "incubus"
+      ],
+      "desc": "Makes the demon invisible out of combat."
+    },
+    "petdevourmagic": {
+      "name": "Devour Magic",
+      "spell": 19505,
+      "icon": "spell_nature_purge",
+      "level": 30,
+      "pet": true,
+      "pets": [
+        "felhunter"
+      ],
+      "desc": "Dispels a debuff from a friend or a buff from an enemy and heals the Felhunter."
+    },
+    "pettaintedblood": {
+      "name": "Tainted Blood",
+      "spell": 19478,
+      "icon": "spell_shadow_lifedrain",
+      "level": 32,
+      "pet": true,
+      "pets": [
+        "felhunter"
+      ],
+      "desc": "Melee attackers of the Felhunter lose attack power."
+    },
+    "petspelllock": {
+      "name": "Spell Lock",
+      "spell": 19244,
+      "icon": "spell_shadow_mindrot",
+      "level": 36,
+      "pet": true,
+      "pets": [
+        "felhunter"
+      ],
+      "desc": "Silence and interrupt. Improved Felhunter (Forever talent) cuts its cooldown."
+    },
+    "petparanoia": {
+      "name": "Paranoia",
+      "spell": 19480,
+      "icon": "spell_shadow_auraofdarkness",
+      "level": 42,
+      "pet": true,
+      "pets": [
+        "felhunter"
+      ],
+      "desc": "Party stealth-detection aura."
+    }
+  },
+  "pet": {
+    "pages": [
+      {
+        "id": "imp",
+        "name": "Imp",
+        "summon": "summonimp"
+      },
+      {
+        "id": "voidwalker",
+        "name": "Voidwalker",
+        "summon": "summonvoidwalker"
+      },
+      {
+        "id": "succubus",
+        "name": "Succubus",
+        "summon": "summonsuccubus"
+      },
+      {
+        "id": "incubus",
+        "name": "Incubus",
+        "summon": "summonincubus"
+      },
+      {
+        "id": "felhunter",
+        "name": "Felhunter",
+        "summon": "summonfelhunter"
+      }
+    ],
+    "book": [
+      "petattack",
+      "petfollow",
+      "petstay",
+      "petaggressive",
+      "petdefensive",
+      "petpassive",
+      "petfirebolt",
+      "petbloodpact",
+      "petphaseshift",
+      "petfireshield",
+      "pettorment",
+      "petsacrifice",
+      "petconsumeshadows",
+      "petsuffering",
+      "petlashofpain",
+      "petsoothingkiss",
+      "petseduction",
+      "petlesserinvisibility",
+      "petdevourmagic",
+      "pettaintedblood",
+      "petspelllock",
+      "petparanoia"
+    ]
+  },
+  "starter": {
+    "bar1": [
+      {
+        "key": "1",
+        "warlock": "shadowbolt"
+      },
+      {
+        "key": "2",
+        "warlock": "corruption"
+      },
+      {
+        "key": "3",
+        "warlock": "baneofagony"
+      },
+      {
+        "key": "4",
+        "warlock": "immolate"
+      },
+      {
+        "key": "Q",
+        "warlock": "fear"
+      },
+      {
+        "key": "E",
+        "warlock": "drainlife"
+      },
+      {
+        "key": "R",
+        "warlock": "lifetap"
+      },
+      {
+        "key": "F",
+        "warlock": "drainsoul"
+      },
+      {
+        "key": "C",
+        "warlock": "curseofweakness"
+      },
+      {
+        "key": "V",
+        "warlock": "healthfunnel"
+      },
+      {
+        "key": "T",
+        "warlock": "shoot"
+      },
+      {
+        "key": "G",
+        "warlock": "searingpain"
+      }
+    ],
+    "bars": [
+      [
+        [
+          "Shift+1",
+          "summonimp"
+        ],
+        [
+          "Shift+2",
+          "summonvoidwalker"
+        ],
+        [
+          "Shift+3",
+          "summonsuccubus"
+        ],
+        [
+          "Shift+4",
+          "summonfelhunter"
+        ],
+        [
+          "Shift+Q",
+          "demonskin"
+        ],
+        [
+          "Shift+E",
+          "createhealthstone"
+        ],
+        [
+          "Shift+R",
+          "createsoulstone"
+        ],
+        [
+          "Shift+F",
+          "rainoffire"
+        ],
+        [
+          "Shift+T",
+          "unendingbreath"
+        ],
+        [
+          "Shift+C",
+          "banish"
+        ],
+        [
+          "Alt+1",
+          "potion"
+        ],
+        [
+          "Alt+2",
+          "bandage"
+        ]
+      ],
+      []
+    ],
+    "pet": [
+      {
+        "key": "Ctrl+1",
+        "imp": "petattack",
+        "voidwalker": "petattack",
+        "succubus": "petattack",
+        "incubus": "petattack",
+        "felhunter": "petattack"
+      },
+      {
+        "key": "Ctrl+2",
+        "imp": "petfollow",
+        "voidwalker": "petfollow",
+        "succubus": "petfollow",
+        "incubus": "petfollow",
+        "felhunter": "petfollow"
+      },
+      {
+        "key": "Ctrl+3",
+        "imp": "petstay",
+        "voidwalker": "petstay",
+        "succubus": "petstay",
+        "incubus": "petstay",
+        "felhunter": "petstay"
+      },
+      {
+        "key": "Ctrl+4",
+        "imp": "petfirebolt",
+        "voidwalker": "pettorment",
+        "succubus": "petlashofpain",
+        "incubus": "petlashofpain",
+        "felhunter": "petdevourmagic"
+      },
+      {
+        "key": "Ctrl+5",
+        "imp": "petbloodpact",
+        "voidwalker": "petsacrifice",
+        "succubus": "petsoothingkiss",
+        "incubus": "petsoothingkiss",
+        "felhunter": "pettaintedblood"
+      },
+      {
+        "key": "Ctrl+6",
+        "imp": "petphaseshift",
+        "voidwalker": "petconsumeshadows",
+        "succubus": "petseduction",
+        "incubus": "petseduction",
+        "felhunter": "petspelllock"
+      },
+      {
+        "key": "Ctrl+7",
+        "imp": "petfireshield",
+        "voidwalker": "petsuffering",
+        "succubus": "petlesserinvisibility",
+        "incubus": "petlesserinvisibility",
+        "felhunter": "petparanoia"
+      },
+      {
+        "imp": "petaggressive",
+        "voidwalker": "petaggressive",
+        "succubus": "petaggressive",
+        "incubus": "petaggressive",
+        "felhunter": "petaggressive"
+      },
+      {
+        "imp": "petdefensive",
+        "voidwalker": "petdefensive",
+        "succubus": "petdefensive",
+        "incubus": "petdefensive",
+        "felhunter": "petdefensive"
+      },
+      {
+        "imp": "petpassive",
+        "voidwalker": "petpassive",
+        "succubus": "petpassive",
+        "incubus": "petpassive",
+        "felhunter": "petpassive"
+      }
+    ]
+  }
+}

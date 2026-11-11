@@ -1,0 +1,452 @@
+{
+  "id": "rogue",
+  "name": "Rogue",
+  "color": "#FFF468",
+  "base": {
+    "id": "normal",
+    "name": "Normal",
+    "abbr": "N",
+    "color": "var(--energy)"
+  },
+  "hidden": [
+    {
+      "id": "stealth",
+      "ability": "stealth",
+      "enteredBy": [
+        "vanish"
+      ],
+      "abbr": "S",
+      "color": "var(--xp)"
+    }
+  ],
+  "stances": [],
+  "use": {
+    "pickpocket": [
+      "stealth"
+    ],
+    "sap": [
+      "stealth"
+    ],
+    "garrote": [
+      "stealth"
+    ],
+    "ambush": [
+      "stealth"
+    ],
+    "cheapshot": [
+      "stealth"
+    ]
+  },
+  "book": [
+    "sinisterstrike",
+    "eviscerate",
+    "stealth",
+    "throw",
+    "backstab",
+    "pickpocket",
+    "gouge",
+    "evasion",
+    "sap",
+    "sliceanddice",
+    "sprint",
+    "kick",
+    "exposearmor",
+    "garrote",
+    "feint",
+    "picklock",
+    "ambush",
+    "rupture",
+    "distract",
+    "vanish",
+    "shank",
+    "cheapshot",
+    "kidneyshot",
+    "disarmtrap",
+    "blind",
+    "coldblood",
+    "mutilate",
+    "riposte",
+    "bladeflurry",
+    "adrenalinerush",
+    "premeditation",
+    "ghostlystrike",
+    "preparation",
+    "hemorrhage",
+    "deathmark"
+  ],
+  "abilities": {
+    "sinisterstrike": {
+      "name": "Sinister Strike",
+      "spell": 1752,
+      "icon": "spell_shadow_ritualofsacrifice",
+      "level": 1,
+      "desc": "Basic attack, 1 combo point."
+    },
+    "eviscerate": {
+      "name": "Eviscerate",
+      "spell": 2098,
+      "icon": "ability_rogue_eviscerate",
+      "level": 1,
+      "desc": "Damage finisher; more damage per combo point."
+    },
+    "stealth": {
+      "name": "Stealth",
+      "spell": 1784,
+      "icon": "ability_stealth",
+      "level": 1,
+      "desc": "Sneak around at reduced speed; swaps action bar 1 to the Stealth page. Can't be used in combat."
+    },
+    "throw": {
+      "name": "Throw",
+      "spell": 2764,
+      "icon": "ability_throw",
+      "level": 1,
+      "desc": "Ranged attack with a thrown weapon (Shoot Bow/Gun/Crossbow if you equip one instead). Good for pulling."
+    },
+    "backstab": {
+      "name": "Backstab",
+      "spell": 53,
+      "icon": "ability_backstab",
+      "level": 4,
+      "desc": "Big dagger hit from behind, 1 combo point."
+    },
+    "pickpocket": {
+      "name": "Pick Pocket",
+      "spell": 921,
+      "icon": "inv_misc_bag_11",
+      "level": 4,
+      "desc": "Steal from a humanoid's pockets. Stealth only, doesn't break Stealth."
+    },
+    "gouge": {
+      "name": "Gouge",
+      "spell": 1776,
+      "icon": "ability_gouge",
+      "level": 6,
+      "desc": "Incapacitates the target for 4 sec from the front; damage breaks it. 1 combo point."
+    },
+    "evasion": {
+      "name": "Evasion",
+      "spell": 5277,
+      "icon": "spell_shadow_shadowward",
+      "level": 8,
+      "desc": "+50% dodge for 15 sec. Defensive cooldown."
+    },
+    "sap": {
+      "name": "Sap",
+      "spell": 6770,
+      "icon": "ability_sap",
+      "level": 10,
+      "desc": "Incapacitates an out-of-combat humanoid for up to 25 sec from Stealth. Changed in Forever: no longer breaks Stealth (baseline)."
+    },
+    "sliceanddice": {
+      "name": "Slice and Dice",
+      "spell": 5171,
+      "icon": "ability_rogue_slicedice",
+      "level": 10,
+      "desc": "Finisher: +20% attack speed, longer per combo point."
+    },
+    "sprint": {
+      "name": "Sprint",
+      "spell": 2983,
+      "icon": "ability_rogue_sprint",
+      "level": 10,
+      "desc": "+50% run speed for 15 sec. Doesn't break Stealth."
+    },
+    "kick": {
+      "name": "Kick",
+      "spell": 1766,
+      "icon": "ability_kick",
+      "level": 12,
+      "desc": "Interrupts a spellcast and locks that school for 5 sec."
+    },
+    "exposearmor": {
+      "name": "Expose Armor",
+      "spell": 8647,
+      "icon": "ability_warrior_riposte",
+      "level": 14,
+      "desc": "Finisher that lowers the target's armor for 30 sec. Changed in Forever: stronger, and no longer blocks Sunder Armor."
+    },
+    "garrote": {
+      "name": "Garrote",
+      "spell": 703,
+      "icon": "ability_rogue_garrote",
+      "level": 14,
+      "desc": "Bleed opener from Stealth, 1 combo point. Usable out of Stealth briefly after Ghostly Strike."
+    },
+    "feint": {
+      "name": "Feint",
+      "spell": 1966,
+      "icon": "ability_rogue_feint",
+      "level": 16,
+      "desc": "Drops your threat. Changed in Forever: threat reduction doubled."
+    },
+    "picklock": {
+      "name": "Pick Lock",
+      "spell": 1804,
+      "icon": "spell_nature_moonkey",
+      "level": 16,
+      "tooltipLevel": 1,
+      "desc": "Opens locked chests and doors (needs Thieves' Tools). Learned at the trainer around 16."
+    },
+    "ambush": {
+      "name": "Ambush",
+      "spell": 8676,
+      "icon": "ability_rogue_ambush",
+      "level": 18,
+      "desc": "Big dagger opener from Stealth, behind the target. 1 combo point. Usable out of Stealth briefly after Ghostly Strike."
+    },
+    "rupture": {
+      "name": "Rupture",
+      "spell": 1943,
+      "icon": "ability_rogue_rupture",
+      "level": 20,
+      "desc": "Bleed finisher; lasts longer per combo point."
+    },
+    "distract": {
+      "name": "Distract",
+      "spell": 1725,
+      "icon": "ability_rogue_distract",
+      "level": 22,
+      "desc": "Turns nearby enemies toward a spot. Changed in Forever: also lowers their Stealth detection for 10 sec. Doesn't break Stealth."
+    },
+    "vanish": {
+      "name": "Vanish",
+      "spell": 1856,
+      "icon": "ability_vanish",
+      "level": 22,
+      "desc": "Drop combat and enter improved Stealth (bar 1 swaps to the Stealth page); breaks snares. Uses Flash Powder, 5 min cooldown."
+    },
+    "shank": {
+      "name": "Shank",
+      "spell": 1329283,
+      "icon": "ability_theblackarrow",
+      "level": 24,
+      "desc": "New in Forever: cheap off-hand stab that can't miss and restores Energy, 10 sec cooldown. Talents (Venom, Boot Knife, Flash of Steel) build on it. Rank 2 (1329549) at 44."
+    },
+    "cheapshot": {
+      "name": "Cheap Shot",
+      "spell": 1833,
+      "icon": "ability_cheapshot",
+      "level": 26,
+      "desc": "Stun opener from Stealth, 4 sec, 2 combo points."
+    },
+    "kidneyshot": {
+      "name": "Kidney Shot",
+      "spell": 408,
+      "icon": "ability_rogue_kidneyshot",
+      "level": 30,
+      "desc": "Stun finisher; longer per combo point."
+    },
+    "disarmtrap": {
+      "name": "Disarm Trap",
+      "spell": 1842,
+      "icon": "spell_shadow_grimward",
+      "level": 30,
+      "desc": "Disarms a detected trap (needs Thieves' Tools)."
+    },
+    "blind": {
+      "name": "Blind",
+      "spell": 2094,
+      "icon": "spell_shadow_mindsteal",
+      "level": 34,
+      "desc": "Disorients the target for up to 10 sec; damage breaks it. Uses Blinding Powder."
+    },
+    "coldblood": {
+      "name": "Cold Blood",
+      "spell": 14177,
+      "icon": "spell_ice_lament",
+      "level": 25,
+      "talent": true,
+      "tree": "Assassination",
+      "tooltipLevel": 1,
+      "desc": "Next Sinister Strike, Backstab, Ambush, Eviscerate or Mutilate is a guaranteed crit."
+    },
+    "mutilate": {
+      "name": "Mutilate",
+      "spell": 399956,
+      "icon": "ability_rogue_deadlybrew",
+      "level": 40,
+      "talent": true,
+      "tree": "Assassination",
+      "desc": "New in Forever: Assassination capstone. Hits with both weapons for 2 combo points, +20% vs poisoned targets. Rank 2 (1241584) at 60."
+    },
+    "riposte": {
+      "name": "Riposte",
+      "spell": 14251,
+      "icon": "ability_warrior_challange",
+      "level": 20,
+      "talent": true,
+      "tree": "Combat",
+      "tooltipLevel": 1,
+      "desc": "Strike usable after you parry; disarms the target for 6 sec."
+    },
+    "bladeflurry": {
+      "name": "Blade Flurry",
+      "spell": 13877,
+      "icon": "ability_warrior_punishingblow",
+      "level": 30,
+      "talent": true,
+      "tree": "Combat",
+      "tooltipLevel": 1,
+      "desc": "+20% attack speed and hits a second nearby enemy for 15 sec."
+    },
+    "adrenalinerush": {
+      "name": "Adrenaline Rush",
+      "spell": 13750,
+      "icon": "spell_shadow_shadowworddominate",
+      "level": 40,
+      "talent": true,
+      "tree": "Combat",
+      "tooltipLevel": 1,
+      "desc": "Doubles Energy regeneration for 15 sec."
+    },
+    "premeditation": {
+      "name": "Premeditation",
+      "spell": 14183,
+      "icon": "spell_shadow_possession",
+      "level": 20,
+      "talent": true,
+      "tree": "Subtlety",
+      "desc": "Adds 2 combo points to the target, kept 20 sec. Changed in Forever: no longer needs Stealth, 20 sec window."
+    },
+    "ghostlystrike": {
+      "name": "Ghostly Strike",
+      "spell": 14278,
+      "icon": "spell_shadow_curse",
+      "level": 25,
+      "talent": true,
+      "tree": "Subtlety",
+      "tooltipLevel": 1,
+      "desc": "Strike that boosts dodge for 7 sec, 1 combo point. Changed in Forever: stronger with a dagger, and your next Ambush or Garrote within 7 sec doesn't need Stealth."
+    },
+    "preparation": {
+      "name": "Preparation",
+      "spell": 14185,
+      "icon": "spell_shadow_antishadow",
+      "level": 30,
+      "talent": true,
+      "tree": "Subtlety",
+      "tooltipLevel": 1,
+      "desc": "Resets your other Rogue cooldowns."
+    },
+    "hemorrhage": {
+      "name": "Hemorrhage",
+      "spell": 16511,
+      "icon": "spell_shadow_lifedrain",
+      "level": 30,
+      "talent": true,
+      "tree": "Subtlety",
+      "desc": "Combo builder; stronger with a dagger and makes the target take 15% more from your Rupture and Garrote (changed in Forever)."
+    },
+    "deathmark": {
+      "name": "Death Mark",
+      "spell": 1316709,
+      "icon": "ability_creature_cursed_02",
+      "level": 40,
+      "talent": true,
+      "tree": "Subtlety",
+      "desc": "New in Forever: Subtlety capstone finisher that stores part of your damage on the target and deals it after 6 sec. 10 sec cooldown."
+    }
+  },
+  "starter": {
+    "bar1": [
+      {
+        "key": "1",
+        "normal": "sinisterstrike",
+        "stealth": "ambush"
+      },
+      {
+        "key": "2",
+        "normal": "eviscerate",
+        "stealth": "garrote"
+      },
+      {
+        "key": "3",
+        "normal": "backstab",
+        "stealth": "cheapshot"
+      },
+      {
+        "key": "4",
+        "normal": "sliceanddice",
+        "stealth": "sap"
+      },
+      {
+        "key": "Q",
+        "normal": "kick",
+        "stealth": "pickpocket"
+      },
+      {
+        "key": "E",
+        "normal": "gouge",
+        "stealth": "distract"
+      },
+      {
+        "key": "R",
+        "normal": "rupture"
+      },
+      {
+        "key": "F",
+        "normal": "stealth",
+        "stealth": "stealth"
+      },
+      {
+        "key": "C",
+        "normal": "evasion"
+      },
+      {
+        "key": "V",
+        "normal": "sprint",
+        "stealth": "sprint"
+      },
+      {
+        "key": "T",
+        "normal": "throw"
+      }
+    ],
+    "bars": [
+      [
+        [
+          "5",
+          "shank"
+        ],
+        [
+          "Shift+1",
+          "kidneyshot"
+        ],
+        [
+          "Shift+2",
+          "exposearmor"
+        ],
+        [
+          "Shift+3",
+          "feint"
+        ],
+        [
+          "Shift+F",
+          "vanish"
+        ],
+        [
+          "Shift+E",
+          "blind"
+        ],
+        [
+          "Shift+R",
+          "picklock"
+        ],
+        [
+          "Shift+T",
+          "disarmtrap"
+        ],
+        [
+          "Ctrl+1",
+          "potion"
+        ],
+        [
+          "Ctrl+2",
+          "bandage"
+        ]
+      ],
+      []
+    ]
+  }
+}

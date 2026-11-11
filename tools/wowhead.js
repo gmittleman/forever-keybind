@@ -77,11 +77,13 @@ function checkClass(cls, common) {
   Object.entries(cls.aliases || {}).forEach(([n, id]) => { names[n.toLowerCase()] = id; });
   const isCommon = k => !!common.abilities[k] && !cls.abilities[k];
   const use = cls.use || {};
-  const books = new Set(cls.book.concat(Object.keys(common.abilities)));
+  const books = new Set(cls.book.concat(Object.keys(common.abilities), cls.pet ? cls.pet.book : []));
 
   for (const k of Object.keys(abilities)) {
     if (isCommon(k) && cls.id !== 'common') continue;
     const a = abilities[k];
+    /* pet bar commands (Attack, Follow…) are built into the game and have no spell */
+    if (a.command) continue;
     const kind = a.spell ? 'spell' : a.item ? 'item' : null;
     if (!kind) { problems.push(k + ': no spell or item id'); continue; }
     const d = tooltip(kind, a.spell || a.item);
@@ -92,7 +94,9 @@ function checkClass(cls, common) {
     if (a.icon && d.icon && d.icon !== a.icon) problems.push(at + ': icon is ' + d.icon + ' on Wowhead, ' + a.icon + ' here');
     if (kind === 'item') continue;
     const r = requirements(d);
-    if ((a.level || 1) !== r.level) problems.push(at + ': level ' + r.level + ' on Wowhead, ' + (a.level || 1) + ' here');
+    /* talents: level is the tier's earliest level; tooltipLevel records what Wowhead shows when that differs */
+    const lvWant = a.tooltipLevel || a.level || 1;
+    if (lvWant !== r.level) problems.push(at + ': level ' + r.level + ' on Wowhead, ' + lvWant + ' here' + (a.talent ? ' (a talent: set tooltipLevel if the tier level is right)' : ''));
     const clsReq = r.other.filter(t => CLASS_NAMES.includes(t));
     if (cls.name && clsReq.length && !clsReq.includes(cls.name) && !a.race) problems.push(at + ': Wowhead says "Requires ' + clsReq.join(', ') + '"');
     /* stance or form lines: the ones naming states we know */

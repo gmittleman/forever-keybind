@@ -110,7 +110,7 @@ const { serve, OUT } = require('./env');
     await p.fill('#kbJson', ''); await p.click('.brand');
 
     // ---- 3. arrange ----
-    ok(await p.isVisible('#kbBookWrap') && (await p.$$('#kbBook .kb-sp')).length === 32, 'spellbook shows 32 entries (30 abilities, potion, bandage)');
+    ok(await p.isVisible('#kbBookWrap') && (await p.$$('#kbBook .kb-sp')).length === 40, 'spellbook shows 40 entries (30 abilities, 8 talents, potion, bandage)');
     ok((await p.textContent('#kbBook')).includes('Execute') && await p.$eval('#kbBook [data-k="execute"]', e => e.className.includes('kb-dim')), 'spellbook dims Execute');
     await p.$eval('#kbB1', e => e.scrollIntoView({ block: 'center' })); await p.dragAndDrop('#kbBook [data-k="hamstring"]', '#kbBars [data-slot="b3-0"]');
     ok((await name('b3-0')) === 'Hamstring' && (await slot('b3-0').locator('.kb-mark').textContent()) === 'BZ', 'drag book→slot; fixed-bar marker "BZ" (Battle or Berserker)');

@@ -54,20 +54,25 @@ Open questions for sprint 2, to check in game:
 - Does Moonkin Form get its own action bar 1 page in Forever? It didn't in vanilla. It's planned without one.
 - Ravage and Pounce are set to need Prowl, as in Classic; their tooltips only say Cat Form.
 
-## Sprint 3: More classes (17 points)
+### Sprint 3: More classes (17 points)
 
-| # | Item | Pts | Notes |
-|---|---|---|---|
-| C2.3 | Rogue | 2 | Stealth swaps bar 1. |
-| C2.4 | Priest | 2 | Check whether Shadowform swaps bars in Forever. |
-| C2.5 | Paladin | 2 | Heavily reworked in Forever (Holy Strike, Seal of Fury, new talents). |
-| C2.8 | Mage | 1 | No bar swaps. |
-| C2.7 | Hunter | 2 | |
-| C2.9 | Warlock | 2 | |
-| C5 | Pet bar | 3 | Hunter and Warlock. |
-| C4 | Talent abilities per spec | 3 | Mortal Strike, Shield Slam, Holy Shock and the like, for the right spec. Druid: Moonkin Form (a stance with no page of its own; it can cast everything but heals), Feral Charge, Insect Swarm, Lacerate, Swiftmend, Nature's Swiftness, Primal Bite, Shifting Power, Wild Growth (already researched). |
+| # | Item | Pts |
+|---|---|---|
+| C2.3 | Rogue: Stealth swaps bar 1, Vanish enters it, Shank (new in Forever) | 2 |
+| C2.4 | Priest: Shadowform on the stance bar, no heals in it (Forever's rule); Fear Ward, Devouring Plague, Divine Spirit and Shadow Word: Death baseline | 2 |
+| C2.5 | Paladin: Forever's rework (Holy Strike, Seal of Fury, Blessing of Kings at 20, no Salvation); auras on the stance bar | 2 |
+| C2.8 | Mage: teleports and portals for your faction, Frostfire Bolt, Teleport: Dalaran | 1 |
+| C2.7 | Hunter: aspects, traps, tracking, pet spells; Forever's new talents | 2 |
+| C2.9 | Warlock: Banes, Curse of the Elements at 20, Incubus | 2 |
+| C5 | Pet bar: 10 slots with Attack/Follow/Stay and stances, a page per demon that summoning switches to, pet abilities only on the pet bar | 3 |
+| C4 | Talent abilities for every class, grouped by tree in the spellbook, marked taken per setup; Moonkin Form and Shadowform are talent stances | 3 |
 
-If this sprint runs long, Warlock and the pet bar can move to sprint 4.
+Open questions after sprint 3, to check in game:
+
+- Spearing Strike (new Arms talent) is missing: no spell id could be found yet.
+- Does Shadowform keep action bar 1, and do paladin auras still sit on a stance bar in Forever? Both follow the 1.12 client.
+- Hunter pet commands: Forever may call Aggressive "Assist".
+- Infernal and Doomguard pet bars aren't in.
 
 ## Sprint 4: Launch (19 points)
 

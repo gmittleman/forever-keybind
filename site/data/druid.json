@@ -35,6 +35,13 @@
       "abbr": "T",
       "color": "var(--gold)",
       "page": false
+    },
+    {
+      "id": "moonkin",
+      "ability": "moonkin",
+      "abbr": "M",
+      "color": "var(--bar4)",
+      "page": false
     }
   ],
   "hidden": [
@@ -50,7 +57,8 @@
     "Dire Bear Form": "bear"
   },
   "castIn": [
-    "caster"
+    "caster",
+    "moonkin"
   ],
   "use": {
     "droar": [
@@ -113,21 +121,55 @@
     "ff": [
       "caster",
       "bear",
-      "cat"
+      "cat",
+      "moonkin"
     ],
     "barkskin": [
       "caster",
       "bear",
       "aquatic",
       "cat",
-      "travel"
+      "travel",
+      "moonkin"
     ],
     "ngrasp": [
       "caster",
       "bear",
       "aquatic",
       "cat",
-      "travel"
+      "travel",
+      "moonkin"
+    ],
+    "feralcharge": [
+      "bear",
+      "cat"
+    ],
+    "lacerate": [
+      "bear"
+    ],
+    "primalbite": [
+      "bear"
+    ],
+    "shiftingpower": [
+      "cat"
+    ],
+    "htouch": [
+      "caster"
+    ],
+    "rejuv": [
+      "caster"
+    ],
+    "regrowth": [
+      "caster"
+    ],
+    "tranquility": [
+      "caster"
+    ],
+    "swiftmend": [
+      "caster"
+    ],
+    "wildgrowth": [
+      "caster"
     ]
   },
   "book": [
@@ -173,7 +215,16 @@
     "hurricane",
     "innervate",
     "barkskin",
-    "gotw"
+    "gotw",
+    "swarm",
+    "moonkin",
+    "feralcharge",
+    "lacerate",
+    "primalbite",
+    "shiftingpower",
+    "swiftmend",
+    "nswiftness",
+    "wildgrowth"
   ],
   "abilities": {
     "bear": {
@@ -204,6 +255,15 @@
       "level": 30,
       "desc": "Run 40% faster outdoors."
     },
+    "moonkin": {
+      "name": "Moonkin Form",
+      "spell": 24858,
+      "icon": "spell_nature_forceofnature",
+      "level": 40,
+      "talent": true,
+      "tree": "Balance",
+      "desc": "Caster form with armor and a crit aura. Casts everything except heals in Forever."
+    },
     "wrath": {
       "name": "Wrath",
       "spell": 5176,
@@ -216,7 +276,8 @@
       "spell": 5185,
       "icon": "spell_nature_healingtouch",
       "level": 1,
-      "desc": "Big single-target heal with a cast time."
+      "desc": "Big single-target heal with a cast time.",
+      "wowheadUse": false
     },
     "motw": {
       "name": "Mark of the Wild",
@@ -230,7 +291,8 @@
       "spell": 774,
       "icon": "spell_nature_rejuvenation",
       "level": 4,
-      "desc": "Heal over time."
+      "desc": "Heal over time.",
+      "wowheadUse": false
     },
     "moonfire": {
       "name": "Moonfire",
@@ -294,7 +356,8 @@
       "spell": 8936,
       "icon": "spell_nature_resistnature",
       "level": 12,
-      "desc": "Direct heal plus a heal over time."
+      "desc": "Direct heal plus a heal over time.",
+      "wowheadUse": false
     },
     "enrage": {
       "name": "Enrage",
@@ -449,7 +512,8 @@
       "spell": 740,
       "icon": "spell_nature_tranquility",
       "level": 30,
-      "desc": "Channeled group heal."
+      "desc": "Channeled group heal.",
+      "wowheadUse": false
     },
     "ravage": {
       "name": "Ravage",
@@ -509,6 +573,85 @@
       "icon": "spell_nature_regeneration",
       "level": 50,
       "desc": "Mark of the Wild for the whole group."
+    },
+    "swarm": {
+      "name": "Insect Swarm",
+      "spell": 5570,
+      "icon": "spell_nature_insectswarm",
+      "level": 25,
+      "talent": true,
+      "tree": "Balance",
+      "desc": "Nature DoT that makes the target miss more.",
+      "tooltipLevel": 20
+    },
+    "feralcharge": {
+      "name": "Feral Charge",
+      "spell": 1238122,
+      "icon": "ability_hunter_pet_bear",
+      "level": 20,
+      "talent": true,
+      "tree": "Feral Combat",
+      "desc": "Bear: charge in and interrupt. Cat: leap behind the target. Both versions in Forever.",
+      "wowheadUse": false
+    },
+    "lacerate": {
+      "name": "Lacerate",
+      "spell": 1328617,
+      "icon": "ability_druid_lacerate",
+      "level": 25,
+      "talent": true,
+      "tree": "Feral Combat",
+      "desc": "Stacking bear bleed with high threat. A talent in Forever."
+    },
+    "primalbite": {
+      "name": "Primal Bite",
+      "spell": 407995,
+      "icon": "ability_racial_cannibalize",
+      "level": 40,
+      "talent": true,
+      "tree": "Feral Combat",
+      "desc": "Bear bite with high threat. New in Forever."
+    },
+    "shiftingpower": {
+      "name": "Shifting Power",
+      "spell": 1322605,
+      "icon": "spell_druid_displacement",
+      "level": 40,
+      "talent": true,
+      "tree": "Feral Combat",
+      "desc": "Cat Form: turns mana into Energy, replacing powershifting. New in Forever.",
+      "tooltipLevel": 1
+    },
+    "swiftmend": {
+      "name": "Swiftmend",
+      "spell": 18562,
+      "icon": "inv_relics_idolofrejuvenation",
+      "level": 25,
+      "talent": true,
+      "tree": "Restoration",
+      "desc": "Instant heal on a target with your Rejuvenation or Regrowth, which it no longer eats in Forever.",
+      "tooltipLevel": 1,
+      "wowheadUse": false
+    },
+    "nswiftness": {
+      "name": "Nature's Swiftness",
+      "spell": 17116,
+      "icon": "spell_nature_ravenform",
+      "level": 30,
+      "talent": true,
+      "tree": "Restoration",
+      "desc": "Your next Nature spell is instant.",
+      "tooltipLevel": 1
+    },
+    "wildgrowth": {
+      "name": "Wild Growth",
+      "spell": 408120,
+      "icon": "ability_druid_flourish",
+      "level": 40,
+      "talent": true,
+      "tree": "Restoration",
+      "desc": "Heal over time on your whole party. New in Forever.",
+      "wowheadUse": false
     }
   },
   "starter": {

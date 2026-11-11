@@ -5,7 +5,9 @@ Plan your WoW Forever action bars, see them on a keyboard, and practice until th
 Everything fits on one desktop screen: your bars, a QWERTY keyboard and a 5-button mouse showing every bind, and the spellbook beside them.
 
 - **Press your keys** (keys, Mouse 4/5, modifier + wheel) to see what fires, with warnings for the wrong stance or form, or an ability you haven't learned yet. Shift, Ctrl and Alt switch the keyboard to that layer.
-- **Stances and forms swap action bar 1** like in the game: warrior stances, druid Bear and Cat Form, and Prowl inside Cat Form. Pressing a druid's active form again goes back to caster form. Tabs beside action bar 1 show any page.
+- **Stances and forms swap action bar 1** like in the game: warrior stances, druid Bear and Cat Form, Prowl inside Cat Form, and rogue Stealth (Vanish too). Pressing a druid's active form again goes back to caster form. Tabs beside action bar 1 show any page. Paladin auras and Shadowform sit on the stance bar without swapping pages.
+- **Pet bar** for hunters and warlocks, with a page per demon: summoning one switches the pet bar, like in the game.
+- **Talents:** each talent ability (Mortal Strike, Moonkin Form, Shadowform…) is in the spellbook under its tree. Mark the ones you took; the rest show as not taken.
 - **Drag** abilities from the spellbook onto slots or keyboard keys, or click to pick up and click to place. Like in WoW, dropping on a filled slot picks up the ability that was there. Abilities keep their keys when you move them on the bars.
 - **Keybind mode**, like WoW's /kb addons: hover a slot and press a key to bind it.
 - **Setups:** several named setups, each with a class, race and level, saved automatically in your browser. No account needed. Export and import as JSON.
@@ -18,8 +20,8 @@ tooltips are shown through [Wowhead](https://www.wowhead.com/forever).
 
 ## Status
 
-Early. Warrior and Druid are in, on Forever's rules for levels 1–60. The other classes follow one at a time; talent
-abilities (Mortal Strike, Moonkin Form and so on) come with talents. See `BACKLOG.md`.
+Every class except the Shaman is in, on Forever's rules for levels 1–60, with talent abilities and pets. The Shaman
+comes next. See `BACKLOG.md`.
 
 ## How it's built
 
@@ -48,9 +50,11 @@ Each `site/data/<class>.json` has:
 
 - `stances`: the stance bar, in order. Each one has its own action bar 1 page unless `page` is `false` (Travel Form
   keeps the caster page). `ability` points into `abilities`, `abbr` is the short marker and `color` the frame color.
-- `base` (druid): the state you're in without a form. It has its own page and no button; pressing the active form
-  again returns to it.
-- `hidden`: states entered by an ability on the bars, inside another state: Prowl `within` Cat Form, with its own page.
+- `base`: the state you're in without a stance or form (druid caster form, a rogue out of Stealth, a mage). It has
+  its own page and no button; pressing the active form again returns to it. Classes without stances have `stances: []`
+  and only a `base`, and then show no stance bar or page tabs.
+- `hidden`: states entered by an ability on the bars, optionally `within` another state: Prowl within Cat Form, or
+  the rogue's Stealth, which Vanish also enters (`enteredBy`). Each has its own page.
 - `use`: for abilities limited to some stances or forms, the ids they work in. A hidden state also allows what its
   parent allows, so Cat Form abilities work while prowling.
 - `castIn`: where the class's other abilities work. The druid's is `["caster"]`. Without it they work everywhere.
@@ -59,9 +63,14 @@ Each `site/data/<class>.json` has:
 - `aliases`: other names Wowhead uses for a state, for the checker (`"Dire Bear Form": "bear"`).
 - `book`: the spellbook, in order.
 - `abilities`: every ability by id, with `name`, `spell` (or `item`, the Wowhead Forever id), `icon` (the Wowhead icon
-  name), `level` and a short `desc` for when Wowhead isn't available.
-- `starter`: the layout a new setup starts with. `bar1` rows give a key plus what each stance shows, `bars` lists
-  `[key, ability]` pairs for action bars 2 and up.
+  name), `level` and a short `desc` for when Wowhead isn't available. Talent abilities add `talent: true`, `tree`, and
+  `level` as the earliest level their tier allows (tier N: 10 + 5 × (N − 1)); `tooltipLevel` keeps what Wowhead shows
+  when that differs. `faction` (mage teleports) and `races` (Summon Charger) limit who gets an ability.
+- `pet` (hunter, warlock): `pages` (one per demon, each with the `summon` ability that switches to it) and `book`, the
+  pet bar's spellbook. Pet abilities have `pet: true`, and `pets` when only some demons have them; the built-in pet
+  commands (Attack, Follow…) have `command: true` and no spell.
+- `starter`: the layout a new setup starts with. `bar1` rows give a key plus what each page shows, `bars` lists
+  `[key, ability]` pairs for action bars 2 and up, and `pet` rows a key plus what each pet shows.
 
 Wowhead's Forever tooltips are the source for spell ids, names, icons, levels and stance or form requirements.
 `npm run check` compares every ability with them and lists any difference; `npm run lookup -- 402927 item:929`
@@ -74,7 +83,8 @@ only shows for those classes (Eureka! has one per class).
 
 ### Saved data
 
-Setups live in localStorage under `forever-keybind` as `{ v, active, setups: [{ id, name, cls, race, level, layout, updated }] }`.
+Setups live in localStorage under `forever-keybind` as `{ v, active, setups: [{ id, name, cls, race, level, talents, layout, updated }] }`.
+`talents` lists the talent abilities taken. A layout with a pet bar has `pet: { petPageId: [10] }` and `p-0` to `p-9` keys.
 `race` is null until one is chosen. A page added later (Berserker Stance) starts empty in older saves.
 `v` is the save format version. When the format changes, bump `VERSION` in `store.js` and convert older saves when
 loading, so nobody loses their setup. Exports use `{ app: 'forever-keybind', v, setup }`, and older Fuffenforge
@@ -103,6 +113,7 @@ blocked. GitHub runs the whole suite on every push.
 | `setups-bars.test.js` | Number of bars, level, setups, storage problems, imports, and `keys.js` |
 | `layout.test.js` | Keyboard and mouse above the fold at common screen sizes, the mouse view, Keybind mode, spellbook search, click-to-move and pick-up, the phone note |
 | `forms-races.test.js` | The stance and form engine, Berserker Stance, the druid, races and racials |
+| `classes-pets.test.js` | Every class, talents, Stealth, auras, Shadowform, faction and race filters, the pet bar |
 
 ## Hosting
 

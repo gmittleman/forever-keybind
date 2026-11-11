@@ -1,0 +1,601 @@
+{
+  "id": "paladin",
+  "name": "Paladin",
+  "color": "#F48CBA",
+  "stateWord": "aura",
+  "base": {
+    "id": "paladin",
+    "name": "No aura",
+    "abbr": "N",
+    "color": "var(--gold)"
+  },
+  "stances": [
+    {
+      "id": "devotion",
+      "ability": "devotionaura",
+      "abbr": "D",
+      "color": "var(--gold)",
+      "page": false
+    },
+    {
+      "id": "retribution",
+      "ability": "retributionaura",
+      "abbr": "R",
+      "color": "var(--rage)",
+      "page": false
+    },
+    {
+      "id": "concentration",
+      "ability": "concentrationaura",
+      "abbr": "C",
+      "color": "var(--mana)",
+      "page": false
+    },
+    {
+      "id": "shadowres",
+      "ability": "shadowresistanceaura",
+      "abbr": "Sh",
+      "color": "var(--xp)",
+      "page": false
+    },
+    {
+      "id": "frostres",
+      "ability": "frostresistanceaura",
+      "abbr": "Fr",
+      "color": "var(--bar4)",
+      "page": false
+    },
+    {
+      "id": "fireres",
+      "ability": "fireresistanceaura",
+      "abbr": "Fi",
+      "color": "var(--energy)",
+      "page": false
+    }
+  ],
+  "use": {},
+  "book": [
+    "sealofrighteousness",
+    "holylight",
+    "blessingofmight",
+    "judgement",
+    "divineprotection",
+    "holystrike",
+    "sealofthecrusader",
+    "hammerofjustice",
+    "purify",
+    "layonhands",
+    "blessingofprotection",
+    "righteousfury",
+    "sealoffury",
+    "redemption",
+    "blessingofwisdom",
+    "blessingoffreedom",
+    "exorcism",
+    "flashoflight",
+    "senseundead",
+    "consecration",
+    "blessingofkings",
+    "sealofjustice",
+    "turnundead",
+    "divineintervention",
+    "sealoflight",
+    "divineshield",
+    "sealofwisdom",
+    "summonwarhorse",
+    "cleanse",
+    "hammerofwrath",
+    "blessingofsacrifice",
+    "holywrath",
+    "greaterblessingofmight",
+    "greaterblessingofwisdom",
+    "greaterblessingofkings",
+    "summoncharger",
+    "divinefavor",
+    "oathoflight",
+    "holyshock",
+    "lightsvigil",
+    "templarsbulwark",
+    "swiftjudgement",
+    "holyshield",
+    "sealofcommand",
+    "repentance"
+  ],
+  "abilities": {
+    "devotionaura": {
+      "name": "Devotion Aura",
+      "spell": 465,
+      "icon": "spell_holy_devotionaura",
+      "level": 1,
+      "desc": "Aura: bonus armor for party members within 30 yd. Sits on the stance bar."
+    },
+    "retributionaura": {
+      "name": "Retribution Aura",
+      "spell": 7294,
+      "icon": "spell_holy_auraoflight",
+      "level": 16,
+      "desc": "Aura: Holy damage to anything that hits a party member. Stance bar."
+    },
+    "concentrationaura": {
+      "name": "Concentration Aura",
+      "spell": 19746,
+      "icon": "spell_holy_mindsooth",
+      "level": 22,
+      "desc": "Aura: party members may ignore spell pushback when hit. Stance bar."
+    },
+    "shadowresistanceaura": {
+      "name": "Shadow Resistance Aura",
+      "spell": 19876,
+      "icon": "spell_shadow_sealofkings",
+      "level": 28,
+      "desc": "Aura: Shadow resistance; raid-wide within 30 yd in Forever. Stance bar."
+    },
+    "frostresistanceaura": {
+      "name": "Frost Resistance Aura",
+      "spell": 19888,
+      "icon": "spell_frost_wizardmark",
+      "level": 32,
+      "desc": "Aura: Frost resistance; raid-wide in Forever. Stance bar."
+    },
+    "fireresistanceaura": {
+      "name": "Fire Resistance Aura",
+      "spell": 19891,
+      "icon": "spell_fire_sealoffire",
+      "level": 36,
+      "desc": "Aura: Fire resistance; raid-wide in Forever. Stance bar."
+    },
+    "sealofrighteousness": {
+      "name": "Seal of Righteousness",
+      "spell": 20154,
+      "icon": "ability_thunderbolt",
+      "level": 1,
+      "desc": "Starter Seal: adds Holy damage to each melee swing; Judge it for a Holy damage hit."
+    },
+    "holylight": {
+      "name": "Holy Light",
+      "spell": 635,
+      "icon": "spell_holy_holybolt",
+      "level": 1,
+      "desc": "Big single-target heal with a cast time."
+    },
+    "blessingofmight": {
+      "name": "Blessing of Might",
+      "spell": 19740,
+      "icon": "spell_holy_fistofjustice",
+      "level": 4,
+      "desc": "Blessing: melee attack power; lasts 1 hour in Forever (was 5 min)."
+    },
+    "judgement": {
+      "name": "Judgement",
+      "spell": 20271,
+      "icon": "spell_holy_righteousfury",
+      "level": 4,
+      "desc": "Unleashes your active Seal's Judgement on an enemy. In Forever it no longer consumes the Seal."
+    },
+    "divineprotection": {
+      "name": "Divine Protection",
+      "spell": 498,
+      "icon": "spell_holy_restoration",
+      "level": 6,
+      "desc": "Short self-immunity, but you cannot attack; applies Forbearance."
+    },
+    "holystrike": {
+      "name": "Holy Strike",
+      "spell": 679,
+      "icon": "classicon_paladin",
+      "level": 6,
+      "desc": "New in Forever: instant melee strike for part weapon damage plus Holy damage (10 sec cooldown)."
+    },
+    "sealofthecrusader": {
+      "name": "Seal of the Crusader",
+      "spell": 21082,
+      "icon": "spell_holy_holysmite",
+      "level": 6,
+      "desc": "Seal: faster, weaker swings plus attack power; its Judgement makes the target take more Holy damage (40 sec in Forever)."
+    },
+    "hammerofjustice": {
+      "name": "Hammer of Justice",
+      "spell": 853,
+      "icon": "spell_holy_sealofmight",
+      "level": 8,
+      "desc": "Stuns the target (3 sec at rank 1, 6 sec at max rank)."
+    },
+    "purify": {
+      "name": "Purify",
+      "spell": 1152,
+      "icon": "spell_holy_purify",
+      "level": 8,
+      "desc": "Removes a disease and a poison from a friendly target."
+    },
+    "layonhands": {
+      "name": "Lay on Hands",
+      "spell": 633,
+      "icon": "spell_holy_layonhands",
+      "level": 10,
+      "desc": "Heals a friendly target for your maximum health and drains your mana; cooldown cut to 20 min in Forever."
+    },
+    "blessingofprotection": {
+      "name": "Blessing of Protection",
+      "spell": 1022,
+      "icon": "spell_holy_sealofprotection",
+      "level": 10,
+      "desc": "Makes a party member immune to physical attacks for a few seconds; applies Forbearance."
+    },
+    "righteousfury": {
+      "name": "Righteous Fury",
+      "spell": 25780,
+      "icon": "spell_holy_sealoffury",
+      "level": 10,
+      "desc": "Tanking buff (30 min): more threat, especially from Holy damage. Trained at 10 in Forever (was 16)."
+    },
+    "sealoffury": {
+      "name": "Seal of Fury",
+      "spell": 1311649,
+      "icon": "spell_holy_retributionaura",
+      "level": 10,
+      "desc": "New in Forever: tanking Seal adding flat Holy damage per swing and a small absorb shield with a shield equipped; its Judgement taunts."
+    },
+    "redemption": {
+      "name": "Redemption",
+      "spell": 7328,
+      "icon": "spell_holy_resurrection",
+      "level": 12,
+      "desc": "Resurrects a dead player; out of combat only."
+    },
+    "blessingofwisdom": {
+      "name": "Blessing of Wisdom",
+      "spell": 19742,
+      "icon": "spell_holy_sealofwisdom",
+      "level": 14,
+      "desc": "Blessing: mana every 5 sec; 1 hour in Forever, stronger (Improved Blessing of Wisdom made baseline)."
+    },
+    "blessingoffreedom": {
+      "name": "Blessing of Freedom",
+      "spell": 1044,
+      "icon": "spell_holy_sealofvalor",
+      "level": 18,
+      "desc": "Makes a friendly target immune to movement impairing effects briefly."
+    },
+    "exorcism": {
+      "name": "Exorcism",
+      "spell": 879,
+      "icon": "spell_holy_excorcism_02",
+      "level": 20,
+      "desc": "Holy damage nuke, Undead and Demon targets only."
+    },
+    "flashoflight": {
+      "name": "Flash of Light",
+      "spell": 19750,
+      "icon": "spell_holy_flashheal",
+      "level": 20,
+      "desc": "Fast, cheap small heal."
+    },
+    "senseundead": {
+      "name": "Sense Undead",
+      "spell": 5502,
+      "icon": "spell_holy_senseundead",
+      "level": 20,
+      "tooltipLevel": 1,
+      "desc": "Tracking: shows nearby undead on the minimap."
+    },
+    "consecration": {
+      "name": "Consecration",
+      "spell": 26573,
+      "icon": "spell_holy_innerfire",
+      "level": 20,
+      "desc": "Ground AoE Holy damage; now baseline at 20 in Forever (was a Holy talent) and only the first 4 enemies take full damage."
+    },
+    "blessingofkings": {
+      "name": "Blessing of Kings",
+      "spell": 20217,
+      "icon": "spell_magic_magearmor",
+      "level": 20,
+      "desc": "Blessing: +10% to all stats for 1 hour. Baseline at 20 in Forever (was a Protection talent)."
+    },
+    "sealofjustice": {
+      "name": "Seal of Justice",
+      "spell": 20164,
+      "icon": "spell_holy_sealofwrath",
+      "level": 22,
+      "desc": "Seal: swings can stun; its Judgement stops the target from fleeing."
+    },
+    "turnundead": {
+      "name": "Turn Undead",
+      "spell": 2878,
+      "icon": "spell_holy_turnundead",
+      "level": 24,
+      "desc": "Makes an undead target flee (Turn Evil talent lets it hit Demons too)."
+    },
+    "divineintervention": {
+      "name": "Divine Intervention",
+      "spell": 19752,
+      "icon": "spell_nature_timestop",
+      "level": 30,
+      "desc": "Sacrifice yourself to make a party member immune and inactive for 3 min (wipe protection)."
+    },
+    "sealoflight": {
+      "name": "Seal of Light",
+      "spell": 20165,
+      "icon": "spell_holy_healingaura",
+      "level": 30,
+      "desc": "Seal: swings may heal you; its Judgement lets attackers heal (40 sec in Forever)."
+    },
+    "divineshield": {
+      "name": "Divine Shield",
+      "spell": 642,
+      "icon": "spell_holy_divineintervention",
+      "level": 34,
+      "desc": "Full immunity bubble; in Forever it halves your damage dealt instead of slowing attacks. Applies Forbearance."
+    },
+    "sealofwisdom": {
+      "name": "Seal of Wisdom",
+      "spell": 20166,
+      "icon": "spell_holy_righteousnessaura",
+      "level": 38,
+      "desc": "Seal: swings may restore mana; its Judgement returns mana to attackers (40 sec in Forever)."
+    },
+    "summonwarhorse": {
+      "name": "Summon Warhorse",
+      "spell": 13819,
+      "icon": "spell_nature_swiftness",
+      "level": 40,
+      "desc": "Summons your class mount (60% speed); from the level 40 paladin mount quest."
+    },
+    "cleanse": {
+      "name": "Cleanse",
+      "spell": 4987,
+      "icon": "spell_holy_renew",
+      "level": 42,
+      "desc": "Removes a poison, a disease and a magic effect from a friendly target."
+    },
+    "hammerofwrath": {
+      "name": "Hammer of Wrath",
+      "spell": 24275,
+      "icon": "ability_thunderclap",
+      "level": 44,
+      "desc": "Ranged Holy execute, only on targets at 20% health or less."
+    },
+    "blessingofsacrifice": {
+      "name": "Blessing of Sacrifice",
+      "spell": 6940,
+      "icon": "spell_holy_sealofsacrifice",
+      "level": 46,
+      "desc": "Redirects part of each hit a party member takes to you for 30 sec."
+    },
+    "holywrath": {
+      "name": "Holy Wrath",
+      "spell": 2812,
+      "icon": "spell_holy_excorcism",
+      "level": 50,
+      "desc": "AoE Holy damage around you to Undead and Demons; now also stuns them for 2 sec."
+    },
+    "greaterblessingofmight": {
+      "name": "Greater Blessing of Might",
+      "spell": 25782,
+      "icon": "spell_holy_greaterblessingofkings",
+      "level": 52,
+      "desc": "Class-wide Blessing of Might for the raid/group; 1 hour in Forever."
+    },
+    "greaterblessingofwisdom": {
+      "name": "Greater Blessing of Wisdom",
+      "spell": 25894,
+      "icon": "spell_holy_greaterblessingofwisdom",
+      "level": 54,
+      "desc": "Class-wide Blessing of Wisdom for the raid/group; 1 hour in Forever."
+    },
+    "greaterblessingofkings": {
+      "name": "Greater Blessing of Kings",
+      "spell": 25898,
+      "icon": "spell_magic_greaterblessingofkings",
+      "level": 60,
+      "desc": "Class-wide Blessing of Kings, trainable at 60 without the talent in Forever; 1 hour."
+    },
+    "summoncharger": {
+      "name": "Summon Charger",
+      "spell": 23214,
+      "icon": "ability_mount_charger",
+      "level": 60,
+      "desc": "Epic class mount (100% speed) from the level 60 quest chain; Human and Dwarf only.",
+      "races": [
+        "human",
+        "dwarf"
+      ]
+    },
+    "divinefavor": {
+      "name": "Divine Favor",
+      "spell": 20216,
+      "icon": "spell_holy_heal",
+      "level": 20,
+      "talent": true,
+      "tree": "Holy",
+      "tooltipLevel": 1,
+      "desc": "Next Flash of Light, Holy Light or Holy Shock is a guaranteed crit (Holy tier 3)."
+    },
+    "oathoflight": {
+      "name": "Oath of Light",
+      "spell": 1328548,
+      "icon": "spell_holy_greaterblessingoflight",
+      "level": 25,
+      "talent": true,
+      "tree": "Holy",
+      "tooltipLevel": 1,
+      "desc": "New in Forever: oath on one ally for 5 min, boosting your Holy Light, Flash of Light and Holy Shock on them (Holy tier 4)."
+    },
+    "holyshock": {
+      "name": "Holy Shock",
+      "spell": 1311606,
+      "icon": "spell_holy_searinglight",
+      "level": 30,
+      "talent": true,
+      "tree": "Holy",
+      "desc": "Instant Holy damage to an enemy or heal to an ally, 10 sec cooldown in Forever (Holy tier 5, was the 31-point talent)."
+    },
+    "lightsvigil": {
+      "name": "Light's Vigil",
+      "spell": 1310911,
+      "icon": "ability_paladin_judgementofthepure",
+      "level": 40,
+      "talent": true,
+      "tree": "Holy",
+      "desc": "New in Forever: mark an ally so your next Holy Shock on them has no cooldown and heals their whole party (Holy tier 7 capstone)."
+    },
+    "templarsbulwark": {
+      "name": "Templar's Bulwark",
+      "spell": 1311015,
+      "icon": "ability_paladin_shieldofthetemplar",
+      "level": 20,
+      "talent": true,
+      "tree": "Protection",
+      "tooltipLevel": 1,
+      "desc": "New in Forever: absorb shield equal to your max health for 8 sec, 5 min cooldown, applies Forbearance (Protection tier 3)."
+    },
+    "swiftjudgement": {
+      "name": "Swift Judgement",
+      "spell": 1310994,
+      "icon": "ability_paladin_judgementred",
+      "level": 25,
+      "talent": true,
+      "tree": "Protection",
+      "tooltipLevel": 1,
+      "desc": "New in Forever: a second Judgement on its own 1 min cooldown, free, 10 yd (Protection tier 4)."
+    },
+    "holyshield": {
+      "name": "Holy Shield",
+      "spell": 20925,
+      "icon": "spell_holy_blessingofprotection",
+      "level": 30,
+      "talent": true,
+      "tree": "Protection",
+      "desc": "Block chance up and Holy damage on each block for 10 sec, 4 charges (Protection tier 5, was tier 7)."
+    },
+    "sealofcommand": {
+      "name": "Seal of Command",
+      "spell": 20375,
+      "icon": "ability_warrior_innerrage",
+      "level": 20,
+      "talent": true,
+      "tree": "Retribution",
+      "desc": "Seal: swings may deal extra Holy damage; Judgement hits harder on stunned targets (Retribution tier 3)."
+    },
+    "repentance": {
+      "name": "Repentance",
+      "spell": 20066,
+      "icon": "spell_holy_prayerofhealing",
+      "level": 30,
+      "talent": true,
+      "tree": "Retribution",
+      "tooltipLevel": 20,
+      "desc": "Incapacitates a humanoid for up to 6 sec; damage breaks it (Retribution tier 5, was the 31-point talent)."
+    }
+  },
+  "starter": {
+    "stances": {
+      "devotion": "Shift+Z",
+      "retribution": "Shift+X",
+      "concentration": "Shift+C"
+    },
+    "bar1": [
+      {
+        "key": "1",
+        "paladin": "holystrike"
+      },
+      {
+        "key": "2",
+        "paladin": "judgement"
+      },
+      {
+        "key": "3",
+        "paladin": "sealofrighteousness"
+      },
+      {
+        "key": "4",
+        "paladin": "sealofthecrusader"
+      },
+      {
+        "key": "Q",
+        "paladin": "hammerofjustice"
+      },
+      {
+        "key": "E",
+        "paladin": "consecration"
+      },
+      {
+        "key": "R",
+        "paladin": "flashoflight"
+      },
+      {
+        "key": "F",
+        "paladin": "holylight"
+      },
+      {
+        "key": "C",
+        "paladin": "exorcism"
+      },
+      {
+        "key": "V",
+        "paladin": "divineprotection"
+      },
+      {
+        "key": "T",
+        "paladin": "sealoffury"
+      },
+      {
+        "key": "G",
+        "paladin": "purify"
+      }
+    ],
+    "bars": [
+      [
+        [
+          "Shift+1",
+          "blessingofmight"
+        ],
+        [
+          "Shift+2",
+          "blessingofwisdom"
+        ],
+        [
+          "Shift+3",
+          "blessingofkings"
+        ],
+        [
+          "Shift+4",
+          "righteousfury"
+        ],
+        [
+          "Shift+Q",
+          "blessingoffreedom"
+        ],
+        [
+          "Shift+E",
+          "blessingofprotection"
+        ],
+        [
+          "Shift+R",
+          "layonhands"
+        ],
+        [
+          "Shift+F",
+          "divineshield"
+        ],
+        [
+          "Shift+T",
+          "turnundead"
+        ],
+        [
+          "Shift+G",
+          "redemption"
+        ],
+        [
+          "Ctrl+1",
+          "potion"
+        ],
+        [
+          "Ctrl+2",
+          "bandage"
+        ]
+      ],
+      []
+    ]
+  }
+}

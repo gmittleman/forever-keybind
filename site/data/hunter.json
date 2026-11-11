@@ -1,0 +1,924 @@
+{
+  "id": "hunter",
+  "name": "Hunter",
+  "color": "#AAD372",
+  "base": {
+    "id": "hunter",
+    "name": "Hunter",
+    "color": "var(--hp)"
+  },
+  "stances": [],
+  "use": {},
+  "book": [
+    "autoshot",
+    "raptorstrike",
+    "trackbeasts",
+    "aspectofthemonkey",
+    "serpentsting",
+    "arcaneshot",
+    "huntersmark",
+    "concussiveshot",
+    "aspectofthehawk",
+    "callpet",
+    "dismisspet",
+    "feedpet",
+    "revivepet",
+    "tamebeast",
+    "beasttraining",
+    "trackhumanoids",
+    "distractingshot",
+    "mendpet",
+    "wingclip",
+    "eyesofthebeast",
+    "scarebeast",
+    "eagleeye",
+    "immolationtrap",
+    "mongoosebite",
+    "multishot",
+    "trackundead",
+    "aimedshot",
+    "aspectofthecheetah",
+    "freezingtrap",
+    "disengage",
+    "scorpidsting",
+    "beastlore",
+    "trackhidden",
+    "rapidfire",
+    "trackelementals",
+    "frosttrap",
+    "feigndeath",
+    "aspectofthebeast",
+    "trackdemons",
+    "flare",
+    "explosivetrap",
+    "vipersting",
+    "trackgiants",
+    "aspectofthepack",
+    "volley",
+    "aspectofthewild",
+    "trackdragonkin",
+    "tranquilizingshot",
+    "summonhawk",
+    "intimidation",
+    "bestialwrath",
+    "trueshotaura",
+    "scattershot",
+    "snipershot",
+    "deterrence",
+    "counterattack",
+    "striderkick"
+  ],
+  "abilities": {
+    "autoshot": {
+      "name": "Auto Shot",
+      "spell": 75,
+      "icon": "ability_whirlwind",
+      "level": 1,
+      "desc": "Starts automatic ranged shots at the target. Toggle; not usable inside 8 yards (dead zone)."
+    },
+    "raptorstrike": {
+      "name": "Raptor Strike",
+      "spell": 2973,
+      "icon": "ability_meleedamage",
+      "level": 1,
+      "desc": "Melee on-next-swing strike for extra damage."
+    },
+    "trackbeasts": {
+      "name": "Track Beasts",
+      "spell": 1494,
+      "icon": "ability_tracking",
+      "level": 1,
+      "desc": "Shows beasts on the minimap. One tracking at a time."
+    },
+    "aspectofthemonkey": {
+      "name": "Aspect of the Monkey",
+      "spell": 13163,
+      "icon": "ability_hunter_aspectofthemonkey",
+      "level": 4,
+      "desc": "Aspect: +8% dodge. Only one Aspect at a time."
+    },
+    "serpentsting": {
+      "name": "Serpent Sting",
+      "spell": 1978,
+      "icon": "ability_hunter_quickshot",
+      "level": 4,
+      "desc": "Nature damage over 15 sec. One Sting per hunter per target. Stronger in Forever (more base damage, 5% AP per tick)."
+    },
+    "arcaneshot": {
+      "name": "Arcane Shot",
+      "spell": 3044,
+      "icon": "ability_impalingbolt",
+      "level": 6,
+      "desc": "Instant Arcane damage shot. No longer shares a cooldown with Aimed Shot in Forever (shares with Summon Hawk instead)."
+    },
+    "huntersmark": {
+      "name": "Hunter's Mark",
+      "spell": 1130,
+      "icon": "ability_hunter_snipershot",
+      "level": 6,
+      "desc": "Marks the target: more ranged attack power against it and it stays visible. 2 min."
+    },
+    "concussiveshot": {
+      "name": "Concussive Shot",
+      "spell": 5116,
+      "icon": "spell_frost_stun",
+      "level": 8,
+      "desc": "Dazes the target, slowing it by 50% for 4 sec."
+    },
+    "aspectofthehawk": {
+      "name": "Aspect of the Hawk",
+      "spell": 13165,
+      "icon": "spell_nature_ravenform",
+      "level": 10,
+      "desc": "Aspect: more ranged attack power. Your main ranged aspect."
+    },
+    "callpet": {
+      "name": "Call Pet",
+      "spell": 883,
+      "icon": "ability_hunter_beastcall",
+      "level": 10,
+      "desc": "Summons your active pet."
+    },
+    "dismisspet": {
+      "name": "Dismiss Pet",
+      "spell": 2641,
+      "icon": "spell_nature_spiritwolf",
+      "level": 10,
+      "desc": "Sends your pet away (costs happiness)."
+    },
+    "feedpet": {
+      "name": "Feed Pet",
+      "spell": 6991,
+      "icon": "ability_hunter_beasttraining",
+      "level": 10,
+      "desc": "Feed your pet the selected food to raise happiness."
+    },
+    "revivepet": {
+      "name": "Revive Pet",
+      "spell": 982,
+      "icon": "ability_hunter_beastsoothe",
+      "level": 10,
+      "desc": "Brings your dead pet back to life (long cast)."
+    },
+    "tamebeast": {
+      "name": "Tame Beast",
+      "spell": 1515,
+      "icon": "ability_hunter_beasttaming",
+      "level": 10,
+      "desc": "Channel to tame a beast as your pet (20 sec, armor drops to 0)."
+    },
+    "beasttraining": {
+      "name": "Beast Training",
+      "spell": 5149,
+      "icon": "ability_hunter_beastcall02",
+      "level": 10,
+      "desc": "Opens the pet training window to teach abilities with Training Points."
+    },
+    "trackhumanoids": {
+      "name": "Track Humanoids",
+      "spell": 19883,
+      "icon": "spell_holy_prayerofhealing",
+      "level": 10,
+      "desc": "Shows humanoids on the minimap."
+    },
+    "distractingshot": {
+      "name": "Distracting Shot",
+      "spell": 20736,
+      "icon": "spell_arcane_blink",
+      "level": 12,
+      "desc": "Ranged taunt-like shot that adds threat (pull a mob off a healer)."
+    },
+    "mendpet": {
+      "name": "Mend Pet",
+      "spell": 136,
+      "icon": "ability_hunter_mendpet",
+      "level": 12,
+      "desc": "Channeled heal over time on your pet."
+    },
+    "wingclip": {
+      "name": "Wing Clip",
+      "spell": 2974,
+      "icon": "ability_rogue_trip",
+      "level": 12,
+      "desc": "Melee hit that slows the target by 50% for 10 sec."
+    },
+    "eyesofthebeast": {
+      "name": "Eyes of the Beast",
+      "spell": 1002,
+      "icon": "ability_eyeoftheowl",
+      "level": 14,
+      "desc": "Take control of your pet and see through its eyes for 2 min (Improved Eyes of the Beast is baseline in Forever)."
+    },
+    "scarebeast": {
+      "name": "Scare Beast",
+      "spell": 1513,
+      "icon": "ability_druid_cower",
+      "level": 14,
+      "desc": "Fears a beast for up to 10 sec. Damage may break it."
+    },
+    "eagleeye": {
+      "name": "Eagle Eye",
+      "spell": 6197,
+      "icon": "ability_hunter_eagleeye",
+      "level": 14,
+      "desc": "Channel to zoom your view far ahead (scouting). Outdoors only."
+    },
+    "immolationtrap": {
+      "name": "Immolation Trap",
+      "spell": 13795,
+      "icon": "spell_fire_flameshock",
+      "level": 16,
+      "desc": "Fire trap: burns the first enemy to step on it. Traps are usable in combat in Forever; all traps share a 30 sec cooldown."
+    },
+    "mongoosebite": {
+      "name": "Mongoose Bite",
+      "spell": 1495,
+      "icon": "ability_hunter_swiftstrike",
+      "level": 16,
+      "desc": "Melee counter-attack usable only after you dodge (or an Expose Prey proc)."
+    },
+    "multishot": {
+      "name": "Multi-Shot",
+      "spell": 2643,
+      "icon": "ability_upgrademoonglaive",
+      "level": 18,
+      "desc": "Shot that hits up to 3 targets. Shares a cooldown with Aimed Shot in Forever."
+    },
+    "trackundead": {
+      "name": "Track Undead",
+      "spell": 19884,
+      "icon": "spell_shadow_darksummoning",
+      "level": 18,
+      "desc": "Shows undead on the minimap."
+    },
+    "aimedshot": {
+      "name": "Aimed Shot",
+      "spell": 19434,
+      "icon": "inv_spear_07",
+      "level": 20,
+      "desc": "Cast-time heavy shot. Baseline at 20 in Forever (was a talent); shares a cooldown with Multi-Shot."
+    },
+    "aspectofthecheetah": {
+      "name": "Aspect of the Cheetah",
+      "spell": 5118,
+      "icon": "ability_mount_jungletiger",
+      "level": 20,
+      "desc": "Aspect: +30% run speed; you are dazed if hit."
+    },
+    "freezingtrap": {
+      "name": "Freezing Trap",
+      "spell": 1499,
+      "icon": "spell_frost_chainsofice",
+      "level": 20,
+      "desc": "Frost trap: freezes the first enemy for up to 10 sec. Your crowd control. Usable in combat in Forever."
+    },
+    "disengage": {
+      "name": "Disengage",
+      "spell": 781,
+      "icon": "ability_rogue_feint",
+      "level": 20,
+      "desc": "Melee-range threat drop (threat reduction doubled in Forever). Stops auto-attack."
+    },
+    "scorpidsting": {
+      "name": "Scorpid Sting",
+      "spell": 3043,
+      "icon": "ability_hunter_criticalshot",
+      "level": 22,
+      "desc": "Sting that lowers the target's hit chance by 2% for 20 sec (Forever: was Strength/Agility reduction)."
+    },
+    "beastlore": {
+      "name": "Beast Lore",
+      "spell": 1462,
+      "icon": "ability_physical_taunt",
+      "level": 24,
+      "desc": "Inspect a beast: damage, health, armor, diet, abilities it can teach."
+    },
+    "trackhidden": {
+      "name": "Track Hidden",
+      "spell": 19885,
+      "icon": "ability_stealth",
+      "level": 24,
+      "desc": "Better stealth detection and shows hidden units on the minimap."
+    },
+    "rapidfire": {
+      "name": "Rapid Fire",
+      "spell": 3045,
+      "icon": "ability_hunter_runningshot",
+      "level": 26,
+      "desc": "+40% attack speed for 15 sec. In Forever it speeds up both ranged and melee attacks."
+    },
+    "trackelementals": {
+      "name": "Track Elementals",
+      "spell": 19880,
+      "icon": "spell_frost_summonwaterelemental",
+      "level": 26,
+      "desc": "Shows elementals on the minimap."
+    },
+    "frosttrap": {
+      "name": "Frost Trap",
+      "spell": 13809,
+      "icon": "spell_frost_freezingbreath",
+      "level": 28,
+      "desc": "Frost trap: creates an ice slick that slows enemies by 60%."
+    },
+    "feigndeath": {
+      "name": "Feign Death",
+      "spell": 5384,
+      "icon": "ability_rogue_feigndeath",
+      "level": 30,
+      "desc": "Play dead to drop combat and threat. Can be resisted."
+    },
+    "aspectofthebeast": {
+      "name": "Aspect of the Beast",
+      "spell": 13161,
+      "icon": "ability_mount_pinktiger",
+      "level": 30,
+      "desc": "Aspect: untrackable by beasts and, new in Forever, more melee attack power (trainer ranks at 40/50/60)."
+    },
+    "trackdemons": {
+      "name": "Track Demons",
+      "spell": 19878,
+      "icon": "spell_shadow_summonfelhunter",
+      "level": 32,
+      "desc": "Shows demons on the minimap."
+    },
+    "flare": {
+      "name": "Flare",
+      "spell": 1543,
+      "icon": "spell_fire_flare",
+      "level": 32,
+      "desc": "Reveals stealthed and invisible enemies in an area for 30 sec."
+    },
+    "explosivetrap": {
+      "name": "Explosive Trap",
+      "spell": 13813,
+      "icon": "spell_fire_selfdestruct",
+      "level": 34,
+      "desc": "Fire trap: area Fire damage plus a burn to all enemies within 10 yards."
+    },
+    "vipersting": {
+      "name": "Viper Sting",
+      "spell": 3034,
+      "icon": "ability_hunter_aimedshot",
+      "level": 36,
+      "desc": "Sting that drains the target's mana."
+    },
+    "trackgiants": {
+      "name": "Track Giants",
+      "spell": 19882,
+      "icon": "ability_racial_avatar",
+      "level": 40,
+      "desc": "Shows giants on the minimap."
+    },
+    "aspectofthepack": {
+      "name": "Aspect of the Pack",
+      "spell": 13159,
+      "icon": "ability_mount_whitetiger",
+      "level": 40,
+      "desc": "Aspect: +30% run speed for you and your group; anyone hit is dazed."
+    },
+    "volley": {
+      "name": "Volley",
+      "spell": 1510,
+      "icon": "ability_marksmanship",
+      "level": 40,
+      "desc": "Channeled ground-targeted Arcane AoE for 6 sec."
+    },
+    "aspectofthewild": {
+      "name": "Aspect of the Wild",
+      "spell": 20043,
+      "icon": "spell_nature_protectionformnature",
+      "level": 46,
+      "desc": "Aspect: Nature resistance for you and your raid in 30 yards."
+    },
+    "trackdragonkin": {
+      "name": "Track Dragonkin",
+      "spell": 19879,
+      "icon": "inv_misc_head_dragon_01",
+      "level": 50,
+      "desc": "Shows dragonkin on the minimap."
+    },
+    "tranquilizingshot": {
+      "name": "Tranquilizing Shot",
+      "spell": 19801,
+      "icon": "spell_nature_drowsy",
+      "level": 60,
+      "desc": "Removes a Frenzy effect from an enemy (Molten Core book, level 60)."
+    },
+    "summonhawk": {
+      "name": "Summon Hawk",
+      "spell": 1293241,
+      "icon": "ability_hunter_animalhandler",
+      "level": 25,
+      "talent": true,
+      "tree": "Beast Mastery",
+      "desc": "New in Forever (BM tier 4, 16-point talent): instant damage and a hawk that attacks for 18 sec, up to 2 hawks. Shares a cooldown with Arcane Shot. Trainer ranks at 36/48/60."
+    },
+    "intimidation": {
+      "name": "Intimidation",
+      "spell": 19577,
+      "icon": "ability_devour",
+      "level": 30,
+      "talent": true,
+      "tree": "Beast Mastery",
+      "desc": "Pet's next hit stuns for 3 sec and gets +100% crit chance (Forever). BM tier 5, needs Bestial Swiftness."
+    },
+    "bestialwrath": {
+      "name": "Bestial Wrath",
+      "spell": 19574,
+      "icon": "ability_druid_ferociousbite",
+      "level": 40,
+      "talent": true,
+      "tree": "Beast Mastery",
+      "desc": "Pet deals 50% more damage and is immune to CC for 18 sec (BM tier 7)."
+    },
+    "trueshotaura": {
+      "name": "Trueshot Aura",
+      "spell": 1299346,
+      "icon": "ability_trueshot",
+      "level": 25,
+      "talent": true,
+      "tree": "Marksmanship",
+      "desc": "Party/raid ranged attack power aura. Moved to Marksmanship tier 4 in Forever with new lower ranks (rank 2 at 32, then 40/50/60)."
+    },
+    "scattershot": {
+      "name": "Scatter Shot",
+      "spell": 19503,
+      "icon": "ability_golemstormbolt",
+      "level": 30,
+      "talent": true,
+      "tree": "Marksmanship",
+      "desc": "Short-range shot that disorients for 4 sec (Marksmanship tier 5)."
+    },
+    "snipershot": {
+      "name": "Sniper Shot",
+      "spell": 1310687,
+      "icon": "hunter_pvp_snipershot",
+      "level": 40,
+      "talent": true,
+      "tree": "Marksmanship",
+      "desc": "New in Forever (Marksmanship tier 7 capstone): 4 sec cast, 45 yard long-range shot; next 3 Shots get +10 yards. Trainer ranks at 48/58."
+    },
+    "deterrence": {
+      "name": "Deterrence",
+      "spell": 19263,
+      "icon": "ability_whirlwind",
+      "level": 20,
+      "talent": true,
+      "tree": "Survival",
+      "desc": "+25% dodge and parry for 10 sec (Survival tier 3)."
+    },
+    "counterattack": {
+      "name": "Counterattack",
+      "spell": 19306,
+      "icon": "ability_warrior_challange",
+      "level": 25,
+      "talent": true,
+      "tree": "Survival",
+      "tooltipLevel": 30,
+      "desc": "Strike usable after you parry; immobilizes for 5 sec. Survival tier 4 (16-point talent) in Forever; trainer ranks at 30/42/54."
+    },
+    "striderkick": {
+      "name": "Strider Kick",
+      "spell": 1317257,
+      "icon": "ability_hunter_pet_tallstrider",
+      "level": 30,
+      "talent": true,
+      "tree": "Survival",
+      "desc": "New in Forever (Survival tier 5, 21-point talent): instant 100% weapon damage kick and +30% run speed for 3 sec."
+    },
+    "petattack": {
+      "name": "Attack",
+      "icon": "ability_ghoulfrenzy",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Pet attacks your target."
+    },
+    "petfollow": {
+      "name": "Follow",
+      "icon": "ability_tracking",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Pet stops and follows you."
+    },
+    "petstay": {
+      "name": "Stay",
+      "icon": "spell_nature_timestop",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Pet holds its position."
+    },
+    "petaggressive": {
+      "name": "Aggressive",
+      "icon": "ability_racial_bloodrage",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Pet attacks anything in range."
+    },
+    "petdefensive": {
+      "name": "Defensive",
+      "icon": "ability_defend",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Pet attacks what attacks you or it."
+    },
+    "petpassive": {
+      "name": "Passive",
+      "icon": "ability_seal",
+      "level": 1,
+      "pet": true,
+      "command": true,
+      "desc": "Pet never attacks on its own."
+    },
+    "petbite": {
+      "name": "Bite",
+      "spell": 17253,
+      "icon": "ability_racial_cannibalize",
+      "level": 1,
+      "pet": true,
+      "desc": "Basic damage attack (Focus). Families: Bat, Bear, Boar, Carrion Bird, Cat, Core Hound, Crocolisk, Fox, Gorilla, Hyena, Raptor, Spider, Tallstrider, Turtle, Wind Serpent, Wolf."
+    },
+    "petclaw": {
+      "name": "Claw",
+      "spell": 16827,
+      "icon": "ability_druid_rake",
+      "level": 1,
+      "pet": true,
+      "desc": "Basic damage attack (Focus). Families: Bear, Bird of Prey, Carrion Bird, Cat, Crab, Raptor, Scorpid."
+    },
+    "petgrowl": {
+      "name": "Growl",
+      "spell": 2649,
+      "icon": "ability_physical_taunt",
+      "level": 1,
+      "pet": true,
+      "desc": "Pet taunt; keeps mobs on the pet. Trained at the Pet Trainer (ranks every 10 levels). Families: Bat, Bear, Bird of Prey, Boar, Carrion Bird, Cat, Core Hound, Crab, Crocolisk, Fox, Gorilla, Hyena, Raptor, Scorpid, Spider, Tallstrider, Turtle, Wind Serpent, Wolf."
+    },
+    "petcharge": {
+      "name": "Charge",
+      "spell": 7371,
+      "icon": "ability_hunter_pet_boar",
+      "level": 1,
+      "pet": true,
+      "desc": "Charges an enemy, roots it for 1 sec and buffs the next attack. Families: Boar."
+    },
+    "petlightningbreath": {
+      "name": "Lightning Breath",
+      "spell": 24844,
+      "icon": "spell_nature_lightning",
+      "level": 1,
+      "pet": true,
+      "desc": "Ranged (20 yard) Nature damage. Families: Wind Serpent."
+    },
+    "petcower": {
+      "name": "Cower",
+      "spell": 1742,
+      "icon": "ability_druid_cower",
+      "level": 5,
+      "pet": true,
+      "desc": "Pet lowers its threat. Families: Bat, Bear, Bird of Prey, Boar, Carrion Bird, Cat, Core Hound, Crab, Crocolisk, Fox, Gorilla, Hyena, Raptor, Scorpid, Spider, Tallstrider, Turtle, Wind Serpent, Wolf."
+    },
+    "petdemoralizingscreech": {
+      "name": "Demoralizing Screech",
+      "spell": 24423,
+      "icon": "ability_hunter_pet_vulture",
+      "level": 8,
+      "pet": true,
+      "desc": "Damage plus lowers melee attack power of enemies in melee range. Renamed from Screech in Forever. Families: Carrion Bird."
+    },
+    "petscorpidpoison": {
+      "name": "Scorpid Poison",
+      "spell": 24640,
+      "icon": "ability_poisonsting",
+      "level": 8,
+      "pet": true,
+      "desc": "Stacking Nature damage over time (up to 5 stacks). Families: Scorpid."
+    },
+    "petmine": {
+      "name": "Mine!",
+      "spell": 1265054,
+      "icon": "spell_nature_natureswrath",
+      "level": 10,
+      "pet": true,
+      "desc": "New in Forever: damage and disarms the target for 3 sec. Families: Bird of Prey."
+    },
+    "petfurioushowl": {
+      "name": "Furious Howl",
+      "spell": 24604,
+      "icon": "ability_hunter_pet_wolf",
+      "level": 10,
+      "pet": true,
+      "desc": "Party melee attack power buff for 1 min. Families: Wolf."
+    },
+    "petsonicblast": {
+      "name": "Sonic Blast",
+      "spell": 1264478,
+      "icon": "ability_vehicle_sonicshockwave",
+      "level": 12,
+      "pet": true,
+      "desc": "New in Forever: Nature damage and +30% spell cast time on the target for 20 sec. Families: Bat."
+    },
+    "petswipe": {
+      "name": "Swipe",
+      "spell": 1264494,
+      "icon": "inv_misc_monsterclaw_03",
+      "level": 12,
+      "pet": true,
+      "desc": "New in Forever: hits up to 3 nearby enemies. Families: Bear."
+    },
+    "petpinch": {
+      "name": "Pinch",
+      "spell": 1264735,
+      "icon": "ability_hunter_pet_crab",
+      "level": 12,
+      "pet": true,
+      "desc": "New in Forever: damage and 50% slow for 9 sec. Families: Crab."
+    },
+    "petdismember": {
+      "name": "Dismember",
+      "spell": 1264758,
+      "icon": "ability_hunter_pet_crocolisk",
+      "level": 12,
+      "pet": true,
+      "desc": "New in Forever: damage and reduces healing taken by 25% for 6 sec (deep dive said 50%; tooltip says 25%). Families: Crocolisk."
+    },
+    "pettendonrip": {
+      "name": "Tendon Rip",
+      "spell": 1265038,
+      "icon": "ability_hunter_pet_hyena",
+      "level": 12,
+      "pet": true,
+      "desc": "New in Forever: bleed and 50% slow for 9 sec. Families: Hyena."
+    },
+    "petsavagerend": {
+      "name": "Savage Rend",
+      "spell": 1265065,
+      "icon": "ability_hunter_pet_raptor",
+      "level": 12,
+      "pet": true,
+      "desc": "New in Forever: bleed over 18 sec. Families: Raptor."
+    },
+    "petweb": {
+      "name": "Web",
+      "spell": 1265843,
+      "icon": "spell_nature_web",
+      "level": 12,
+      "pet": true,
+      "desc": "New in Forever: immobilizes the target and deals Nature damage over 4 sec. Families: Spider."
+    },
+    "petdustcloud": {
+      "name": "Dust Cloud",
+      "spell": 1265899,
+      "icon": "spell_nature_sleep",
+      "level": 12,
+      "pet": true,
+      "desc": "New in Forever: reduces the target's armor for 30 sec. Families: Tallstrider."
+    },
+    "pettrickstersdance": {
+      "name": "Trickster's Dance",
+      "spell": 1310612,
+      "icon": "ability_hunter_aspectofthefox",
+      "level": 20,
+      "pet": true,
+      "desc": "New Fox family ability: pet +50% dodge and 30% faster attacks for 12 sec. Families: Fox."
+    },
+    "petshellshield": {
+      "name": "Shell Shield",
+      "spell": 26064,
+      "icon": "ability_hunter_pet_turtle",
+      "level": 20,
+      "pet": true,
+      "desc": "Pet takes 50% less damage but attacks slower (harder hits) for 12 sec. Families: Turtle."
+    },
+    "petdash": {
+      "name": "Dash",
+      "spell": 23099,
+      "icon": "ability_druid_dash",
+      "level": 30,
+      "pet": true,
+      "desc": "Pet +40% run speed for 15 sec (ground families). Families: Bear, Boar, Cat, Crab, Crocolisk, Fox, Gorilla, Hyena, Raptor, Scorpid, Spider, Tallstrider, Turtle, Wolf."
+    },
+    "petdive": {
+      "name": "Dive",
+      "spell": 23145,
+      "icon": "spell_shadow_burningspirit",
+      "level": 30,
+      "pet": true,
+      "desc": "Pet +40% run speed for 15 sec (flying families). Families: Bat, Bird of Prey, Carrion Bird, Wind Serpent."
+    },
+    "petprowl": {
+      "name": "Prowl",
+      "spell": 24450,
+      "icon": "ability_druid_supriseattack",
+      "level": 30,
+      "pet": true,
+      "desc": "Pet stealth; first attack from stealth +20% damage. Families: Cat."
+    },
+    "petthunderstomp": {
+      "name": "Thunderstomp",
+      "spell": 26090,
+      "icon": "ability_hunter_pet_gorilla",
+      "level": 30,
+      "pet": true,
+      "desc": "Nature damage to all enemies within 8 yards. Families: Gorilla."
+    },
+    "petlavabreath": {
+      "name": "Lava Breath",
+      "spell": 444678,
+      "icon": "spell_fire_windsofwoe",
+      "level": 48,
+      "pet": true,
+      "desc": "Fire damage to 2 targets and slows their casting by 25%. Families: Core Hound."
+    }
+  },
+  "pet": {
+    "pages": [
+      {
+        "id": "pet",
+        "name": "Pet"
+      }
+    ],
+    "book": [
+      "petattack",
+      "petfollow",
+      "petstay",
+      "petaggressive",
+      "petdefensive",
+      "petpassive",
+      "petbite",
+      "petclaw",
+      "petgrowl",
+      "petcharge",
+      "petlightningbreath",
+      "petcower",
+      "petdemoralizingscreech",
+      "petscorpidpoison",
+      "petmine",
+      "petfurioushowl",
+      "petsonicblast",
+      "petswipe",
+      "petpinch",
+      "petdismember",
+      "pettendonrip",
+      "petsavagerend",
+      "petweb",
+      "petdustcloud",
+      "pettrickstersdance",
+      "petshellshield",
+      "petdash",
+      "petdive",
+      "petprowl",
+      "petthunderstomp",
+      "petlavabreath"
+    ]
+  },
+  "starter": {
+    "bar1": [
+      {
+        "key": "1",
+        "hunter": "autoshot"
+      },
+      {
+        "key": "2",
+        "hunter": "arcaneshot"
+      },
+      {
+        "key": "3",
+        "hunter": "serpentsting"
+      },
+      {
+        "key": "4",
+        "hunter": "concussiveshot"
+      },
+      {
+        "key": "Q",
+        "hunter": "raptorstrike"
+      },
+      {
+        "key": "E",
+        "hunter": "wingclip"
+      },
+      {
+        "key": "R",
+        "hunter": "mongoosebite"
+      },
+      {
+        "key": "F",
+        "hunter": "huntersmark"
+      },
+      {
+        "key": "C",
+        "hunter": "multishot"
+      },
+      {
+        "key": "V",
+        "hunter": "disengage"
+      },
+      {
+        "key": "T",
+        "hunter": "aimedshot"
+      },
+      {
+        "key": "G",
+        "hunter": "freezingtrap"
+      }
+    ],
+    "bars": [
+      [
+        [
+          "Shift+1",
+          "aspectofthehawk"
+        ],
+        [
+          "Shift+2",
+          "aspectofthemonkey"
+        ],
+        [
+          "Shift+3",
+          "aspectofthecheetah"
+        ],
+        [
+          "Shift+4",
+          "aspectofthepack"
+        ],
+        [
+          "Shift+Q",
+          "feigndeath"
+        ],
+        [
+          "Shift+E",
+          "rapidfire"
+        ],
+        [
+          "Shift+R",
+          "mendpet"
+        ],
+        [
+          "Shift+F",
+          "callpet"
+        ],
+        [
+          "Shift+T",
+          "revivepet"
+        ],
+        [
+          "Shift+C",
+          "feedpet"
+        ],
+        [
+          "Alt+1",
+          "potion"
+        ],
+        [
+          "Alt+2",
+          "bandage"
+        ]
+      ],
+      []
+    ],
+    "pet": [
+      {
+        "key": "Ctrl+1",
+        "pet": "petattack"
+      },
+      {
+        "key": "Ctrl+2",
+        "pet": "petfollow"
+      },
+      {
+        "key": "Ctrl+3",
+        "pet": "petstay"
+      },
+      {
+        "key": "Ctrl+4",
+        "pet": "petbite"
+      },
+      {
+        "key": "Ctrl+5",
+        "pet": "petgrowl"
+      },
+      {
+        "key": "Ctrl+6",
+        "pet": "petdash"
+      },
+      {
+        "key": "Ctrl+7",
+        "pet": "petcower"
+      },
+      {
+        "pet": "petaggressive"
+      },
+      {
+        "pet": "petdefensive"
+      },
+      {
+        "pet": "petpassive"
+      }
+    ]
+  }
+}

@@ -71,7 +71,7 @@ const { serve, OUT } = require('./env');
     ok(r.battleTwice === 'battle', 'a warrior stays in a stance when pressing it again');
     ok(r.wPages === 'battle,def,berserker', 'warrior has a Berserker page');
     ok(r.wOld, 'an older save without the Berserker page loads with it empty');
-    ok(r.only === 'caster,bear,cat / caster', 'only-in lists for Faerie Fire and Wrath');
+    ok(r.only === 'caster,bear,cat,moonkin / caster,moonkin', 'only-in lists for Faerie Fire and Wrath (Moonkin casts both)');
     ok(!p.errs.length, 'no page errors ' + p.errs.join(' | '));
     await ctx.close();
   }
@@ -116,7 +116,7 @@ const { serve, OUT } = require('./env');
     await p.waitForSelector('#setupDlg', { state: 'hidden' });
     await p.waitForTimeout(150);
     ok((await p.textContent('#setupCls')).includes('Druid') && (await p.$eval('#raceSel', s => s.value)) === 'tauren', 'Tauren Druid setup');
-    ok((await p.$$('#kbSt .kb-slot')).length === 4 && !(await p.$('#kbSt .kb-on')), 'stance bar: four forms, none lit in caster form');
+    ok((await p.$$('#kbSt .kb-slot')).length === 5 && !(await p.$('#kbSt .kb-on')) && (await p.getAttribute('#kbSt [data-slot="st-moonkin"]', 'class')).includes('kb-dim'), 'stance bar: five forms, none lit in caster form, Moonkin dimmed (talent not taken)');
     ok((await tag(p)) === 'Caster Form' && (await tab(p)) === 'Caster' && (await name(p, 'b1-0')) === 'Wrath', 'starts in caster form: Wrath on 1');
     ok((await p.$eval('#kbB2 .kb-bar-r', e => e.textContent)) === 'All forms', 'extra bars say All forms');
     await p.keyboard.press('z');
@@ -135,7 +135,7 @@ const { serve, OUT } = require('./env');
     ok((await tag(p)) === 'Travel Form' && (await tab(p)) === 'Caster' && (await cls(p, 'b1-0')).includes('kb-red'), 'Travel Form keeps the caster page, where Wrath can’t be cast');
     await p.click('#kbPages .kb-pg[data-page="bear"]');
     ok((await tag(p)) === 'Bear Form', 'page tab to Bear');
-    ok((await meta(p, 'ff')) === 'Level 18 · Caster, Bear or Cat' && (await meta(p, 'potion')).endsWith('Any form'), 'spellbook lists where abilities work');
+    ok((await meta(p, 'ff')) === 'Level 18 · Caster, Bear, Cat or Moonkin' && (await meta(p, 'potion')).endsWith('Any form'), 'spellbook lists where abilities work');
     ok((await meta(p, 'warstomp')) === 'Racial · Level 1 · Any form', 'Tauren racial in the spellbook');
     // put War Stomp on bar 2, then change race
     await p.click('#kbBook .kb-sp[data-k="warstomp"]');

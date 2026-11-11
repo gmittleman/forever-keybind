@@ -84,6 +84,9 @@
     ],
     "reck": [
       "berserker"
+    ],
+    "sweeping": [
+      "battle"
     ]
   },
   "book": [
@@ -116,7 +119,15 @@
     "slam",
     "whirlwind",
     "pummel",
-    "reck"
+    "reck",
+    "sweeping",
+    "mortal",
+    "piercing",
+    "deathwish",
+    "bloodthirst",
+    "laststand",
+    "concussion",
+    "shieldslam"
   ],
   "abilities": {
     "bstance": {
@@ -350,6 +361,80 @@
       "icon": "ability_criticalstrike",
       "level": 50,
       "desc": "Huge crit chance for a short time."
+    },
+    "piercing": {
+      "name": "Piercing Howl",
+      "spell": 12323,
+      "icon": "spell_shadow_deathscream",
+      "level": 20,
+      "talent": true,
+      "tree": "Fury",
+      "desc": "Slows all nearby enemies by 50% for 6 sec."
+    },
+    "laststand": {
+      "name": "Last Stand",
+      "spell": 12975,
+      "icon": "spell_holy_ashestoashes",
+      "level": 20,
+      "talent": true,
+      "tree": "Protection",
+      "desc": "Emergency: 30% extra maximum health for 20 sec.",
+      "tooltipLevel": 1
+    },
+    "sweeping": {
+      "name": "Sweeping Strikes",
+      "spell": 12292,
+      "icon": "ability_rogue_slicedice",
+      "level": 30,
+      "talent": true,
+      "tree": "Arms",
+      "desc": "Your next 5 melee attacks also hit a nearby enemy."
+    },
+    "deathwish": {
+      "name": "Death Wish",
+      "spell": 12328,
+      "icon": "spell_shadow_deathpact",
+      "level": 30,
+      "talent": true,
+      "tree": "Fury",
+      "desc": "20% more physical damage and immune to fear for 30 sec, but you take 5% more damage.",
+      "tooltipLevel": 1
+    },
+    "concussion": {
+      "name": "Concussion Blow",
+      "spell": 12809,
+      "icon": "ability_thunderbolt",
+      "level": 30,
+      "talent": true,
+      "tree": "Protection",
+      "desc": "Stuns the target for 5 sec."
+    },
+    "mortal": {
+      "name": "Mortal Strike",
+      "spell": 12294,
+      "icon": "ability_warrior_savageblow",
+      "level": 40,
+      "talent": true,
+      "tree": "Arms",
+      "desc": "Big hit that halves the target’s healing for 10 sec."
+    },
+    "bloodthirst": {
+      "name": "Bloodthirst",
+      "spell": 23881,
+      "icon": "spell_nature_bloodlust",
+      "level": 40,
+      "talent": true,
+      "tree": "Fury",
+      "desc": "Instant attack based on your Attack Power. Also 10% faster movement for 10 sec in Forever."
+    },
+    "shieldslam": {
+      "name": "Shield Slam",
+      "spell": 23922,
+      "icon": "inv_shield_05",
+      "level": 40,
+      "talent": true,
+      "tree": "Protection",
+      "desc": "Hits with your shield, scaled by block value, and may dispel a magic effect."
     }
   },
   "starter": {

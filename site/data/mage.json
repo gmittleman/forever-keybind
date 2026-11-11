@@ -1,0 +1,631 @@
+{
+  "id": "mage",
+  "name": "Mage",
+  "color": "#3FC7EB",
+  "base": {
+    "id": "mage",
+    "name": "Mage",
+    "color": "var(--mana)"
+  },
+  "stances": [],
+  "use": {},
+  "book": [
+    "fireball",
+    "frostarmor",
+    "arcaneintellect",
+    "shoot",
+    "conjurewater",
+    "frostbolt",
+    "conjurefood",
+    "fireblast",
+    "comprehendscroll",
+    "arcanemissiles",
+    "polymorph",
+    "frostnova",
+    "dampenmagic",
+    "slowfall",
+    "arcaneexplosion",
+    "flamestrike",
+    "amplifymagic",
+    "removelessercurse",
+    "blink",
+    "blizzard",
+    "evocation",
+    "fireward",
+    "manashield",
+    "teleportstormwind",
+    "teleportironforge",
+    "teleportundercity",
+    "teleportorgrimmar",
+    "frostward",
+    "scorch",
+    "counterspell",
+    "coneofcold",
+    "conjuremanaagate",
+    "icearmor",
+    "teleportdarnassus",
+    "teleportthunderbluff",
+    "magearmor",
+    "conjuremanajade",
+    "frostfirebolt",
+    "portalstormwind",
+    "portalironforge",
+    "portalorgrimmar",
+    "portalundercity",
+    "conjuremanacitrine",
+    "portaldarnassus",
+    "portalthunderbluff",
+    "teleportdalaran",
+    "arcanebrilliance",
+    "conjuremanaruby",
+    "arcaneblast",
+    "arcanewrath",
+    "presenceofmind",
+    "arcanepower",
+    "pyroblast",
+    "blastwave",
+    "combustion",
+    "icelance",
+    "iceblock",
+    "coldsnap",
+    "icebarrier"
+  ],
+  "abilities": {
+    "fireball": {
+      "name": "Fireball",
+      "spell": 133,
+      "icon": "spell_fire_flamebolt",
+      "level": 1,
+      "desc": "Main Fire nuke with a cast time and a small burn. Damage lowered in Forever."
+    },
+    "frostarmor": {
+      "name": "Frost Armor",
+      "spell": 168,
+      "icon": "spell_frost_frostarmor02",
+      "level": 1,
+      "desc": "30-min armor buff that chills melee attackers. Ice Armor replaces it at 30."
+    },
+    "arcaneintellect": {
+      "name": "Arcane Intellect",
+      "spell": 1459,
+      "icon": "spell_holy_magicalsentry",
+      "level": 1,
+      "desc": "Intellect buff on one target. Lasts 1 hour in Forever (was 30 min)."
+    },
+    "shoot": {
+      "name": "Shoot",
+      "spell": 5019,
+      "icon": "ability_shootwand",
+      "level": 1,
+      "desc": "Attack with your equipped wand."
+    },
+    "conjurewater": {
+      "name": "Conjure Water",
+      "spell": 5504,
+      "icon": "inv_drink_06",
+      "level": 4,
+      "desc": "Conjures water to drink; more bottles per cast in Forever."
+    },
+    "frostbolt": {
+      "name": "Frostbolt",
+      "spell": 116,
+      "icon": "spell_frost_frostbolt02",
+      "level": 4,
+      "desc": "Frost nuke that slows the target's movement."
+    },
+    "conjurefood": {
+      "name": "Conjure Food",
+      "spell": 587,
+      "icon": "inv_misc_food_10",
+      "level": 6,
+      "desc": "Conjures food to eat out of combat."
+    },
+    "fireblast": {
+      "name": "Fire Blast",
+      "spell": 2136,
+      "icon": "spell_fire_fireball",
+      "level": 6,
+      "desc": "Instant Fire damage on an 8 sec cooldown. Shares that cooldown with Ice Lance in Forever."
+    },
+    "comprehendscroll": {
+      "name": "Comprehend Scroll",
+      "spell": 1296017,
+      "icon": "8188276",
+      "level": 6,
+      "desc": "New in Forever: decipher a scroll you looted, training the Comprehension skill."
+    },
+    "arcanemissiles": {
+      "name": "Arcane Missiles",
+      "spell": 5143,
+      "icon": "spell_nature_starfall",
+      "level": 8,
+      "desc": "Channeled Arcane missiles over 3 sec."
+    },
+    "polymorph": {
+      "name": "Polymorph",
+      "spell": 118,
+      "icon": "spell_nature_polymorph",
+      "level": 8,
+      "desc": "Turns an enemy humanoid or beast into a sheep. Breaks on damage."
+    },
+    "frostnova": {
+      "name": "Frost Nova",
+      "spell": 122,
+      "icon": "spell_frost_frostnova",
+      "level": 10,
+      "desc": "Freezes nearby enemies in place."
+    },
+    "dampenmagic": {
+      "name": "Dampen Magic",
+      "spell": 604,
+      "icon": "spell_nature_abolishmagic",
+      "level": 12,
+      "desc": "Party buff: less spell damage and less healing taken. Stronger in Forever."
+    },
+    "slowfall": {
+      "name": "Slow Fall",
+      "spell": 130,
+      "icon": "spell_magic_featherfall",
+      "level": 12,
+      "desc": "Slows your falling speed for 30 sec."
+    },
+    "arcaneexplosion": {
+      "name": "Arcane Explosion",
+      "spell": 1449,
+      "icon": "spell_nature_wispsplode",
+      "level": 14,
+      "desc": "Instant Arcane damage to all enemies around you."
+    },
+    "flamestrike": {
+      "name": "Flamestrike",
+      "spell": 2120,
+      "icon": "spell_fire_selfdestruct",
+      "level": 16,
+      "desc": "Ground-targeted Fire damage plus a burn. Ignite can now apply to its burn in Forever."
+    },
+    "amplifymagic": {
+      "name": "Amplify Magic",
+      "spell": 1008,
+      "icon": "spell_holy_flashheal",
+      "level": 18,
+      "desc": "Party buff: more spell damage and more healing taken. Stronger in Forever."
+    },
+    "removelessercurse": {
+      "name": "Remove Lesser Curse",
+      "spell": 475,
+      "icon": "spell_nature_removecurse",
+      "level": 18,
+      "desc": "Removes one curse from a friendly target."
+    },
+    "blink": {
+      "name": "Blink",
+      "spell": 1953,
+      "icon": "spell_arcane_blink",
+      "level": 20,
+      "desc": "Teleport 20 yards forward and break stuns and roots."
+    },
+    "blizzard": {
+      "name": "Blizzard",
+      "spell": 10,
+      "icon": "spell_frost_icestorm",
+      "level": 20,
+      "desc": "Channeled ground-targeted Frost damage."
+    },
+    "evocation": {
+      "name": "Evocation",
+      "spell": 12051,
+      "icon": "spell_nature_purge",
+      "level": 20,
+      "desc": "Channel to regenerate mana quickly."
+    },
+    "fireward": {
+      "name": "Fire Ward",
+      "spell": 543,
+      "icon": "spell_fire_firearmor",
+      "level": 20,
+      "desc": "Absorbs Fire damage for 30 sec."
+    },
+    "manashield": {
+      "name": "Mana Shield",
+      "spell": 1463,
+      "icon": "spell_shadow_detectlesserinvisibility",
+      "level": 20,
+      "desc": "Absorbs physical damage by draining your mana."
+    },
+    "teleportstormwind": {
+      "name": "Teleport: Stormwind",
+      "spell": 3561,
+      "icon": "spell_arcane_teleportstormwind",
+      "level": 20,
+      "faction": "Alliance",
+      "desc": "Teleports you to Stormwind."
+    },
+    "teleportironforge": {
+      "name": "Teleport: Ironforge",
+      "spell": 3562,
+      "icon": "spell_arcane_teleportironforge",
+      "level": 20,
+      "faction": "Alliance",
+      "desc": "Teleports you to Ironforge."
+    },
+    "teleportundercity": {
+      "name": "Teleport: Undercity",
+      "spell": 3563,
+      "icon": "spell_arcane_teleportundercity",
+      "level": 20,
+      "faction": "Horde",
+      "desc": "Teleports you to Undercity."
+    },
+    "teleportorgrimmar": {
+      "name": "Teleport: Orgrimmar",
+      "spell": 3567,
+      "icon": "spell_arcane_teleportorgrimmar",
+      "level": 20,
+      "faction": "Horde",
+      "desc": "Teleports you to Orgrimmar."
+    },
+    "frostward": {
+      "name": "Frost Ward",
+      "spell": 6143,
+      "icon": "spell_frost_frostward",
+      "level": 22,
+      "desc": "Absorbs Frost damage for 30 sec."
+    },
+    "scorch": {
+      "name": "Scorch",
+      "spell": 2948,
+      "icon": "spell_fire_soulburn",
+      "level": 22,
+      "desc": "Fast Fire nuke. Damage lowered in Forever."
+    },
+    "counterspell": {
+      "name": "Counterspell",
+      "spell": 2139,
+      "icon": "spell_frost_iceshock",
+      "level": 24,
+      "desc": "Interrupts a cast and locks that school for 10 sec."
+    },
+    "coneofcold": {
+      "name": "Cone of Cold",
+      "spell": 120,
+      "icon": "spell_frost_glacier",
+      "level": 26,
+      "desc": "Frost damage and a slow in a cone. Shorter, weaker slow in Forever."
+    },
+    "conjuremanaagate": {
+      "name": "Conjure Mana Agate",
+      "spell": 759,
+      "icon": "inv_misc_gem_emerald_01",
+      "level": 28,
+      "desc": "Conjures a Mana Agate, a gem you use to restore mana."
+    },
+    "icearmor": {
+      "name": "Ice Armor",
+      "spell": 7302,
+      "icon": "spell_frost_frostarmor02",
+      "level": 30,
+      "desc": "Stronger armor buff that chills melee attackers. Replaces Frost Armor."
+    },
+    "teleportdarnassus": {
+      "name": "Teleport: Darnassus",
+      "spell": 3565,
+      "icon": "spell_arcane_teleportdarnassus",
+      "level": 30,
+      "faction": "Alliance",
+      "desc": "Teleports you to Darnassus."
+    },
+    "teleportthunderbluff": {
+      "name": "Teleport: Thunder Bluff",
+      "spell": 3566,
+      "icon": "spell_arcane_teleportthunderbluff",
+      "level": 30,
+      "faction": "Horde",
+      "desc": "Teleports you to Thunder Bluff."
+    },
+    "magearmor": {
+      "name": "Mage Armor",
+      "spell": 6117,
+      "icon": "spell_magearmor",
+      "level": 34,
+      "desc": "Armor buff for resistances and mana regeneration while casting. Regen raised to 50% in Forever."
+    },
+    "conjuremanajade": {
+      "name": "Conjure Mana Jade",
+      "spell": 3552,
+      "icon": "inv_misc_gem_emerald_02",
+      "level": 38,
+      "desc": "Conjures a Mana Jade, a gem you use to restore mana."
+    },
+    "frostfirebolt": {
+      "name": "Frostfire Bolt",
+      "spell": 401502,
+      "icon": "ability_mage_frostfirebolt",
+      "level": 40,
+      "desc": "New in Forever: a 3 sec Fire and Frost nuke with a slow and a burn, checked against the lower resistance."
+    },
+    "portalstormwind": {
+      "name": "Portal: Stormwind",
+      "spell": 10059,
+      "icon": "spell_arcane_portalstormwind",
+      "level": 40,
+      "faction": "Alliance",
+      "desc": "Opens a portal to Stormwind for your group."
+    },
+    "portalironforge": {
+      "name": "Portal: Ironforge",
+      "spell": 11416,
+      "icon": "spell_arcane_portalironforge",
+      "level": 40,
+      "faction": "Alliance",
+      "desc": "Opens a portal to Ironforge for your group."
+    },
+    "portalorgrimmar": {
+      "name": "Portal: Orgrimmar",
+      "spell": 11417,
+      "icon": "spell_arcane_portalorgrimmar",
+      "level": 40,
+      "faction": "Horde",
+      "desc": "Opens a portal to Orgrimmar for your group."
+    },
+    "portalundercity": {
+      "name": "Portal: Undercity",
+      "spell": 11418,
+      "icon": "spell_arcane_portalundercity",
+      "level": 40,
+      "faction": "Horde",
+      "desc": "Opens a portal to Undercity for your group."
+    },
+    "conjuremanacitrine": {
+      "name": "Conjure Mana Citrine",
+      "spell": 10053,
+      "icon": "inv_misc_gem_opal_01",
+      "level": 48,
+      "desc": "Conjures a Mana Citrine, a gem you use to restore mana."
+    },
+    "portaldarnassus": {
+      "name": "Portal: Darnassus",
+      "spell": 11419,
+      "icon": "spell_arcane_portaldarnassus",
+      "level": 50,
+      "faction": "Alliance",
+      "desc": "Opens a portal to Darnassus for your group."
+    },
+    "portalthunderbluff": {
+      "name": "Portal: Thunder Bluff",
+      "spell": 11420,
+      "icon": "spell_arcane_portalthunderbluff",
+      "level": 50,
+      "faction": "Horde",
+      "desc": "Opens a portal to Thunder Bluff for your group."
+    },
+    "teleportdalaran": {
+      "name": "Teleport: Dalaran",
+      "spell": 1297659,
+      "icon": "spell_arcane_teleporthalloftheguardian",
+      "level": 50,
+      "desc": "New in Forever: teleports you to Dalaran, which both factions can visit."
+    },
+    "arcanebrilliance": {
+      "name": "Arcane Brilliance",
+      "spell": 23028,
+      "icon": "spell_holy_arcaneintellect",
+      "level": 56,
+      "desc": "Intellect buff for your whole party or raid."
+    },
+    "conjuremanaruby": {
+      "name": "Conjure Mana Ruby",
+      "spell": 10054,
+      "icon": "inv_misc_gem_ruby_01",
+      "level": 58,
+      "desc": "Conjures a Mana Ruby, a gem you use to restore mana."
+    },
+    "arcaneblast": {
+      "name": "Arcane Blast",
+      "spell": 400574,
+      "icon": "spell_arcane_blast",
+      "level": 20,
+      "talent": true,
+      "tree": "Arcane",
+      "desc": "New in Forever: 1.5 sec Arcane nuke. Each cast stacks Spell Damage and raises its own mana cost, up to 4 stacks."
+    },
+    "arcanewrath": {
+      "name": "Arcane Wrath",
+      "spell": 1326079,
+      "icon": "ability_mage_netherwindpresence",
+      "level": 25,
+      "talent": true,
+      "tree": "Arcane",
+      "desc": "New in Forever: 3.5 sec Arcane projectile on a 6 sec cooldown that scales with your maximum mana."
+    },
+    "presenceofmind": {
+      "name": "Presence of Mind",
+      "spell": 12043,
+      "icon": "spell_nature_enchantarmor",
+      "level": 30,
+      "talent": true,
+      "tree": "Arcane",
+      "tooltipLevel": 1,
+      "desc": "Makes your next spell with a cast time instant."
+    },
+    "arcanepower": {
+      "name": "Arcane Power",
+      "spell": 12042,
+      "icon": "spell_nature_lightning",
+      "level": 40,
+      "talent": true,
+      "tree": "Arcane",
+      "tooltipLevel": 1,
+      "desc": "15 sec: spells deal 30% more damage and cost 30% more mana."
+    },
+    "pyroblast": {
+      "name": "Pyroblast",
+      "spell": 11366,
+      "icon": "spell_fire_fireball02",
+      "level": 20,
+      "talent": true,
+      "tree": "Fire",
+      "desc": "Huge, slow Fire nuke with a burn. Heating Up crits shorten its cast in Forever."
+    },
+    "blastwave": {
+      "name": "Blast Wave",
+      "spell": 11113,
+      "icon": "spell_holy_excorcism_02",
+      "level": 30,
+      "talent": true,
+      "tree": "Fire",
+      "desc": "Instant Fire damage and a daze to enemies around you."
+    },
+    "combustion": {
+      "name": "Combustion",
+      "spell": 11129,
+      "icon": "spell_fire_sealoffire",
+      "level": 40,
+      "talent": true,
+      "tree": "Fire",
+      "desc": "Each Fire spell hit raises your Fire crit chance until you have scored several crits."
+    },
+    "icelance": {
+      "name": "Ice Lance",
+      "spell": 1312002,
+      "icon": "spell_frost_frostblast",
+      "level": 20,
+      "talent": true,
+      "tree": "Frost",
+      "desc": "New in Forever: instant Frost hit that does 300% damage to Frozen targets. 8 sec cooldown shared with Fire Blast."
+    },
+    "iceblock": {
+      "name": "Ice Block",
+      "spell": 11958,
+      "icon": "spell_frost_frost",
+      "level": 25,
+      "talent": true,
+      "tree": "Frost",
+      "tooltipLevel": 4,
+      "desc": "Become immune to everything for 10 sec but unable to act. Moved up a tier in Forever."
+    },
+    "coldsnap": {
+      "name": "Cold Snap",
+      "spell": 12472,
+      "icon": "spell_frost_wizardmark",
+      "level": 30,
+      "talent": true,
+      "tree": "Frost",
+      "tooltipLevel": 1,
+      "desc": "Resets the cooldowns of your Frost spells. 10 min cooldown and moved down to tier 5 in Forever."
+    },
+    "icebarrier": {
+      "name": "Ice Barrier",
+      "spell": 11426,
+      "icon": "spell_ice_lament",
+      "level": 40,
+      "talent": true,
+      "tree": "Frost",
+      "desc": "Damage shield that also raises Frost damage and stops pushback in Forever."
+    }
+  },
+  "starter": {
+    "bar1": [
+      {
+        "key": "1",
+        "mage": "frostbolt"
+      },
+      {
+        "key": "2",
+        "mage": "fireball"
+      },
+      {
+        "key": "3",
+        "mage": "fireblast"
+      },
+      {
+        "key": "4",
+        "mage": "arcanemissiles"
+      },
+      {
+        "key": "Q",
+        "mage": "frostnova"
+      },
+      {
+        "key": "E",
+        "mage": "coneofcold"
+      },
+      {
+        "key": "R",
+        "mage": "arcaneexplosion"
+      },
+      {
+        "key": "F",
+        "mage": "polymorph"
+      },
+      {
+        "key": "C",
+        "mage": "counterspell"
+      },
+      {
+        "key": "V",
+        "mage": "blink"
+      },
+      {
+        "key": "T",
+        "mage": "scorch"
+      },
+      {
+        "key": "G",
+        "mage": "shoot"
+      }
+    ],
+    "bars": [
+      [
+        [
+          "Shift+1",
+          "conjurewater"
+        ],
+        [
+          "Shift+2",
+          "conjurefood"
+        ],
+        [
+          "Shift+3",
+          "evocation"
+        ],
+        [
+          "Shift+4",
+          "manashield"
+        ],
+        [
+          "Shift+Q",
+          "frostward"
+        ],
+        [
+          "Shift+E",
+          "blizzard"
+        ],
+        [
+          "Shift+R",
+          "arcaneintellect"
+        ],
+        [
+          "Shift+T",
+          "removelessercurse"
+        ],
+        [
+          "Shift+F",
+          "frostarmor"
+        ],
+        [
+          "Shift+C",
+          "flamestrike"
+        ],
+        [
+          "Ctrl+1",
+          "potion"
+        ],
+        [
+          "Ctrl+2",
+          "bandage"
+        ]
+      ],
+      []
+    ]
+  }
+}

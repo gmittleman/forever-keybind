@@ -1,0 +1,549 @@
+{
+  "id": "priest",
+  "name": "Priest",
+  "color": "#FFFFFF",
+  "stateWord": "form",
+  "base": {
+    "id": "priest",
+    "name": "Normal",
+    "abbr": "N",
+    "color": "var(--gold)"
+  },
+  "stances": [
+    {
+      "id": "shadowform",
+      "ability": "shadowform",
+      "abbr": "S",
+      "color": "var(--xp)",
+      "page": false
+    }
+  ],
+  "use": {
+    "lesserheal": [
+      "priest"
+    ],
+    "renew": [
+      "priest"
+    ],
+    "heal": [
+      "priest"
+    ],
+    "flashheal": [
+      "priest"
+    ],
+    "holynova": [
+      "priest"
+    ],
+    "bindingheal": [
+      "priest"
+    ],
+    "prayerofhealing": [
+      "priest"
+    ],
+    "penance": [
+      "priest"
+    ],
+    "greaterheal": [
+      "priest"
+    ],
+    "prayerofmending": [
+      "priest"
+    ]
+  },
+  "book": [
+    "smite",
+    "lesserheal",
+    "fortitude",
+    "shoot",
+    "swpain",
+    "pwshield",
+    "renew",
+    "fade",
+    "mindblast",
+    "resurrection",
+    "innerfire",
+    "psychicscream",
+    "curedisease",
+    "heal",
+    "dispelmagic",
+    "mindsoothe",
+    "flashheal",
+    "shackleundead",
+    "fearward",
+    "devouringplague",
+    "holyfire",
+    "mindvision",
+    "manaburn",
+    "bindingheal",
+    "mindcontrol",
+    "prayerofhealing",
+    "shadowprotection",
+    "divinespirit",
+    "abolishdisease",
+    "swdeath",
+    "levitate",
+    "greaterheal",
+    "prayeroffortitude",
+    "prayerofshadowprotection",
+    "prayerofspirit",
+    "innerfocus",
+    "penance",
+    "powerinfusion",
+    "holynova",
+    "prayerofmending",
+    "mindflay",
+    "vampiricembrace",
+    "silence",
+    "shadowform"
+  ],
+  "abilities": {
+    "smite": {
+      "name": "Smite",
+      "spell": 585,
+      "icon": "spell_holy_holysmite",
+      "level": 1,
+      "desc": "Basic Holy damage nuke with a cast time. Castable in Shadowform in Forever (Classic blocked it)."
+    },
+    "lesserheal": {
+      "name": "Lesser Heal",
+      "spell": 2050,
+      "icon": "spell_holy_lesserheal",
+      "level": 1,
+      "desc": "Small, cheap direct heal with a cast time.",
+      "wowheadUse": false
+    },
+    "fortitude": {
+      "name": "Power Word: Fortitude",
+      "spell": 1243,
+      "icon": "spell_holy_wordfortitude",
+      "level": 1,
+      "desc": "1-hour Stamina buff on one target."
+    },
+    "shoot": {
+      "name": "Shoot",
+      "spell": 5019,
+      "icon": "ability_shootwand",
+      "level": 1,
+      "desc": "Auto-attack with your equipped wand (needs a wand)."
+    },
+    "swpain": {
+      "name": "Shadow Word: Pain",
+      "spell": 589,
+      "icon": "spell_shadow_shadowwordpain",
+      "level": 4,
+      "desc": "Instant Shadow damage-over-time. In Forever its ticks can crit and get Shadowform's bigger crit bonus."
+    },
+    "pwshield": {
+      "name": "Power Word: Shield",
+      "spell": 17,
+      "icon": "spell_holy_powerwordshield",
+      "level": 6,
+      "desc": "Instant absorb shield; target gets Weakened Soul (can't be shielded again for 15 sec)."
+    },
+    "renew": {
+      "name": "Renew",
+      "spell": 139,
+      "icon": "spell_holy_renew",
+      "level": 8,
+      "desc": "Instant heal over time. In Forever several priests' Renews can sit on one target.",
+      "wowheadUse": false
+    },
+    "fade": {
+      "name": "Fade",
+      "spell": 586,
+      "icon": "spell_magic_lesserinvisibilty",
+      "level": 8,
+      "desc": "Temporarily drops your threat for 10 sec; threat reduction doubled in Forever."
+    },
+    "mindblast": {
+      "name": "Mind Blast",
+      "spell": 8092,
+      "icon": "spell_shadow_unholyfrenzy",
+      "level": 10,
+      "desc": "Shadow damage nuke on a cooldown, high threat."
+    },
+    "resurrection": {
+      "name": "Resurrection",
+      "spell": 2006,
+      "icon": "spell_holy_resurrection",
+      "level": 10,
+      "desc": "Brings a dead player back to life out of combat."
+    },
+    "innerfire": {
+      "name": "Inner Fire",
+      "spell": 588,
+      "icon": "spell_holy_innerfire",
+      "level": 12,
+      "desc": "10-min self buff: armor (spell power at higher ranks), uses charges when hit."
+    },
+    "psychicscream": {
+      "name": "Psychic Scream",
+      "spell": 8122,
+      "icon": "spell_shadow_psychicscream",
+      "level": 14,
+      "desc": "Instant AoE fear on nearby enemies; damage may break it."
+    },
+    "curedisease": {
+      "name": "Cure Disease",
+      "spell": 528,
+      "icon": "spell_holy_nullifydisease",
+      "level": 14,
+      "desc": "Removes one disease from a friendly target. Forever: usable in Shadowform without dropping it."
+    },
+    "heal": {
+      "name": "Heal",
+      "spell": 2054,
+      "icon": "spell_holy_heal",
+      "level": 16,
+      "desc": "Mid-size direct heal with a cast time.",
+      "wowheadUse": false
+    },
+    "dispelmagic": {
+      "name": "Dispel Magic",
+      "spell": 527,
+      "icon": "spell_holy_dispelmagic",
+      "level": 18,
+      "desc": "Removes a harmful magic effect from a friend or a buff from an enemy."
+    },
+    "mindsoothe": {
+      "name": "Mind Soothe",
+      "spell": 453,
+      "icon": "spell_holy_mindsooth",
+      "level": 20,
+      "desc": "Shrinks a humanoid's aggro range so you can slip past it."
+    },
+    "flashheal": {
+      "name": "Flash Heal",
+      "spell": 2061,
+      "icon": "spell_holy_flashheal",
+      "level": 20,
+      "desc": "Fast, mana-hungry direct heal.",
+      "wowheadUse": false
+    },
+    "shackleundead": {
+      "name": "Shackle Undead",
+      "spell": 9484,
+      "icon": "spell_nature_slow",
+      "level": 20,
+      "desc": "Crowd control on one Undead target; breaks on damage."
+    },
+    "fearward": {
+      "name": "Fear Ward",
+      "spell": 6346,
+      "icon": "spell_holy_excorcism",
+      "level": 20,
+      "desc": "Wards a friendly target against the next Fear. New for every priest race in Forever (was Dwarf-only)."
+    },
+    "devouringplague": {
+      "name": "Devouring Plague",
+      "spell": 2944,
+      "icon": "spell_shadow_devouringplague",
+      "level": 20,
+      "desc": "Instant disease DoT that heals you for the damage dealt. Forever: baseline for all priests (was Undead-only), 24 sec cooldown."
+    },
+    "holyfire": {
+      "name": "Holy Fire",
+      "spell": 14914,
+      "icon": "spell_holy_searinglight",
+      "level": 20,
+      "desc": "Slow Holy nuke plus a short burn. Castable in Shadowform in Forever."
+    },
+    "mindvision": {
+      "name": "Mind Vision",
+      "spell": 2096,
+      "icon": "spell_holy_mindvision",
+      "level": 22,
+      "desc": "See through the target's eyes for 1 min (scouting)."
+    },
+    "manaburn": {
+      "name": "Mana Burn",
+      "spell": 8129,
+      "icon": "spell_shadow_manaburn",
+      "level": 24,
+      "desc": "Burns the target's mana and deals Shadow damage for part of it."
+    },
+    "bindingheal": {
+      "name": "Binding Heal",
+      "spell": 401937,
+      "icon": "spell_holy_blindingheal",
+      "level": 25,
+      "desc": "Heals your target and yourself at once, 1.5 sec cast. New in Forever: was a Holy talent in beta, now trainer-taught at 25 (see unverified).",
+      "wowheadUse": false
+    },
+    "mindcontrol": {
+      "name": "Mind Control",
+      "spell": 605,
+      "icon": "spell_shadow_shadowworddominate",
+      "level": 30,
+      "desc": "Channel to take control of a humanoid."
+    },
+    "prayerofhealing": {
+      "name": "Prayer of Healing",
+      "spell": 596,
+      "icon": "spell_holy_prayerofhealing02",
+      "level": 30,
+      "desc": "Big group heal with a cast time. Forever: heals your target's party (and pets), not yours.",
+      "wowheadUse": false
+    },
+    "shadowprotection": {
+      "name": "Shadow Protection",
+      "spell": 976,
+      "icon": "spell_shadow_antishadow",
+      "level": 30,
+      "desc": "Shadow resistance buff on one target."
+    },
+    "divinespirit": {
+      "name": "Divine Spirit",
+      "spell": 14752,
+      "icon": "spell_holy_divinespirit",
+      "level": 30,
+      "desc": "1-hour Spirit buff. Forever: baseline at 30 (was a Discipline talent)."
+    },
+    "abolishdisease": {
+      "name": "Abolish Disease",
+      "spell": 552,
+      "icon": "spell_nature_nullifydisease",
+      "level": 32,
+      "desc": "Cleanses a disease now and every 5 sec for 20 sec. Forever: usable in Shadowform without dropping it."
+    },
+    "swdeath": {
+      "name": "Shadow Word: Death",
+      "spell": 1309595,
+      "icon": "spell_shadow_demonicfortitude",
+      "level": 32,
+      "desc": "New in Forever: instant Shadow hit, 18 sec cooldown; if the target survives you take 30% of your max health."
+    },
+    "levitate": {
+      "name": "Levitate",
+      "spell": 1706,
+      "icon": "spell_holy_layonhands",
+      "level": 34,
+      "desc": "Float, fall slowly and walk on water for 2 min."
+    },
+    "greaterheal": {
+      "name": "Greater Heal",
+      "spell": 2060,
+      "icon": "spell_holy_greaterheal",
+      "level": 40,
+      "desc": "Slow, very large direct heal.",
+      "wowheadUse": false
+    },
+    "prayeroffortitude": {
+      "name": "Prayer of Fortitude",
+      "spell": 21562,
+      "icon": "spell_holy_prayeroffortitude",
+      "level": 48,
+      "desc": "Group/raid version of Power Word: Fortitude."
+    },
+    "prayerofshadowprotection": {
+      "name": "Prayer of Shadow Protection",
+      "spell": 27683,
+      "icon": "spell_holy_prayerofshadowprotection",
+      "level": 56,
+      "desc": "Group/raid Shadow resistance buff."
+    },
+    "prayerofspirit": {
+      "name": "Prayer of Spirit",
+      "spell": 27681,
+      "icon": "spell_holy_prayerofspirit",
+      "level": 60,
+      "desc": "Group/raid version of Divine Spirit."
+    },
+    "innerfocus": {
+      "name": "Inner Focus",
+      "spell": 14751,
+      "icon": "spell_frost_windwalkon",
+      "level": 20,
+      "talent": true,
+      "tree": "Discipline",
+      "tooltipLevel": 1,
+      "desc": "Next spell costs no mana and gets +25% crit chance (now only affects one spell)."
+    },
+    "penance": {
+      "name": "Penance",
+      "spell": 402174,
+      "icon": "spell_holy_penance",
+      "level": 30,
+      "talent": true,
+      "tree": "Discipline",
+      "desc": "New in Forever: 2 sec channel, 12 sec cooldown; damages an enemy or heals an ally every second.",
+      "wowheadUse": false
+    },
+    "powerinfusion": {
+      "name": "Power Infusion",
+      "spell": 10060,
+      "icon": "spell_holy_powerinfusion",
+      "level": 40,
+      "talent": true,
+      "tree": "Discipline",
+      "desc": "+20% spell damage and healing on a target for 15 sec."
+    },
+    "holynova": {
+      "name": "Holy Nova",
+      "spell": 15237,
+      "icon": "spell_holy_holynova",
+      "level": 20,
+      "talent": true,
+      "tree": "Holy",
+      "desc": "Instant point-blank AoE: damages nearby enemies and heals nearby party members, no threat.",
+      "wowheadUse": false
+    },
+    "prayerofmending": {
+      "name": "Prayer of Mending",
+      "spell": 401859,
+      "icon": "spell_holy_prayerofmendingtga",
+      "level": 40,
+      "talent": true,
+      "tree": "Holy",
+      "desc": "New in Forever: 10 sec cooldown heal that triggers when the target is hit, then jumps to another party member (5 heals).",
+      "wowheadUse": false
+    },
+    "mindflay": {
+      "name": "Mind Flay",
+      "spell": 15407,
+      "icon": "spell_shadow_siphonmana",
+      "level": 20,
+      "talent": true,
+      "tree": "Shadow",
+      "desc": "3 sec Shadow channel that slows the target by 50%."
+    },
+    "vampiricembrace": {
+      "name": "Vampiric Embrace",
+      "spell": 15286,
+      "icon": "spell_shadow_unsummonbuilding",
+      "level": 25,
+      "talent": true,
+      "tree": "Shadow",
+      "tooltipLevel": 30,
+      "desc": "Debuff that heals your party for 20% of your Shadow damage. Forever: 30 sec duration, 30 sec cooldown, now the Shadow 16-point talent."
+    },
+    "silence": {
+      "name": "Silence",
+      "spell": 15487,
+      "icon": "spell_shadow_impphaseshift",
+      "level": 30,
+      "talent": true,
+      "tree": "Shadow",
+      "tooltipLevel": 1,
+      "desc": "Silences the target for 5 sec (interrupt). Forever: no longer needs Improved Psychic Scream."
+    },
+    "shadowform": {
+      "name": "Shadowform",
+      "spell": 15473,
+      "icon": "spell_shadow_shadowform",
+      "level": 40,
+      "talent": true,
+      "tree": "Shadow",
+      "tooltipLevel": 1,
+      "desc": "Shadow caster form: Shadow spells cost 50% less and crit harder, 15% less physical damage taken; no healing spells while in it."
+    }
+  },
+  "starter": {
+    "stances": {
+      "shadowform": "Z"
+    },
+    "bar1": [
+      {
+        "key": "1",
+        "priest": "smite"
+      },
+      {
+        "key": "2",
+        "priest": "swpain"
+      },
+      {
+        "key": "3",
+        "priest": "mindblast"
+      },
+      {
+        "key": "4",
+        "priest": "holyfire"
+      },
+      {
+        "key": "Q",
+        "priest": "pwshield"
+      },
+      {
+        "key": "E",
+        "priest": "renew"
+      },
+      {
+        "key": "R",
+        "priest": "flashheal"
+      },
+      {
+        "key": "F",
+        "priest": "heal"
+      },
+      {
+        "key": "C",
+        "priest": "psychicscream"
+      },
+      {
+        "key": "V",
+        "priest": "fade"
+      },
+      {
+        "key": "T",
+        "priest": "shoot"
+      },
+      {
+        "key": "G",
+        "priest": "dispelmagic"
+      }
+    ],
+    "bars": [
+      [
+        [
+          "Shift+1",
+          "fortitude"
+        ],
+        [
+          "Shift+2",
+          "innerfire"
+        ],
+        [
+          "Shift+3",
+          "shadowprotection"
+        ],
+        [
+          "Shift+4",
+          "fearward"
+        ],
+        [
+          "Shift+Q",
+          "curedisease"
+        ],
+        [
+          "Shift+E",
+          "greaterheal"
+        ],
+        [
+          "Shift+R",
+          "lesserheal"
+        ],
+        [
+          "Shift+F",
+          "resurrection"
+        ],
+        [
+          "Shift+C",
+          "manaburn"
+        ],
+        [
+          "Shift+V",
+          "shackleundead"
+        ],
+        [
+          "Ctrl+1",
+          "potion"
+        ],
+        [
+          "Ctrl+2",
+          "bandage"
+        ]
+      ],
+      []
+    ]
+  }
+}
